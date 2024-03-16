@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kotovskaya.Categories.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/categories")]
     public class MSCategoriesController : ControllerBase
     {
 
@@ -14,7 +14,7 @@ namespace Kotovskaya.Categories.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "getCategories")]
+        [HttpGet, Route("get_all")]
         public string Get()
         {
             return "created succesfully";

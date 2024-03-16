@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kotovskaya.Order.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/order")]
     public class MSOrderController : ControllerBase
     {
         private readonly ILogger<MSOrderController> _logger;
@@ -13,7 +13,7 @@ namespace Kotovskaya.Order.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "createOrder")]
+        [HttpGet, Route("create")]
         public IEnumerable<string> Get()
         {
             return ["order", "created"];

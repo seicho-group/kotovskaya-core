@@ -428,31 +428,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\user\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/fedotovskih/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Order\\Kotovskaya.Order.csproj",
+      "projectUniqueName": "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Order/Kotovskaya.Order.csproj",
       "projectName": "Kotovskaya.Order",
-      "projectPath": "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Order\\Kotovskaya.Order.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Order\\obj\\",
+      "projectPath": "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Order/Kotovskaya.Order.csproj",
+      "packagesPath": "/Users/fedotovskih/.nuget/packages/",
+      "outputPath": "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Order/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/fedotovskih/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -500,7 +493,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
