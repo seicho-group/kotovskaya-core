@@ -1,0 +1,6 @@
+@kotovskaya_2._0_HostAddress = http://localhost:5263
+
+GET {{kotovskaya_2._0_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

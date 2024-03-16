@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\kotovskaya-2.0.props" />
+</Project>

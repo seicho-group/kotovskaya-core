@@ -1,0 +1,6 @@
+@Kotovskaya.Categories_HostAddress = http://localhost:5064
+
+GET {{Kotovskaya.Categories_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
