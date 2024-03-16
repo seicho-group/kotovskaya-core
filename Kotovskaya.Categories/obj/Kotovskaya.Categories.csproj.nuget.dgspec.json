@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Categories/Kotovskaya.Categories.csproj": {}
+    "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Categories\\Kotovskaya.Categories.csproj": {}
   },
   "projects": {
-    "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Categories/Kotovskaya.Categories.csproj": {
+    "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Categories\\Kotovskaya.Categories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Categories/Kotovskaya.Categories.csproj",
+        "projectUniqueName": "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Categories\\Kotovskaya.Categories.csproj",
         "projectName": "Kotovskaya.Categories",
-        "projectPath": "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Categories/Kotovskaya.Categories.csproj",
-        "packagesPath": "/Users/fedotovskih/.nuget/packages/",
-        "outputPath": "/Users/fedotovskih/job/kotovskaya-core-2.0/Kotovskaya.Categories/obj/",
+        "projectPath": "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Categories\\Kotovskaya.Categories.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\source\\repos\\kotovskaya-2.0\\Kotovskaya.Categories\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/fedotovskih/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -67,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

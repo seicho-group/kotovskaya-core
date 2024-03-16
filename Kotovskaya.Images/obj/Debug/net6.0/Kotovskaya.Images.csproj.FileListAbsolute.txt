@@ -1,0 +1,8 @@
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.AssemblyInfo.cs
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\user\source\repos\kotovskaya-2.0\Kotovskaya.Images\obj\Debug\net6.0\Kotovskaya.Images.sourcelink.json
