@@ -1,28 +1,41 @@
 {
-  "ReRoutes": [
+  "Routes": [
     {
-      "DownstreamPathTemplate": "/api/StudentAttendance",
+      "DownstreamPathTemplate": "/api/{catchAll8003}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44317
+          "Port": 8003
         }
       ],
-      "UpstreamPathTemplate": "/apigateway/AttendanceService",
-      "UpstreamHttpMethod": [ "GET", "PUT", "POST" ]
+      "UpstreamPathTemplate": "/{catchAll8003}",
+      "UpstreamHttpMethod": ["GET"]
     },
     {
-      "DownstreamPathTemplate": "/api/StudentAdmission",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{catchAll8002}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44381
+          "Port": 8002
         }
       ],
-      "UpstreamPathTemplate": "/apigateway/AdmissionService",
-      "UpstreamHttpMethod": [ "GET", "PUT", "POST" ]
+      "UpstreamPathTemplate": "/{catchAll8002}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{catchAll8001}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8001
+        }
+      ],
+      "UpstreamPathTemplate": "/{catchAll8001}"
     }
-  ]
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:8000"
+  }
 }

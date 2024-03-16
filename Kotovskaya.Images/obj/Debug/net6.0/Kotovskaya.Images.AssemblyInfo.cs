@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Kotovskaya.API")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Kotovskaya.Images")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+343b6292def80ea2cf9ea72cf9607639cf987efe")]
-[assembly: System.Reflection.AssemblyProductAttribute("Kotovskaya.API")]
-[assembly: System.Reflection.AssemblyTitleAttribute("Kotovskaya.API")]
+[assembly: System.Reflection.AssemblyProductAttribute("Kotovskaya.Images")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Kotovskaya.Images")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.

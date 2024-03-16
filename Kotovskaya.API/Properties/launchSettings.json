@@ -9,12 +9,12 @@
     }
   },
   "profiles": {
-    "http": {
+    "Kotovskaya.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "",
-      "applicationUrl": "http://localhost:8000",
+      "applicationUrl": "https://localhost:8000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
