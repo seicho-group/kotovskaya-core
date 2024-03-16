@@ -12,7 +12,7 @@
     "Kotovskaya.Images": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/images",
       "applicationUrl": "http://localhost:8002",
       "environmentVariables": {

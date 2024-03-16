@@ -12,7 +12,7 @@
     "Kotovskaya.Order": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/order",
       "applicationUrl": "http://localhost:8003",
       "environmentVariables": {

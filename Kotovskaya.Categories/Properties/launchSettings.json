@@ -12,7 +12,7 @@
     "Kotovskaya.Categories": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/categories",
       "applicationUrl": "http://localhost:8001",
       "environmentVariables": {

@@ -12,7 +12,7 @@
     "Kotovskaya.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "",
       "applicationUrl": "https://localhost:8000",
       "environmentVariables": {
