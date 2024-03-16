@@ -1,6 +1,6 @@
 @Kotovskaya.Order_HostAddress = http://localhost:5010
 
-GET {{Kotovskaya.Order_HostAddress}}/weatherforecast/
+GET {{Kotovskaya.Order_HostAddress}}/createOrder/
 Accept: application/json
 
 ###

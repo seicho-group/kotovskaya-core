@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kotovskaya.Order")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a35890090a6d60ad4edc39dedad15aac402fcd38")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0be9713c96be2ff7f9046c12f01db29dbcbc078")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kotovskaya.Order")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kotovskaya.Order")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
