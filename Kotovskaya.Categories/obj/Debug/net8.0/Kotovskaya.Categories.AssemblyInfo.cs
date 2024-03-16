@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kotovskaya.Categories")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d22bfa042c40c53eced50aaa5423ec871c556ee")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kotovskaya.Categories")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kotovskaya.Categories")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
