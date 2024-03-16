@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Kotovskaya.Order.Core.Interfaces;
 
-namespace Kotovskaya.Order.Infrastrucure.EntityTypeConfiguration
+namespace Kotovskaya.Order.Application.DB.EntityTypeConfiguration
 {
     public class OrderTypeConfiguration : IEntityTypeConfiguration<OrderEntity>
     {

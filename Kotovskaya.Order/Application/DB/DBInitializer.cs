@@ -1,4 +1,4 @@
-﻿namespace Kotovskaya.Order.Infrastructure
+﻿namespace Kotovskaya.Order.Application.DB
 {
     public class DBInitializer
     {

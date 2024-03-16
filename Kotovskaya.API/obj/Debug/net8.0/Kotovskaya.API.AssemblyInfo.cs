@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kotovskaya.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9b325fefd4fd36e0d4299a324620a1ea5f9e6ad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+caac1debfc73f76d79b3879a6748083f55b387da")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kotovskaya.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kotovskaya.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
