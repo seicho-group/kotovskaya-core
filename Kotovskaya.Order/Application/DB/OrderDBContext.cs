@@ -1,5 +1,5 @@
 ﻿using Kotovskaya.Order.Core.Interfaces;
-using Kotovskaya.Order.Infrastrucure.EntityTypeConfiguration;
+using Kotovskaya.Order.Application.DB.EntityTypeConfiguration;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Order.Application.DB
