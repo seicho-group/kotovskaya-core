@@ -22,7 +22,7 @@ namespace Kotovskaya.Order.Controllers
             await _mediator.Send(request, cancellationToken);
 
         [HttpGet, Route("get_order")]
-        public async Task<GetOrderResponse> GetOrder([FromBody] GetOrderRequest request, CancellationToken cancellationToken) =>
+        public async Task<GetOrderResponse> GetOrder([FromQuery] GetOrderRequest request, CancellationToken cancellationToken) =>
             await _mediator.Send(request, cancellationToken);
         
     }
