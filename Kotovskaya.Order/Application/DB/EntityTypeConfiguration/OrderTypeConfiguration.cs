@@ -10,7 +10,7 @@ namespace Kotovskaya.Order.Application.DB.EntityTypeConfiguration
         {
             builder.HasKey(x => x.Id);
             builder.HasIndex(x => x.Id).IsUnique();
-            builder.Property(x => x.Orderer).IsRequired();
+            builder.Property(x => x.OrdererId).IsRequired();
             builder.Property(x => x.OrderNumber).IsRequired();
             builder.Property(x => x.TotalPrice).IsRequired();
         }
