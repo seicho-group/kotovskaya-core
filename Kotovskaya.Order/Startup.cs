@@ -1,7 +1,7 @@
-﻿using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
+using System.Reflection;
+using Kotovskaya.Order.Controllers;
 
-namespace Kotovskaya.API
+namespace Kotovskaya.Order
 {
     public class Startup
     {
@@ -15,7 +15,9 @@ namespace Kotovskaya.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddOcelot();
+            services.AddSingleton<MSOrderController>();
+            services
+                .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,8 +37,6 @@ namespace Kotovskaya.API
             {
                 endpoints.MapControllers();
             });
-
-            app.UseOcelot().Wait();
         }
     }
 }
