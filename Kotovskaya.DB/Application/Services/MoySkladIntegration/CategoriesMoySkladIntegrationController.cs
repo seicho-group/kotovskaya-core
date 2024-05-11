@@ -1,12 +1,25 @@
 ﻿using Confiti.MoySklad.Remap.Api;
 using Kotovskaya.DB.Application.Services.Interfaces;
+using Kotovskaya.DB.Domain.Context;
 
 namespace Kotovskaya.DB.Application.Services.MoySkladIntegration;
 
-public class CategoriesMoySkladIntegrationController: IIntegrationController<MoySkladApi>
+public class CategoriesMoySkladIntegrationController : IIntegrationController<MoySkladApi, KotovskayaDbContext>
 {
-    public Task Migrate(MoySkladApi api)
+    private MoySkladApi? Api { get; set; }
+    private KotovskayaDbContext? DbContext { get; set; }
+    public async Task Migrate(MoySkladApi msApi, KotovskayaDbContext dbContext)
     {
-        throw new NotImplementedException();
+        Api = msApi;
+        await MigrateTopCategories();
+    }
+
+    private async Task MigrateTopCategories()
+    {
+        if (Api != null)
+        {
+            var categoriesResponse = await Api.ProductFolder.GetAllAsync();
+        }
+        
     }
 }

@@ -16,7 +16,7 @@ namespace Kotovskaya.Categories
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<MSCategoriesController>();
+            services.AddSingleton<MsCategoriesController>();
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }

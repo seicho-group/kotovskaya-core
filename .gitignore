@@ -10,3 +10,4 @@ Kotovskaya.Order/obj/
 */bin/
 */obj/
 .idea/  
+*/.env
