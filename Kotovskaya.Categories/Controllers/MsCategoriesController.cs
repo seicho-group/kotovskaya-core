@@ -1,11 +1,4 @@
-using Confiti.MoySklad.Remap.Api;
-using Confiti.MoySklad.Remap.Client;
-using Confiti.MoySklad.Remap.Entities;
-using Confiti.MoySklad.Remap.Models;
-using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.DB.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Product = Kotovskaya.DB.Domain.Interfaces.Product;
 
 namespace Kotovskaya.Categories.Controllers
 {
@@ -24,8 +17,9 @@ namespace Kotovskaya.Categories.Controllers
         }
 
         [HttpPost, Route("get_category_items")]
-        public async  Task<object> GetCategoryItems([FromBody] GetCategoryItemsRequest request)
+        public async Task<object> GetCategoryItems([FromBody] GetCategoryItemsRequest request)
         {
+            await Task.Delay(12);
             throw new NotImplementedException();
         }
     }
