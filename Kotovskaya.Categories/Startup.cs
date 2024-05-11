@@ -16,6 +16,7 @@ namespace Kotovskaya.Categories
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // automapper
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new CategoriesMapperProfile());
@@ -24,7 +25,16 @@ namespace Kotovskaya.Categories
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             
+            // database
             services.AddSingleton<KotovskayaDbContext>();
+            
+            // redis
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Environment.GetEnvironmentVariable("PG_HOST");
+                options.InstanceName = "kot-redis";
+            });
+            
             services.AddControllers();
             services.AddSingleton<MsCategoriesController>();
             services
