@@ -1,6 +1,4 @@
-﻿using Confiti.MoySklad.Remap.Api;
-using Confiti.MoySklad.Remap.Client;
-using Kotovskaya.Categories.Controllers;
+﻿using Kotovskaya.Categories.Controllers;
 
 namespace Kotovskaya.Categories
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kotovskaya.Images.Controllers;
+namespace Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Images.Controllers;
 
 [ApiController]
 [Route("/api/images")]

@@ -3,7 +3,6 @@ using Confiti.MoySklad.Remap.Entities;
 using Kotovskaya.DB.Application.Services.Interfaces;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.DB.Application.Services.MoySkladIntegration;
 

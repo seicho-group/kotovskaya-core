@@ -1,7 +1,7 @@
-using Kotovskaya.Order.Domain.DTO;
+using Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Domain.DTO;
 using MediatR;
 
-namespace Kotovskaya.Order.Application.Services.GetOrder;
+namespace Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Application.Services.GetOrder;
 
 public class GetOrderHandler: IRequestHandler<GetOrderRequest, GetOrderResponse>
 {

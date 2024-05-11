@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Kotovskaya.DB.Application.Services.Interfaces;
+﻿namespace Kotovskaya.DB.Application.Services.Interfaces;
 
 public interface IIntegrator<TIn, TOut>
 {

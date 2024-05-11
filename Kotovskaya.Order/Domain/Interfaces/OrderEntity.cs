@@ -1,4 +1,4 @@
-﻿namespace Kotovskaya.Order.Core.Interfaces
+﻿namespace Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Core.Interfaces
 {
     public class OrderEntity
     {

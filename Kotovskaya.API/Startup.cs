@@ -1,7 +1,7 @@
 ﻿using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
-namespace Kotovskaya.API
+namespace Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.API
 {
     public class Startup
     {
