@@ -8,3 +8,8 @@ public class CategoryDto
     public string Id { get; set; }
     public CategoryType Type { get; set; }
 }
+
+public class CategoryDtoBranch : CategoryDto
+{
+    public List<CategoryDtoBranch>? CategoryItems { get; set; }
+}

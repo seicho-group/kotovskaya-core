@@ -7,9 +7,14 @@ public class CategoriesMapperProfile : Profile
 {
     public CategoriesMapperProfile()
     {
-        CreateMap<Category, CategoryDto>().ReverseMap();
+        CreateMap<Category, CategoryDto>()
+            .ReverseMap();
+        
+        CreateMap<Category, CategoryDtoBranch>()
+            .ReverseMap();
 
-        CreateMap<ProductEntity, ProductEntityDto>().ReverseMap();
+        CreateMap<ProductEntity, ProductEntityDto>()
+            .ReverseMap();
     }
 }
 

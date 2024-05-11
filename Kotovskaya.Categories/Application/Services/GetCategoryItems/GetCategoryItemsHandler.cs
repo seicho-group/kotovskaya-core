@@ -27,7 +27,7 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
         var products = await dbContext.Products
             .Where(pr => pr.CategoryId == category.Id)
             .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
-            .ToArrayAsync();
+            .ToArrayAsync(cancellationToken);
 
         
         return new GetCategoryItemsResponse()
