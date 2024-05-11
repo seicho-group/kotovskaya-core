@@ -1,6 +1,8 @@
-﻿namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
+﻿using MediatR;
 
-public class GetCategoryItemsRequest
+namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
+
+public class GetCategoryItemsRequest:IRequest<GetCategoryItemsResponse>
 {
-    
+    public string CategoryId { get; init; }
 }

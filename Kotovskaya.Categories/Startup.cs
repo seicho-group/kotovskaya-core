@@ -1,4 +1,7 @@
-﻿using Kotovskaya.Categories.Controllers;
+﻿using AutoMapper;
+using Kotovskaya.Categories.Controllers;
+using Kotovskaya.Categories.Domain.DTO;
+using Kotovskaya.DB.Domain.Context;
 
 namespace Kotovskaya.Categories
 {
@@ -13,6 +16,15 @@ namespace Kotovskaya.Categories
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new CategoriesMapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            
+            services.AddSingleton<KotovskayaDbContext>();
             services.AddControllers();
             services.AddSingleton<MsCategoriesController>();
             services
