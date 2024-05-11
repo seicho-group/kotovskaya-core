@@ -1,4 +1,4 @@
-﻿using Kotovskaya.DB.Domain.Interfaces;
+﻿using Kotovskaya.DB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.DB.Domain.Context;
@@ -6,7 +6,10 @@ namespace Kotovskaya.DB.Domain.Context;
 public class KotovskayaDbContext : DbContext
 {
     public DbSet<Category> Categories { get; set; }
-    public DbSet<Product> Products { get; set; }
+    
+    public DbSet<ProductEntity> Products { get; set; }
+    
+    public DbSet<SaleTypes> SaleTypes { get; set; }
 
     public KotovskayaDbContext()
     {

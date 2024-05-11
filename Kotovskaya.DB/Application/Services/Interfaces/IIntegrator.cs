@@ -2,9 +2,9 @@
 
 namespace Kotovskaya.DB.Application.Services.Interfaces;
 
-public interface IIntegrator<I, O>
+public interface IIntegrator<TIn, TOut>
 {
-    protected I Api { get; set; }
-    protected O OutApi { get; set; }
-    public Task Migrate(List<IIntegrationController<I, O>> controllers);
+    protected TIn Api { get; set; }
+    protected TOut OutApi { get; set; }
+    public Task Migrate(List<IIntegrationController<TIn, TOut>> controllers);
 }

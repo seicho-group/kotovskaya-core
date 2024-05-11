@@ -2,7 +2,8 @@
 using Confiti.MoySklad.Remap.Entities;
 using Kotovskaya.DB.Application.Services.Interfaces;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.DB.Domain.Interfaces;
+using Kotovskaya.DB.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.DB.Application.Services.MoySkladIntegration;
 
@@ -10,18 +11,16 @@ public class CategoriesMoySkladIntegrationController : IIntegrationController<Mo
 {
     private MoySkladApi? Api { get; set; }
     private KotovskayaDbContext? KotovskayaDbContext { get; set; }
-    public async Task Migrate(MoySkladApi msApi, KotovskayaDbContext dbContext)
+    public async Task Migrate(MoySkladApi api, KotovskayaDbContext apiTo)
     {
-        Api = msApi;
-        KotovskayaDbContext = dbContext;
+        Api = api;
+        KotovskayaDbContext = apiTo;
         if (Api != null)
         {
             var categoriesResponse = await Api.ProductFolder.GetAllAsync();
             MigrateCategoriesByPathName(categoriesResponse.Payload.Rows, "", null);
             await KotovskayaDbContext.SaveChangesAsync();
         }
-
-        
     }
 
     private void MigrateCategoriesByPathName(ProductFolder[] categories, string pathName, Category? parentFolder)
@@ -32,18 +31,26 @@ public class CategoriesMoySkladIntegrationController : IIntegrationController<Mo
         {
             childCategories.ToList().ForEach(childCategory =>
             {
-                var childCategoryModel = new Category
+                var existingCategory = KotovskayaDbContext.Categories
+                    .FirstOrDefault(cat => cat.Id == childCategory.Id.ToString());
+                
+                var newCategoryModel = new Category
                 {
                     ParentCategory = parentFolder, 
                     Id = childCategory.Id.ToString() ?? Guid.NewGuid().ToString(), 
                     Name = childCategory.Name,
-                    Type = CategoryType.Soapmaking,
-                    IsVisible = true,
-                    MSId = childCategory.Id.ToString()
+                    Type = existingCategory?.Type ?? CategoryType.Soapmaking,
+                    IsVisible = existingCategory?.IsVisible ?? true,
+                    MsId = childCategory.Id.ToString()
                 };
-                KotovskayaDbContext.Categories.Add(childCategoryModel);
 
-                MigrateCategoriesByPathName(categories, childCategory.Name, childCategoryModel);
+                if (existingCategory != null)
+                {
+                    KotovskayaDbContext.Categories.Remove(existingCategory);    
+                }
+                KotovskayaDbContext.Categories.Add(newCategoryModel);
+
+                MigrateCategoriesByPathName(categories, childCategory.Name, newCategoryModel);
             });
         }
     }

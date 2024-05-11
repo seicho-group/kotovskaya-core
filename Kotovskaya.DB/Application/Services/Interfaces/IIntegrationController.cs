@@ -1,6 +1,6 @@
 ﻿namespace Kotovskaya.DB.Application.Services.Interfaces;
 
-public interface IIntegrationController<I, O>
+public interface IIntegrationController<TIn, TOut>
 {
-    public Task Migrate(I Api, O ApiTo);
+    public Task Migrate(TIn api, TOut apiTo);
 }
