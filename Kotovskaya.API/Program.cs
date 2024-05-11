@@ -1,4 +1,4 @@
-namespace Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.API
+namespace Kotovskaya.API
 {
     public class Program
     {

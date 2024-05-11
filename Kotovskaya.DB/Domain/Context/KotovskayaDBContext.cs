@@ -13,9 +13,10 @@ public class KotovskayaDbContext : DbContext
 
     public KotovskayaDbContext()
     {
+        DotNetEnv.Env.TraversePath().Load();
         Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=31.184.240.135;Database=postgres;Username=root;Password=123123");
+        => optionsBuilder.UseNpgsql($"Host={Environment.GetEnvironmentVariable("PG_HOST")};Database={Environment.GetEnvironmentVariable("PG_DB")};Username=root;Password={Environment.GetEnvironmentVariable("PG_PASS")}");
 }

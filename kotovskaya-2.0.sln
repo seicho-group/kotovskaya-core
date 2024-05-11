@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6342CA2-8018-49B3-9587-81BEBD8B9F88}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		.env = .env
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.Order", "Kotovskaya.Order\Kotovskaya.Order.csproj", "{D387ACD0-A0A7-40D4-8574-4C698A06A0EF}"
