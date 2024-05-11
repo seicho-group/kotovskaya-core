@@ -1,4 +1,5 @@
-﻿using Kotovskaya.Products.Application.Services.GetProductInfo;
+﻿using Kotovskaya.Products.Application.Services.GetNewProducts;
+using Kotovskaya.Products.Application.Services.GetProductInfo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,10 @@ namespace Kotovskaya.Products.Controllers
 
         [HttpPost, Route("get_product_info")]
         public async Task<ActionResult<GetProductInfoResponse>> GetProductInfo([FromBody] GetProductInfoRequest request,
+            CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
+
+        [HttpPost, Route("get_new_products")]
+        public async Task<ActionResult<GetNewProductsResponse>> GetNewProducts([FromBody] GetNewProductsRequest request,
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
     }
 }
