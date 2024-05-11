@@ -22,6 +22,7 @@ public class ProductsMoySkladIntegrationController: IIntegrationController<MoySk
                 {
                     Id = Guid.NewGuid().ToString(),
                     Category = category,
+                    CategoryId = category.Id,
                     MsId = product.Id,
                     Name = product.Name,
                     Description = product.Product.Description,

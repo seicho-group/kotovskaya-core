@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kotovskaya.DB.Domain.Entities;
 
@@ -25,6 +26,8 @@ public class Category
     public bool? IsVisible { get; init; }
     
     public CategoryType? Type { get; init; }
-    
-    public List<ProductEntity>? Products { get; set; }
+
+    [ForeignKey("ProductId")]
+    [Required]
+    public ICollection<ProductEntity>? Products { get; set; } = new List<ProductEntity>();
 }

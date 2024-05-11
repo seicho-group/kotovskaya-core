@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kotovskaya.DB.Domain.Entities;
 
@@ -16,7 +17,10 @@ public class ProductEntity
     [StringLength(64, MinimumLength = 10)] 
     public string? Article { get; init; }
     public int Quantity { get; init; }
-    public Category? Category { get; init; }
+    
+    [ForeignKey("ProductId")]
+    public string? CategoryId { get; init; }
+    public Category Category { get; init; } = null!;
     
     [StringLength(512, MinimumLength = 0)] 
     public string? ImageLink { get; set; }

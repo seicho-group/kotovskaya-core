@@ -7,9 +7,9 @@ public class CategoriesMapperProfile : Profile
 {
     public CategoriesMapperProfile()
     {
-        CreateMap<Category, CategoryDto>()
-            .ForMember(catDto => catDto.Name,
-                cfg => cfg.MapFrom(cat => cat.Name));
+        CreateMap<Category, CategoryDto>().ReverseMap();
+
+        CreateMap<ProductEntity, ProductEntityDto>().ReverseMap();
     }
 }
 

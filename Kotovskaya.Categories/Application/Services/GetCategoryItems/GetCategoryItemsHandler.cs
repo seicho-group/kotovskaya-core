@@ -7,37 +7,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
 
-public class GetCategoryItemsHandler : IRequestHandler<GetCategoryItemsRequest, GetCategoryItemsResponse>
+public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapper)
+    : IRequestHandler<GetCategoryItemsRequest, GetCategoryItemsResponse>
 {
-    private readonly KotovskayaDbContext _dbContext;
-    private readonly IMapper _mapper;
     public async Task<GetCategoryItemsResponse> Handle(GetCategoryItemsRequest request, CancellationToken cancellationToken)
     {
-        var category = await _dbContext.Categories
-            .FirstOrDefaultAsync(cat => cat.Id == request.CategoryId);
+        var category = await dbContext.Categories
+            .FirstOrDefaultAsync(cat => cat.Id == request.CategoryId, cancellationToken);
 
         if (category == null)
-        {
             throw new KeyNotFoundException("Категория с данным айди не найдена");
-        }
-
-        var subcategories = await _dbContext.Categories
-            .Where(cat => cat.ParentCategory != null && cat.ParentCategory.Id == category.Id)
-            .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
-            .ToArrayAsync();
         
-        await Task.Delay(1);
+
+        var subcategories = await dbContext.Categories
+            .Where(cat => cat.ParentCategory != null && cat.ParentCategory.Id == category.Id)
+            .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
+            .ToArrayAsync(cancellationToken);
+
+        var products = await dbContext.Products
+            .Where(pr => pr.CategoryId == category.Id)
+            .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
+            .ToArrayAsync();
+
+        
         return new GetCategoryItemsResponse()
         {
             CategoryName = category.Name,
             CategoryId = category.Id,
+            CategoryItems = products,
             CategoryChilds = subcategories
         };
-    }
-
-    public GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapper)
-    {
-        _dbContext = dbContext;
-        _mapper = mapper;
     }
 }
