@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using Kotovskaya.Products.Application.Services.GetProductInfo;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kotovskaya.Products.Controllers
 {
     [ApiController]
-    [Route("api/order")]
+    [Route("api/products")]
     public class ProductsController : ControllerBase
     {
         private readonly ILogger<ProductsController> _logger;
@@ -14,5 +15,9 @@ namespace Kotovskaya.Products.Controllers
             _logger = logger;
             _mediator = mediator;
         }
+
+        [HttpPost, Route("get_product_info")]
+        public async Task<ActionResult<GetProductInfoResponse>> GetProductInfo([FromBody] GetProductInfoRequest request,
+            CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
     }
 }
