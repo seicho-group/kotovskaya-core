@@ -1,6 +1,6 @@
-using Kotovskaya.Order.Controllers;
+using Kotovskaya.Products.Controllers;
 
-namespace Kotovskaya.Order
+namespace Kotovskaya.Products
 {
     public class Startup
     {
@@ -14,7 +14,7 @@ namespace Kotovskaya.Order
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<OrderController>();
+            services.AddSingleton<ProductsController>();
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }

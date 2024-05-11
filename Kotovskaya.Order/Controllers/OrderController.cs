@@ -7,11 +7,11 @@ namespace Kotovskaya.Order.Controllers
 {
     [ApiController]
     [Route("api/order")]
-    public class MSOrderController : ControllerBase
+    public class OrderController : ControllerBase
     {
-        private readonly ILogger<MSOrderController> _logger;
+        private readonly ILogger<OrderController> _logger;
         private readonly IMediator _mediator;
-        public MSOrderController(ILogger<MSOrderController> logger, IMediator mediator)
+        public OrderController(ILogger<OrderController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;

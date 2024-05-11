@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Kotovskaya.Categories.Domain.DTO;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities;
@@ -22,6 +21,7 @@ public class GetAllCategoriesTreeHandler(KotovskayaDbContext dbContext, IMapper 
         var topCategories = categoriesData.Where(cat => cat.ParentCategory == null);
         var result = mapper.Map<CategoryDtoBranch[]>(topCategories).ToList();
         
+        // fill children
         var subCategories = categoriesData.Where(cat => cat.ParentCategory != null);
         result.ForEach(cat =>
         {
