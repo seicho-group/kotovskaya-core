@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Kotovskaya.Categories.Application.Services.GetAllCategoriesTree;
 
 public class GetAllCategoriesTreeHandler(KotovskayaDbContext dbContext, IMapper mapper)
-    : IRequestHandler<GetAllCategoriesTreeRequest, GetAllCategoriesTreeResponse>
+    : IRequestHandler<GetAllCategoriesTreeRequest, List<CategoryDtoBranch>>
 {
-    public async Task<GetAllCategoriesTreeResponse> Handle(GetAllCategoriesTreeRequest request, CancellationToken cancellationToken)
+    public async Task<List<CategoryDtoBranch>> Handle(GetAllCategoriesTreeRequest request, CancellationToken cancellationToken)
     {
         // taking all visible categories without parents - high-layer categories 
         var categoriesData = await dbContext.Categories
@@ -28,7 +28,7 @@ public class GetAllCategoriesTreeHandler(KotovskayaDbContext dbContext, IMapper 
             cat.CategoryItems = GetCategoryItems(cat, subCategories.ToList());
         });
         
-        return new GetAllCategoriesTreeResponse() {Categories = result};
+        return result;
     }
 
     private List<CategoryDtoBranch>? GetCategoryItems(CategoryDtoBranch parentBranch, List<Category> possibleChildCategories)

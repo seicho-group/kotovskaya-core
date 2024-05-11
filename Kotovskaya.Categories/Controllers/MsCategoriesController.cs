@@ -1,5 +1,6 @@
 using Kotovskaya.Categories.Application.Services.GetAllCategoriesTree;
 using Kotovskaya.Categories.Application.Services.GetCategoryItems;
+using Kotovskaya.Categories.Domain.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,11 +22,11 @@ namespace Kotovskaya.Categories.Controllers
         }
 
         [HttpPost, Route("get_category_items")]
-        public async Task<object> GetCategoryItems([FromBody] GetCategoryItemsRequest request) =>
+        public async Task<ActionResult<GetCategoryItemsResponse>> GetCategoryItems([FromBody] GetCategoryItemsRequest request) =>
             Ok(await _mediatr.Send(request));
 
-        [HttpPost, Route("get_all_categories_tree")]
-        public async Task<object> GetAllCategoriesTree([FromBody] GetAllCategoriesTreeRequest request) =>
+        [HttpGet, Route("get_all_categories_tree")]
+        public async Task<ActionResult<List<CategoryDtoBranch>>> GetAllCategoriesTree([FromRoute] GetAllCategoriesTreeRequest request) =>
             Ok(await _mediatr.Send(request));
     }
 }
