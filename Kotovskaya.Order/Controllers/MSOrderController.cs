@@ -21,6 +21,7 @@ namespace Kotovskaya.Order.Controllers
         public async Task<string> CreateOrder([FromBody] CreateOrderRequest request, CancellationToken cancellationToken) =>
             await _mediator.Send(request, cancellationToken);
 
+        // todo: get order details
         [HttpGet, Route("get_order")]
         public async Task<GetOrderResponse> GetOrder([FromQuery] GetOrderRequest request, CancellationToken cancellationToken) =>
             await _mediator.Send(request, cancellationToken);

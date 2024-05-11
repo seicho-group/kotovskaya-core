@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/{catchAll8003}",
+      "DownstreamPathTemplate": "/api/order/{catchAll8003}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,11 +9,11 @@
           "Port": 8003
         }
       ],
-      "UpstreamPathTemplate": "/{catchAll8003}",
-      "UpstreamHttpMethod": ["GET"]
+      "UpstreamPathTemplate": "/order/{catchAll8003}",
+      "UpstreamHttpMethod": ["GET", "POST"]
     },
     {
-      "DownstreamPathTemplate": "/api/{catchAll8002}",
+      "DownstreamPathTemplate": "/api/images/{catchAll8002}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -21,10 +21,11 @@
           "Port": 8002
         }
       ],
-      "UpstreamPathTemplate": "/{catchAll8002}"
+      "UpstreamPathTemplate": "/images/{catchAll8002}",
+      "UpstreamHttpMethod": ["GET", "POST"]
     },
     {
-      "DownstreamPathTemplate": "/api/{catchAll8001}",
+      "DownstreamPathTemplate": "/api/categories/{catchAll8001}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -32,7 +33,8 @@
           "Port": 8001
         }
       ],
-      "UpstreamPathTemplate": "/{catchAll8001}"
+      "UpstreamPathTemplate": "/categories/{catchAll8001}",
+      "UpstreamHttpMethod": ["GET", "POST"]
     }
   ],
   "GlobalConfiguration": {

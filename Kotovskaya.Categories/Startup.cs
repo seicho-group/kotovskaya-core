@@ -1,6 +1,8 @@
-using Kotovskaya.Order.Controllers;
+﻿using Confiti.MoySklad.Remap.Api;
+using Confiti.MoySklad.Remap.Client;
+using Kotovskaya.Categories.Controllers;
 
-namespace Kotovskaya.Order
+namespace Kotovskaya.Categories
 {
     public class Startup
     {
@@ -14,7 +16,7 @@ namespace Kotovskaya.Order
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<MSOrderController>();
+            services.AddSingleton<MSCategoriesController>();
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }
@@ -29,7 +31,7 @@ namespace Kotovskaya.Order
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
