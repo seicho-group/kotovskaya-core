@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Application.Services.CreateOrder;
+namespace Kotovskaya.Order.Application.Services.CreateOrder;
 
 public class CreateOrderHandler : IRequestHandler<CreateOrderRequest, string>
 {

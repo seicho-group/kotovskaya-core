@@ -1,5 +1,5 @@
-using Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Application.Services.CreateOrder;
-using Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Application.Services.GetOrder;
+using Kotovskaya.Order.Application.Services.CreateOrder;
+using Kotovskaya.Order.Application.Services.GetOrder;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
