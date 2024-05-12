@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Kotovskaya.DB\Kotovskaya.DB.csproj" />
+    <ProjectReference Include="..\Kotovskaya.Products\Kotovskaya.Products.csproj" />
   </ItemGroup>
 
 </Project>

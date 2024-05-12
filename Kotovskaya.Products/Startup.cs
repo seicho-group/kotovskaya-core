@@ -1,4 +1,7 @@
+using AutoMapper;
+using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Products.Controllers;
+using Kotovskaya.Products.Domain;
 
 namespace Kotovskaya.Products
 {
@@ -13,8 +16,17 @@ namespace Kotovskaya.Products
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ProductMapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddControllers();
             services.AddSingleton<ProductsController>();
+            services.AddSingleton<KotovskayaDbContext>();
+            services.AddSingleton<KotovskayaMsContext>();
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }

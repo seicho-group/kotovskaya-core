@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Kotovskaya.Categories.Domain.DTO;
 using Kotovskaya.DB.Domain.Entities;
 
-namespace Kotovskaya.Categories.Domain.DTO;
+namespace Kotovskaya.Categories.Domain;
 
 public class CategoriesMapperProfile : Profile
 {
@@ -11,9 +12,6 @@ public class CategoriesMapperProfile : Profile
             .ReverseMap();
         
         CreateMap<Category, CategoryDtoBranch>()
-            .ReverseMap();
-
-        CreateMap<ProductEntity, ProductEntityDto>()
             .ReverseMap();
     }
 }
