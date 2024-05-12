@@ -14,12 +14,7 @@ public class MoySkladMigrator : IMigrator<MoySkladApi, KotovskayaDbContext>
     public MoySkladMigrator(KotovskayaDbContext dbContext)
     {
         OutApi = dbContext;
-        
-        var credentials = new MoySkladCredentials()
-        {
-            AccessToken = Environment.GetEnvironmentVariable("MS_TOKEN")
-        };
-        Api = new MoySkladApi(credentials);
+        Api = new KotovskayaMsContext();
     }
     
     public async Task Migrate(List<IMigrationController<MoySkladApi, KotovskayaDbContext>> controllers)
