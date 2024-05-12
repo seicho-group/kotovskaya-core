@@ -25,7 +25,7 @@ namespace Kotovskaya.Products.Controllers
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
 
         [HttpPost, Route("get_new_products")]
-        public async Task<ActionResult<List<ProductEntityDto>>> GetNewProducts([FromBody] GetNewProductsRequest request,
+        public async Task<ActionResult<List<ProductEntityDto>>> GetNewProducts([FromRoute] GetNewProductsRequest request,
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
         
         

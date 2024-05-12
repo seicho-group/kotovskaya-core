@@ -1,3 +1,4 @@
+using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Products.Controllers;
 
 namespace Kotovskaya.Products
@@ -15,6 +16,7 @@ namespace Kotovskaya.Products
         {
             services.AddControllers();
             services.AddSingleton<ProductsController>();
+            services.AddSingleton<KotovskayaMsContext>();
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }

@@ -7,6 +7,7 @@ public class KotovskayaMsContext : MoySkladApi
 {
     public KotovskayaMsContext()
     {
+        DotNetEnv.Env.TraversePath().Load();
         Credentials = new MoySkladCredentials()
         {
             AccessToken = Environment.GetEnvironmentVariable("MS_TOKEN")

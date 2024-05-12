@@ -1,12 +1,19 @@
-﻿using Kotovskaya.Products.Domain.Entities;
+﻿using Confiti.MoySklad.Remap.Client;
+using Kotovskaya.DB.Domain.Context;
+using Kotovskaya.Products.Domain.Entities;
 using MediatR;
 
 namespace Kotovskaya.Products.Application.Services.GetNewProducts;
 
-public class GetNewProductsHandler: IRequestHandler<GetNewProductsRequest, List<ProductEntityDto>>
+public class GetNewProductsHandler(KotovskayaMsContext msContext)
+    : IRequestHandler<GetNewProductsRequest, List<ProductEntityDto>>
 {
-    public Task<List<ProductEntityDto>> Handle(GetNewProductsRequest request, CancellationToken cancellationToken)
+    public async Task<List<ProductEntityDto>> Handle(GetNewProductsRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var query = new AssortmentApiParameterBuilder();
+        query.Limit(10);
+        await msContext.Assortment.GetAllAsync(query);
+
+        return [];
     }
 }
