@@ -5,5 +5,5 @@ namespace Kotovskaya.Products.Application.Services.GetProductInfo;
 
 public class GetProductInfoRequest : IRequest<ProductEntityDto>
 {
-    public string ProductId { get; set; }
+    public required string ProductId { get; set; }
 }
