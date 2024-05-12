@@ -8,9 +8,7 @@ public class Order
     [Key]
     public Guid Id { get; init; }
     
-    
     public int Price { get; init; }
     
     public int? SalePrice { get; init; }
-
 }

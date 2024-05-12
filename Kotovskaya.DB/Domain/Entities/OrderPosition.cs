@@ -9,7 +9,7 @@ public class OrderPosition
     public Guid Id { get; init; }
     
     [ForeignKey("OrderId")]
-    public Order Product { get; init; }
+    public Order OrderId { get; init; }
     
     public int Price { get; init; }
     

@@ -5,6 +5,12 @@ using Kotovskaya.DB.Domain.Context;
 
 DotNetEnv.Env.TraversePath().Load();
 
+Console.WriteLine("Password: ");
+var pw = Console.ReadLine();
+if (pw != Environment.GetEnvironmentVariable("MIGRATION_PASSWORD"))
+{
+    throw new Exception("Password check fault");
+}
 // setting up controllers
 var categoriesController = new CategoriesMoySkladMigrationController();
 var productsController = new ProductsMoySkladMigrationController();
