@@ -4,9 +4,9 @@ using Kotovskaya.DB.Application.Services.Interfaces;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities;
 
-namespace Kotovskaya.DB.Application.Services.MoySkladIntegration;
+namespace Kotovskaya.DB.Application.Services.MoySkladMigration;
 
-public class CategoriesMoySkladIntegrationController : IIntegrationController<MoySkladApi, KotovskayaDbContext>
+public class CategoriesMoySkladMigrationController : IMigrationController<MoySkladApi, KotovskayaDbContext>
 {
     private MoySkladApi? Api { get; set; }
     private KotovskayaDbContext? KotovskayaDbContext { get; set; }

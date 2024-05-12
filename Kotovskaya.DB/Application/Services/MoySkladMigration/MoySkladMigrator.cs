@@ -3,15 +3,15 @@ using Confiti.MoySklad.Remap.Client;
 using Kotovskaya.DB.Application.Services.Interfaces;
 using Kotovskaya.DB.Domain.Context;
 
-namespace Kotovskaya.DB.Application.Services.MoySkladIntegration;
+namespace Kotovskaya.DB.Application.Services.MoySkladMigration;
 
-public class MoySkladIntegrator : IIntegrator<MoySkladApi, KotovskayaDbContext>
+public class MoySkladMigrator : IMigrator<MoySkladApi, KotovskayaDbContext>
 {
     public MoySkladApi Api { get; set; }
 
     public KotovskayaDbContext OutApi { get; set; }
 
-    public MoySkladIntegrator(KotovskayaDbContext dbContext)
+    public MoySkladMigrator(KotovskayaDbContext dbContext)
     {
         OutApi = dbContext;
         
@@ -22,7 +22,7 @@ public class MoySkladIntegrator : IIntegrator<MoySkladApi, KotovskayaDbContext>
         Api = new MoySkladApi(credentials);
     }
     
-    public async Task Migrate(List<IIntegrationController<MoySkladApi, KotovskayaDbContext>> controllers)
+    public async Task Migrate(List<IMigrationController<MoySkladApi, KotovskayaDbContext>> controllers)
     {
         foreach (var integrationController in controllers)
         {

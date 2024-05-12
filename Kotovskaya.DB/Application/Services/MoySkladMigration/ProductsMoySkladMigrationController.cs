@@ -6,9 +6,9 @@ using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kotovskaya.DB.Application.Services.MoySkladIntegration;
+namespace Kotovskaya.DB.Application.Services.MoySkladMigration;
 
-public class ProductsMoySkladIntegrationController: IIntegrationController<MoySkladApi, KotovskayaDbContext>
+public class ProductsMoySkladMigrationController: IMigrationController<MoySkladApi, KotovskayaDbContext>
 {
     public async Task Migrate(MoySkladApi api, KotovskayaDbContext dbContext)
     {
