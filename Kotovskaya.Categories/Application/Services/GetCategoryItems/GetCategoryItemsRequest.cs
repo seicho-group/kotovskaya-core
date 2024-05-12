@@ -4,5 +4,5 @@ namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
 
 public class GetCategoryItemsRequest:IRequest<GetCategoryItemsResponse>
 {
-    public string CategoryId { get; init; }
+    public required string CategoryId { get; init; }
 }

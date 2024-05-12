@@ -11,6 +11,7 @@ public class ProductEntity
     [StringLength(150, MinimumLength = 5)] 
     public string Name { get; init; } = "Без имени";
     
+    [StringLength(2048, MinimumLength = 5)] 
     public string? Description { get; init; } = "";
     public Guid? MsId { get; init; }
     
@@ -18,6 +19,7 @@ public class ProductEntity
     public string? Article { get; init; }
     public int Quantity { get; init; }
     
+    [StringLength(150, MinimumLength = 5)]
     public string? CategoryId { get; init; }
     public Category Category { get; init; } = null!;
     

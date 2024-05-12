@@ -21,6 +21,7 @@ public class Category
     [StringLength(150, MinimumLength = 5)]
     public string? MsId { get; init; }
     
+    [StringLength(150, MinimumLength = 5)]
     public string? ParentCategoryId { get; init; }
     public Category? ParentCategory { get; init; }
 

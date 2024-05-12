@@ -29,7 +29,7 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
             CategoryName = category.Name,
             CategoryId = category.Id,
             CategoryItems = mapper.Map<ProductEntityDto[]>(category.Products),
-            CategoryChilds = subcategories
+            CategoryChildren = subcategories
         };
     }
 }

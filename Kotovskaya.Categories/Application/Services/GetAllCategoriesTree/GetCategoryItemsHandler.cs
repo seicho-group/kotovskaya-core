@@ -12,6 +12,7 @@ public class GetAllCategoriesTreeHandler(KotovskayaDbContext dbContext, IMapper 
 {
     public async Task<List<CategoryDtoBranch>> Handle(GetAllCategoriesTreeRequest request, CancellationToken cancellationToken)
     {
+        // todo: redis
         // taking all visible categories without parents - high-layer categories 
         var categoriesData = await dbContext.Categories
             .Where(cat => cat.IsVisible == true)

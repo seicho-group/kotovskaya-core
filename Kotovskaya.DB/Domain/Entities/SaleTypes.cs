@@ -9,10 +9,9 @@ public class SaleTypes
     public Guid Id { get; init; }
     
     [ForeignKey("ProductId")]
-    public ProductEntity Product { get; init; }
+    public required ProductEntity Product { get; init; }
     
     public int Price { get; init; }
     
-    public int? SalePrice { get; init; }
-
+    public int? OldPrice { get; init; }
 }
