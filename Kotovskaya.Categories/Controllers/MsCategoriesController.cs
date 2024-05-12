@@ -1,6 +1,6 @@
 using Kotovskaya.Categories.Application.Services.GetAllCategoriesTree;
 using Kotovskaya.Categories.Application.Services.GetCategoryItems;
-using Kotovskaya.Categories.Domain.DTO;
+using Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

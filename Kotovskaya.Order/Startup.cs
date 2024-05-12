@@ -1,4 +1,5 @@
 using Kotovskaya.Order.Controllers;
+using Kotovskaya.Shared.Application.ServiceConfiguration;
 
 namespace Kotovskaya.Order
 {
@@ -13,10 +14,13 @@ namespace Kotovskaya.Order
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSingleton<OrderController>();
+            new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
+            
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            
+            services.AddControllers();
+            services.AddSingleton<OrderController>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

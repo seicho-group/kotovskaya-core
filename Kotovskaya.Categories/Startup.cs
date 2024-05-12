@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using Kotovskaya.Categories.Controllers;
-using Kotovskaya.Categories.Domain;
-using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.Products.Domain;
+﻿using Kotovskaya.Categories.Controllers;
+using Kotovskaya.Shared.Application.ServiceConfiguration;
 
 namespace Kotovskaya.Categories
 {
@@ -17,20 +14,12 @@ namespace Kotovskaya.Categories
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new CategoriesMapperProfile());
-                mc.AddProfile(new ProductMapperProfile());
-            });
-
-            IMapper mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
             
-            services.AddSingleton<KotovskayaDbContext>();
-            services.AddControllers();
-            services.AddSingleton<MsCategoriesController>();
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            services.AddControllers();
+            services.AddSingleton<MsCategoriesController>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

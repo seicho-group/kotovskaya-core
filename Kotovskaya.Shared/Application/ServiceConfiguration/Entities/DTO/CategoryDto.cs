@@ -1,6 +1,6 @@
 ﻿using Kotovskaya.DB.Domain.Entities;
 
-namespace Kotovskaya.Categories.Domain.DTO;
+namespace Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
 
 public class CategoryDto
 {

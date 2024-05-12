@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Kotovskaya.Categories.Domain.DTO;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
