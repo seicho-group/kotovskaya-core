@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using AutoMapper;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.Shared.Application.ServiceConfiguration.MapperProfiles;
+using Kotovskaya.Shared.Application.MapperProfiles;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kotovskaya.Shared.Application.ServiceConfiguration;

@@ -2,7 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Confiti.MoySklad.Remap.Client;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
+using Kotovskaya.Shared.Application.Entities.DTO;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

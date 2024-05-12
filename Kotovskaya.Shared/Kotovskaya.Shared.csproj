@@ -13,10 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\ServiceConfiguration\Entities\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Kotovskaya.DB\Kotovskaya.DB.csproj" />
     </ItemGroup>
 

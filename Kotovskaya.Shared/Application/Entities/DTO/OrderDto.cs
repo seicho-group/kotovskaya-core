@@ -1,4 +1,4 @@
-﻿namespace Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
+﻿namespace Kotovskaya.Shared.Application.Entities.DTO;
 
 public class OrderDto
 {
