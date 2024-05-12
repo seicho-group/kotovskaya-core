@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Kotovskaya.Categories.Domain.DTO;
 using Kotovskaya.DB.Domain.Entities;
 
-namespace Kotovskaya.Categories.Domain.DTO;
+namespace Kotovskaya.Categories.Domain;
 
 public class CategoriesMapperProfile : Profile
 {

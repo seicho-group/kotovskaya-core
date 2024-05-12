@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Kotovskaya.Categories.Controllers;
-using Kotovskaya.Categories.Domain.DTO;
+using Kotovskaya.Categories.Domain;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Products.Domain;
 
