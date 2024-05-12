@@ -18,7 +18,6 @@ public class ProductEntity
     public string? Article { get; init; }
     public int Quantity { get; init; }
     
-    [ForeignKey("ProductId")]
     public string? CategoryId { get; init; }
     public Category Category { get; init; } = null!;
     

@@ -21,13 +21,12 @@ public class Category
     [StringLength(150, MinimumLength = 5)]
     public string? MsId { get; init; }
     
+    public string? ParentCategoryId { get; init; }
     public Category? ParentCategory { get; init; }
+
+    public List<ProductEntity>? Products { get; init; } = null;
     
     public bool? IsVisible { get; init; }
     
     public CategoryType? Type { get; init; }
-
-    [ForeignKey("ProductId")]
-    [Required]
-    public ICollection<ProductEntity>? Products { get; set; } = new List<ProductEntity>();
 }
