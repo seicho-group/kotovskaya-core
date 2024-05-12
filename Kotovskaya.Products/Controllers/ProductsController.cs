@@ -3,7 +3,7 @@ using Kotovskaya.Products.Application.Services.GetPopularProducts;
 using Kotovskaya.Products.Application.Services.GetProductInfo;
 using Kotovskaya.Products.Application.Services.GetSaleProducts;
 using Kotovskaya.Products.Application.Services.SearchForProducts;
-using Kotovskaya.Products.Domain.Entities;
+using Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Kotovskaya.Categories.Domain.DTO;
 using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
 
-namespace Kotovskaya.Categories.Domain;
+namespace Kotovskaya.Shared.Application.ServiceConfiguration.MapperProfiles;
 
 public class CategoriesMapperProfile : Profile
 {

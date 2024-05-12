@@ -1,4 +1,4 @@
-﻿using Kotovskaya.Categories.Domain.DTO;
+﻿using Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
 using MediatR;
 
 namespace Kotovskaya.Categories.Application.Services.GetAllCategoriesTree;

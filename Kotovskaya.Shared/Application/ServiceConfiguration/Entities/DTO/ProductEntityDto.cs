@@ -1,4 +1,4 @@
-﻿namespace Kotovskaya.Products.Domain.Entities;
+﻿namespace Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
 
 public class ProductEntityDto
 {
