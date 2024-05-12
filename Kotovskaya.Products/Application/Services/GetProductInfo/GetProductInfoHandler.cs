@@ -1,11 +1,18 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Kotovskaya.DB.Domain.Context;
+using Kotovskaya.Products.Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Products.Application.Services.GetProductInfo;
 
-public class GetProductInfoHandler: IRequestHandler<GetProductInfoRequest, GetProductInfoResponse>
+public class GetProductInfoHandler(KotovskayaDbContext dbContext, IMapper mapper): IRequestHandler<GetProductInfoRequest, ProductEntityDto>
 {
-    public Task<GetProductInfoResponse> Handle(GetProductInfoRequest request, CancellationToken cancellationToken)
+    public async Task<ProductEntityDto?> Handle(GetProductInfoRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await dbContext.Products
+            .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(pr => pr.Id == request.ProductId);
     }
 }
