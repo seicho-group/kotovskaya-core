@@ -1,4 +1,4 @@
-﻿namespace Kotovskaya.Categories.Domain.DTO;
+﻿namespace Kotovskaya.Products.Domain.Entities;
 
 public class ProductEntityDto
 {

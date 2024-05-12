@@ -12,9 +12,6 @@ public class CategoriesMapperProfile : Profile
         
         CreateMap<Category, CategoryDtoBranch>()
             .ReverseMap();
-
-        CreateMap<ProductEntity, ProductEntityDto>()
-            .ReverseMap();
     }
 }
 

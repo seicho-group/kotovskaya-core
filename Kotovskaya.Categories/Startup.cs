@@ -2,6 +2,7 @@
 using Kotovskaya.Categories.Controllers;
 using Kotovskaya.Categories.Domain.DTO;
 using Kotovskaya.DB.Domain.Context;
+using Kotovskaya.Products.Domain;
 
 namespace Kotovskaya.Categories
 {
@@ -19,6 +20,7 @@ namespace Kotovskaya.Categories
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new CategoriesMapperProfile());
+                mc.AddProfile(new ProductMapperProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

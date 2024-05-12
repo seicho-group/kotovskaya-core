@@ -2,6 +2,7 @@
 using Kotovskaya.Products.Application.Services.GetPopularProducts;
 using Kotovskaya.Products.Application.Services.GetProductInfo;
 using Kotovskaya.Products.Application.Services.GetSaleProducts;
+using Kotovskaya.Products.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,16 +25,16 @@ namespace Kotovskaya.Products.Controllers
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
 
         [HttpPost, Route("get_new_products")]
-        public async Task<ActionResult<GetNewProductsResponse>> GetNewProducts([FromBody] GetNewProductsRequest request,
+        public async Task<ActionResult<List<ProductEntityDto>>> GetNewProducts([FromBody] GetNewProductsRequest request,
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
         
         
         [HttpPost, Route("get_popular_products")]
-        public async Task<ActionResult<GetPopularProductsResponse>> GetPopularProducts([FromBody] GetPopularProductsRequest request,
+        public async Task<ActionResult<List<ProductEntityDto>>> GetPopularProducts([FromBody] GetPopularProductsRequest request,
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
         
         [HttpPost, Route("get_sale_products")]
-        public async Task<ActionResult<GetSaleProductsResponse>> GetSaleProducts([FromBody] GetSaleProductsRequest request,
+        public async Task<ActionResult<List<ProductEntityDto>>> GetSaleProducts([FromBody] GetSaleProductsRequest request,
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
     }
 }

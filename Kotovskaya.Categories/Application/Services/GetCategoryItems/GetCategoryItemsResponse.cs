@@ -1,4 +1,5 @@
 ﻿using Kotovskaya.Categories.Domain.DTO;
+using Kotovskaya.Products.Domain.Entities;
 
 namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
 

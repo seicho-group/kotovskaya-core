@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using Kotovskaya.Products.Domain.Entities;
+using MediatR;
 
 namespace Kotovskaya.Products.Application.Services.GetSaleProducts;
 
-public class GetSaleProductsHandler: IRequestHandler<GetSaleProductsRequest, GetSaleProductsResponse>
+public class GetSaleProductsHandler: IRequestHandler<GetSaleProductsRequest, List<ProductEntityDto>>
 {
-    public Task<GetSaleProductsResponse> Handle(GetSaleProductsRequest request, CancellationToken cancellationToken)
+    public Task<List<ProductEntityDto>> Handle(GetSaleProductsRequest request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
