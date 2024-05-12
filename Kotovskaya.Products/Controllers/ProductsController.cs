@@ -2,6 +2,7 @@
 using Kotovskaya.Products.Application.Services.GetPopularProducts;
 using Kotovskaya.Products.Application.Services.GetProductInfo;
 using Kotovskaya.Products.Application.Services.GetSaleProducts;
+using Kotovskaya.Products.Application.Services.SearchForProducts;
 using Kotovskaya.Products.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,10 @@ namespace Kotovskaya.Products.Controllers
 
         [HttpPost, Route("get_product_info")]
         public async Task<ActionResult<ProductEntityDto>> GetProductInfo([FromBody] GetProductInfoRequest request,
+            CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
+        
+        [HttpPost, Route("search_for_products")]
+        public async Task<ActionResult<ProductEntityDto>> SearchForProducts([FromBody] SearchForProductsRequest request,
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
 
         [HttpPost, Route("get_new_products")]

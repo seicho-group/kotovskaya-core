@@ -13,6 +13,6 @@ public class GetProductInfoHandler(KotovskayaDbContext dbContext, IMapper mapper
     {
         return await dbContext.Products
             .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(pr => pr.Id == request.ProductId);
+            .FirstOrDefaultAsync(pr => pr.Id == request.ProductId, cancellationToken: cancellationToken);
     }
 }
