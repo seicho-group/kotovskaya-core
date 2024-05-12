@@ -21,7 +21,7 @@ namespace Kotovskaya.Products.Controllers
         }
 
         [HttpPost, Route("get_product_info")]
-        public async Task<ActionResult<GetProductInfoResponse>> GetProductInfo([FromBody] GetProductInfoRequest request,
+        public async Task<ActionResult<ProductEntityDto>> GetProductInfo([FromBody] GetProductInfoRequest request,
             CancellationToken cancellationToken) => Ok( await _mediator.Send(request, cancellationToken));
 
         [HttpPost, Route("get_new_products")]
