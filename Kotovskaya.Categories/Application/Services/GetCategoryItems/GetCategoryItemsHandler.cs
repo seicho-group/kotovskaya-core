@@ -13,28 +13,22 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
     public async Task<GetCategoryItemsResponse> Handle(GetCategoryItemsRequest request, CancellationToken cancellationToken)
     {
         var category = await dbContext.Categories
+            .Include(category => category.Products)
             .FirstOrDefaultAsync(cat => cat.Id == request.CategoryId, cancellationToken);
 
         if (category == null)
             throw new KeyNotFoundException("Категория с данным айди не найдена");
-        
 
         var subcategories = await dbContext.Categories
             .Where(cat => cat.ParentCategory != null && cat.ParentCategory.Id == category.Id)
             .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
 
-        var products = await dbContext.Products
-            .Where(pr => pr.CategoryId == category.Id)
-            .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
-            .ToArrayAsync(cancellationToken);
-
-        
         return new GetCategoryItemsResponse()
         {
             CategoryName = category.Name,
             CategoryId = category.Id,
-            CategoryItems = products,
+            CategoryItems = mapper.Map<ProductEntityDto[]>(category.Products),
             CategoryChilds = subcategories
         };
     }
