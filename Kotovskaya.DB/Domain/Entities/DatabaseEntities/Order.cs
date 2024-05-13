@@ -10,9 +10,9 @@ public class Order
     [StringLength(150, MinimumLength = 5)] 
     public required string MoySkladNumber { get; init; }
 
-    public List<OrderPosition> OrderPositions { get; init; } = new List<OrderPosition>();
+    public ICollection<OrderPosition> OrderPositions { get; init; } = new List<OrderPosition>();
 
-    [StringLength(150, MinimumLength = 5)] 
+    [StringLength(64, MinimumLength = 5)]
     public required string AuthorName { get; set; }
     
     [StringLength(10)] 
@@ -23,7 +23,7 @@ public class Order
 
     public bool HasAuthorDiscount { get; init; } = false;
 
-    [StringLength(256, MinimumLength = 0)] 
+    [StringLength(512, MinimumLength = 0)]
     public string? Comment { get; set; }
 
     public DeliveryWay DeliveryWay { get; init; } = DeliveryWay.Self;
