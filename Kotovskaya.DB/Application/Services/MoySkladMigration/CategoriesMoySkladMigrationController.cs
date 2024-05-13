@@ -2,7 +2,7 @@
 using Confiti.MoySklad.Remap.Entities;
 using Kotovskaya.DB.Application.Services.Interfaces;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 namespace Kotovskaya.DB.Application.Services.MoySkladMigration;
 

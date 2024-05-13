@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Kotovskaya.DB.Domain.Entities;
-using Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
+using Kotovskaya.Shared.Application.Entities.DTO;
 
-namespace Kotovskaya.Shared.Application.ServiceConfiguration.MapperProfiles;
+namespace Kotovskaya.Shared.Application.MapperProfiles;
 
 public class ProductMapperProfile : Profile
 {

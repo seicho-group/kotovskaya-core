@@ -1,11 +1,12 @@
 ﻿using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
-namespace Kotovskaya.Shared.Application.ServiceConfiguration.Entities.DTO;
+namespace Kotovskaya.Shared.Application.Entities.DTO;
 
 public class CategoryDto
 {
-    public string Name { get; set; } 
-    public string Id { get; set; }
+    public required string Name { get; set; } 
+    public required string Id { get; set; }
     public CategoryType Type { get; set; }
 }
 

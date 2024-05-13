@@ -4,6 +4,7 @@ using Confiti.MoySklad.Remap.Entities;
 using Kotovskaya.DB.Application.Services.Interfaces;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.DB.Application.Services.MoySkladMigration;
@@ -18,17 +19,20 @@ public class ProductsMoySkladMigrationController: IMigrationController<MoySkladA
         {
             var assortment = await GetAllAssortmentByFolder(api, category);
             var products = assortment.Select(product =>
-                new ProductEntity()
+            {
+                var desc = product.Product.Description ?? "";
+                return new ProductEntity()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Category = category,
                     CategoryId = category.Id,
                     MsId = product.Id,
                     Name = product.Name,
-                    Description = product.Product.Description,
+                    Description = desc.Substring(0, desc.Length > 2040 ? 2040 : desc.Length),
                     Quantity = (int)(product.Quantity ?? 0),
                     Article = null,
-                });
+                };
+            });
             dbContext.Products.AddRange(products.ToArray());
         }
 
