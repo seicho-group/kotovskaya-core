@@ -1,4 +1,5 @@
 ﻿using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 namespace Kotovskaya.Shared.Application.Entities.DTO;
 

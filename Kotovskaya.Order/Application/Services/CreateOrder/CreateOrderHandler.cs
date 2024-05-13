@@ -1,6 +1,8 @@
-using AutoMapper;
+using Confiti.MoySklad.Remap.Client;
+using Confiti.MoySklad.Remap.Entities;
+using Confiti.MoySklad.Remap.Models;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,31 +13,79 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 {
     public async Task<string> Handle(CreateOrderRequest request, CancellationToken cancellationToken)
     {
-        var orderDbEntity = new DB.Domain.Entities.Order()
+        var msId = await SaveOrderOnMs(request, cancellationToken);
+
+        if (msId == null && msId?.Payload.Id == null)
+            throw new ApiException(500, "Couldn't create order in MS for some reason");
+
+
+        // todo: отправить в телегу сообщение
+        
+        var orderDbEntity = new DB.Domain.Entities.DatabaseEntities.Order()
         {
-            MoySkladNumber = "123",
+            MoySkladNumber = msId.Payload.Name,
             AuthorName = request.AuthorName,
             AuthorEmail = request.AuthorMail,
             AuthorPhone = request.AuthorPhone
         };
-        var product = await dbContext.Products
-            .FirstOrDefaultAsync(pr => pr.Id == "a75b392b-7373-404c-9f8e-5c2a3c2e1459", cancellationToken);
-        if (product != null)
+
+        foreach (var position in request.Positions)
         {
-            var orderPosition = new OrderPosition()
+            var product = await dbContext.Products
+                .Include(productEntity => productEntity.SaleTypes)
+                .FirstOrDefaultAsync(pr => pr.Id == position.ProductId.ToString(), cancellationToken);
+
+            // Shouldn't go here
+            if (product == null)
+                throw new ApiException(404, $"Product: {product?.Id} not found, but MS order created");
+
+            if (msId.Payload.Id != null && product.MsId != null)
             {
-                OrderId = orderDbEntity.Id,
-                Order = orderDbEntity,
-                Product = product,
-                ProductId = product.Id
-            };
-            await dbContext.AddAsync(orderPosition, cancellationToken);
+                await msContext.CreateOrderPositionByOrderId(msId.Payload.Id.Value, product.MsId.Value, position.Quantity,
+                    product.SaleTypes?.Price ?? 0);
+            }
+
+            await SaveOrderPosition(orderDbEntity, product, cancellationToken);
         }
-        
 
         await dbContext.AddAsync(orderDbEntity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken); 
         
         return orderDbEntity.MoySkladNumber;
+    }
+
+    private async Task SaveOrderPosition(DB.Domain.Entities.DatabaseEntities.Order parentOrder, ProductEntity product, CancellationToken cancellationToken)
+    {
+        var orderPosition = new OrderPosition()
+        {
+            OrderId = parentOrder.Id,
+            Order = parentOrder,
+            Product = product,
+            ProductId = product.Id
+        };
+        await dbContext.AddAsync(orderPosition, cancellationToken);
+    }
+
+    private async Task<ApiResponse<CustomerOrder>?> SaveOrderOnMs(CreateOrderRequest request, CancellationToken cancellationToken)
+    {
+        var organizationId = Environment.GetEnvironmentVariable("MS_ORG_ID");
+        if (organizationId == null)
+            throw new ApiException(500, "No organization id, call developers");
+
+        var organization = await msContext.Organization.GetAsync(Guid.Parse(organizationId));
+
+        var counterAgentId = Environment.GetEnvironmentVariable("MS_COUNTERAGENT_ID");
+        if (counterAgentId == null)
+            throw new ApiException(500, "No counteragent id, call developers");
+
+        var agent = await msContext.Counterparty.GetAsync(Guid.Parse(counterAgentId));
+
+        var moySkladRequest = new CustomerOrder()
+        {
+            Organization = organization.Payload,
+            Agent = agent.Payload,
+        };
+
+        return await msContext.CustomerOrder.CreateAsync(moySkladRequest);
     }
 }

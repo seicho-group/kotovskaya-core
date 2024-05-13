@@ -1,4 +1,4 @@
-﻿namespace Kotovskaya.DB.Domain.Entities;
+﻿namespace Kotovskaya.DB.Domain.Entities.Enum;
 
 public enum DeliveryWay
 {

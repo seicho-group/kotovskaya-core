@@ -1,4 +1,5 @@
-﻿using Kotovskaya.DB.Domain.Entities;
+﻿using DotNetEnv;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.DB.Domain.Context;
@@ -17,9 +18,13 @@ public class KotovskayaDbContext : DbContext
 
     public KotovskayaDbContext()
     {
-        DotNetEnv.Env.TraversePath().Load();
+        Env.TraversePath().Load();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql($"Host={Environment.GetEnvironmentVariable("PG_HOST")};Database={Environment.GetEnvironmentVariable("PG_DB")};Username=root;Password={Environment.GetEnvironmentVariable("PG_PASS")}");
+        => optionsBuilder.UseNpgsql($"" +
+                                    $"Host={Environment.GetEnvironmentVariable("PG_HOST")};" +
+                                    $"Database={Environment.GetEnvironmentVariable("PG_DB")};" +
+                                    $"Username=root;" +
+                                    $"Password={Environment.GetEnvironmentVariable("PG_PASS")}");
 }

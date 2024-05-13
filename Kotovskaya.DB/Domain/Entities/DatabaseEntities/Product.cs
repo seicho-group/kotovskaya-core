@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Kotovskaya.DB.Domain.Entities;
+namespace Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 public class ProductEntity
 {

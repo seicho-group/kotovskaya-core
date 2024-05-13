@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kotovskaya.DB.Domain.Entities.Enum;
 
-namespace Kotovskaya.DB.Domain.Entities;
+namespace Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 public class Order
 {

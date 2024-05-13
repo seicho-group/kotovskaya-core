@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Kotovskaya.DB.Domain.Entities;
+namespace Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 public class OrderPosition
 {
