@@ -69,7 +69,7 @@ jobs:
           tags: seichocorp/kotovskaya-core-products:latest          
   deploy:
     runs-on: ubuntu-latest
-    needs: build_and_push_to_docker_hub
+    needs: [build_and_push_categories_to_docker_hub, build_and_push_orders_to_docker_hub, build_and_push_products_to_docker_hub]
     environment: env
     steps:
       - name: executing remote ssh commands to deploy
