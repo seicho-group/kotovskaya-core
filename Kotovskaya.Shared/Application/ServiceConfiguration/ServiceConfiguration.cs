@@ -10,6 +10,8 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
 {
     public IServiceCollection Configure()
     {
+        DotNetEnv.Env.TraversePath().Load();
+
         var mapperConfig = new MapperConfiguration(mc =>
         {
             mc.AddProfile(new ProductMapperProfile());

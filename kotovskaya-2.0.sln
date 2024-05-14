@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.Products", "Koto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.Shared", "Kotovskaya.Shared\Kotovskaya.Shared.csproj", "{8FFD6EBF-80ED-43D1-ADCC-58BF8C56AEDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.TelegramApi", "Kotovskaya.TelegramApi\Kotovskaya.TelegramApi.csproj", "{8894EB29-DF7C-44CD-AF24-FFE2E371ECAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{8FFD6EBF-80ED-43D1-ADCC-58BF8C56AEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FFD6EBF-80ED-43D1-ADCC-58BF8C56AEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FFD6EBF-80ED-43D1-ADCC-58BF8C56AEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8894EB29-DF7C-44CD-AF24-FFE2E371ECAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8894EB29-DF7C-44CD-AF24-FFE2E371ECAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8894EB29-DF7C-44CD-AF24-FFE2E371ECAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8894EB29-DF7C-44CD-AF24-FFE2E371ECAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

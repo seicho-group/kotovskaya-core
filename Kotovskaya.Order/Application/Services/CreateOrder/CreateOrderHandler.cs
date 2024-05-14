@@ -3,12 +3,13 @@ using Confiti.MoySklad.Remap.Entities;
 using Confiti.MoySklad.Remap.Models;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
+using Kotovskaya.TelegramApi.KotovskayaBotController;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Order.Application.Services.CreateOrder;
 
-public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsContext msContext) 
+public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsContext msContext)
     : IRequestHandler<CreateOrderRequest, string>
 {
     public async Task<string> Handle(CreateOrderRequest request, CancellationToken cancellationToken)
@@ -17,9 +18,6 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 
         if (msId == null && msId?.Payload.Id == null)
             throw new ApiException(500, "Couldn't create order in MS for some reason");
-
-
-        // todo: отправить в телегу сообщение
         
         var orderDbEntity = new DB.Domain.Entities.DatabaseEntities.Order()
         {
@@ -47,6 +45,12 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 
             await SaveOrderPosition(orderDbEntity, product, cancellationToken);
         }
+
+        await new KotovskayaBotController(Environment.GetEnvironmentVariable("TG_TOKEN")!)
+            .SendMessageToChat($"Заказ создан, номер заказа: {msId.Payload.Name} \n \n" +
+                               $"Ссылка: https://online.moysklad.ru/app/#customerorder/edit?id={msId.Payload.Id};\n \n" +
+                               $"ID в бд: {msId.Payload.Id}\n \n" +
+                               $"Позиции: \n {string.Join("\n", request.Positions.Select(pos => $"* {pos.ProductId} : {pos.Quantity}"))}");
 
         await dbContext.AddAsync(orderDbEntity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken); 
