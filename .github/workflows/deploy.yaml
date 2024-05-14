@@ -9,11 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: env
     steps:
-      - name: install ssh keys
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-      - name: copy docker compose config
-        run: scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:docker-compose.yaml
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
