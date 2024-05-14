@@ -1,13 +1,12 @@
 ﻿services:
   kotovskaya.order:
     image: kotovskaya.order
-    env_file:
-      - path: ./.env
-        required: true
     ports:
       - "8003:8003"
     environment:
       - ASPNETCORE_HTTP_PORTS=8003
+      - name: env
+        url: https://github.com
     build:
       context: .
       dockerfile: Kotovskaya.Order/Dockerfile
@@ -16,8 +15,8 @@
     image: kotovskaya.products
     environment:
       - ASPNETCORE_HTTP_PORTS=8004
-    env_file:
-      - ./.env
+      - name: env
+        url: https://github.com
     ports:
       - "8004:8004"
     build:
@@ -28,8 +27,8 @@
     image: kotovskaya.categories
     environment:
       - ASPNETCORE_HTTP_PORTS=8001
-    env_file:
-      - ./.env
+      - name: env
+        url: https://github.com
     ports:
       - "8001:8001"
     build:
