@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: env
     steps:
+      - name: install ssh keys
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      - name: copy docker compose config
+        run: scp docker-compose.yaml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:docker-compose.yaml
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
@@ -16,17 +21,5 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo docker stop kotovskaya-core-categories
-            sudo docker rm -f kotovskaya-core-categories
-            sudo docker pull seichocorp/kotovskaya-core-categories
-            sudo docker run --name kotovskaya-core-categories -p 8001:8001 -d seichocorp/kotovskaya-core-categories
-
-            sudo docker stop kotovskaya-core-orders
-            sudo docker rm -f kotovskaya-core-orders
-            sudo docker pull seichocorp/kotovskaya-core-orders
-            sudo docker run --name kotovskaya-core-orders -p 8003:8003 -d seichocorp/kotovskaya-core-orders
-            
-            sudo docker stop kotovskaya-core-products
-            sudo docker rm -f kotovskaya-core-products
-            sudo docker pull seichocorp/kotovskaya-core-products
-            sudo docker run --name kotovskaya-core-products -p 8004:8004 -d seichocorp/kotovskaya-core-products
+            sudo docker-compose pull
+            sudo docker-compose up -d
