@@ -10,7 +10,7 @@ RUN echo ${PWD} && ls -lR
 COPY ["../Kotovskaya.Order/Kotovskaya.Order.csproj", "Kotovskaya.Order/"]
 COPY ["../Kotovskaya.DB/Kotovskaya.DB.csproj", "Kotovskaya.DB/"]
 COPY ["../Kotovskaya.Shared/Kotovskaya.Shared.csproj", "Kotovskaya.Shared/"]
-COPY ["../Kotovskaya.TelegramApi/Kotovskaya.TelegramApi.csproj", "Kotovskaya.TelegramApi/"]
+COPY ["../../Kotovskaya.TelegramApi/Kotovskaya.TelegramApi.csproj", "Kotovskaya.TelegramApi/"]
 RUN dotnet restore "Kotovskaya.Order/Kotovskaya.Order.csproj"
 COPY . .
 WORKDIR "/src/Kotovskaya.Order"
