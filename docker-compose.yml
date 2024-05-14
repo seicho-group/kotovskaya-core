@@ -1,0 +1,30 @@
+﻿services:
+  kotovskaya.order:
+    image: kotovskaya.order
+    ports:
+      - "8003:8003"
+    environment:
+      - ASPNETCORE_HTTP_PORTS=8003
+    build:
+      context: .
+      dockerfile: Kotovskaya.Order/Dockerfile
+
+  kotovskaya.products:
+    image: kotovskaya.products
+    environment:
+      - ASPNETCORE_HTTP_PORTS=8004
+    ports:
+      - "8004:8004"
+    build:
+      context: .
+      dockerfile: Kotovskaya.Products/Dockerfile
+
+  kotovskaya.categories:
+    image: kotovskaya.categories
+    environment:
+      - ASPNETCORE_HTTP_PORTS=8001
+    ports:
+      - "8001:8001"
+    build:
+      context: .
+      dockerfile: Kotovskaya.Categories/Dockerfile

@@ -1,0 +1,68 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build_and_push_to_docker_hub:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push Orders to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ./Kotovskaya.Order/
+          tags: seichocorp/kotovskaya-core-orders:latest
+
+        - name: Push Categories to Docker Hub
+          uses: docker/build-push-action@v2
+          with:
+            push: true
+            context: ./Kotovskaya.Categories/
+            tags: seichocorp/kotovskaya-core-categories:latest
+
+        - name: Push Products to Docker Hub
+          uses: docker/build-push-action@v2
+          with:
+            push: true
+            context: ./Kotovskaya.Products/
+            tags: seichocorp/kotovskaya-core-products:latest          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_and_push_to_docker_hub
+    environment: 
+      - name: env
+        url: https://github.com
+    steps:
+      - name: executing remote ssh commands to deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker stop kotovskaya-core-categories
+            sudo docker rm -f kotovskaya-core-categories
+            sudo docker pull seichocorp/kotovskaya-core-categories
+            sudo docker run --name kotovskaya-core-categories -p 8001:8001 -d seichocorp/kotovskaya-core-categories
+
+            sudo docker stop kotovskaya-core-orders
+            sudo docker rm -f kotovskaya-core-orders
+            sudo docker pull seichocorp/kotovskaya-core-orders
+            sudo docker run --name kotovskaya-core-orders -p 8003:8003 -d seichocorp/kotovskaya-core-orders
+            
+            sudo docker stop kotovskaya-core-products
+            sudo docker rm -f kotovskaya-core-products
+            sudo docker pull seichocorp/kotovskaya-core-products
+            sudo docker run --name kotovskaya-core-products -p 8004:8004 -d seichocorp/kotovskaya-core-products
