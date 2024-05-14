@@ -5,8 +5,8 @@ on:
     branches: [ master, feat/kot-21-ci-cd-initial ]
 
 jobs:
-  build_and_push_to_docker_hub:
-    name: Push Docker image to Docker Hub
+  build_and_push_categories_to_docker_hub:
+    name: Push Categories Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -26,12 +26,40 @@ jobs:
           context: ./Kotovskaya.Categories/
           tags: seichocorp/kotovskaya-core-categories:latest
 
+  build_and_push_orders_to_docker_hub:
+    name: Push Orders Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Push Orders to Docker Hub
         uses: docker/build-push-action@v2
         with:
           push: true
           context: ./Kotovskaya.Order/
           tags: seichocorp/kotovskaya-core-orders:latest
+
+  build_and_push_products_to_docker_hub:
+    name: Push Products Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Products to Docker Hub
         uses: docker/build-push-action@v2
