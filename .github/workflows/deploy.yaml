@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, feat/kot-21-ci-cd-initial ]
 
 jobs:
   build_and_push_to_docker_hub:
