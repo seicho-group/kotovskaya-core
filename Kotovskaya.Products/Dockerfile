@@ -5,7 +5,7 @@ EXPOSE 8004
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR ../
+WORKDIR ./
 COPY ["Kotovskaya.Products/Kotovskaya.Products.csproj", "Kotovskaya.Products/"]
 RUN dotnet restore "Kotovskaya.Products/Kotovskaya.Products.csproj"
 COPY . .
