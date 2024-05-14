@@ -5,7 +5,7 @@ EXPOSE 8003
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR ../
+WORKDIR ./
 COPY ["Kotovskaya.Order/Kotovskaya.Order.csproj", "Kotovskaya.Order/"]
 COPY ["Kotovskaya.DB/Kotovskaya.DB.csproj", "Kotovskaya.DB/"]
 COPY ["Kotovskaya.Shared/Kotovskaya.Shared.csproj", "Kotovskaya.Shared/"]
