@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Kotovskaya.DB\Kotovskaya.DB.csproj" />
+      <ProjectReference Include="..\Kotovskaya.TelegramApi\Kotovskaya.TelegramApi.csproj" />
     </ItemGroup>
 
 </Project>
