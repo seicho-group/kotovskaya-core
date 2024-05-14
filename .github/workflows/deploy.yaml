@@ -15,11 +15,13 @@ jobs:
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.HOST }} > ~/.ssh/known_hosts
-          - name: create docker compose config
-            run: |
-              cat docker-compose.yml | envsubst > docker-compose-secret.yml
-          - name: copy docker compose config
-            run: scp docker-compose-secret.yml ${{ secrets.USER }}@${{ secrets.HOST }}:docker-compose.yml
+      - name: create docker compose config
+        uses: actions/checkout@v4
+        run: |
+          cat docker-compose.yml | envsubst > docker-compose-secret.yml
+      - name: copy docker compose config
+        uses: actions/checkout@v4
+        run: scp docker-compose-secret.yml ${{ secrets.USER }}@${{ secrets.HOST }}:docker-compose.yml
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
