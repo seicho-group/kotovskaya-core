@@ -12,12 +12,12 @@ COPY ["Kotovskaya.Shared/Kotovskaya.Shared.csproj", "Kotovskaya.Shared/"]
 COPY ["Kotovskaya.TelegramApi/Kotovskaya.TelegramApi.csproj", "Kotovskaya.TelegramApi/"]
 RUN dotnet restore "Kotovskaya.Order/Kotovskaya.Order.csproj"
 COPY . .
-WORKDIR "./Kotovskaya.Order"
+WORKDIR "/src/Kotovskaya.Order"
 RUN dotnet build "Kotovskaya.Order.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "Kotovskaya.Order.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=true
+RUN dotnet publish "Kotovskaya.Order.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
