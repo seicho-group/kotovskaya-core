@@ -2,11 +2,15 @@
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8004
+ENV ASPNETCORE_HTTP_PORTS 8004
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR ./
+WORKDIR /src
 COPY ["Kotovskaya.Products/Kotovskaya.Products.csproj", "Kotovskaya.Products/"]
+COPY ["Kotovskaya.Shared/Kotovskaya.Shared.csproj", "Kotovskaya.Shared/"]
+COPY ["Kotovskaya.DB/Kotovskaya.DB.csproj", "Kotovskaya.DB/"]
+COPY ["Kotovskaya.TelegramApi/Kotovskaya.TelegramApi.csproj", "Kotovskaya.TelegramApi/"]
 RUN dotnet restore "Kotovskaya.Products/Kotovskaya.Products.csproj"
 COPY . .
 WORKDIR "/src/Kotovskaya.Products"

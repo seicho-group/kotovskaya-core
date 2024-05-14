@@ -15,14 +15,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+      <ProjectReference Include="..\Kotovskaya.DB\Kotovskaya.DB.csproj" />
+      <ProjectReference Include="..\Kotovskaya.Shared\Kotovskaya.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Kotovskaya.DB\Kotovskaya.DB.csproj" />
-      <ProjectReference Include="..\Kotovskaya.Shared\Kotovskaya.Shared.csproj" />
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
