@@ -1,16 +1,16 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8003
+EXPOSE 8080
+EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-RUN echo ${PWD} && ls -lR
-COPY ["../Kotovskaya.Order/Kotovskaya.Order.csproj", "Kotovskaya.Order/"]
-COPY ["../Kotovskaya.DB/Kotovskaya.DB.csproj", "Kotovskaya.DB/"]
-COPY ["../Kotovskaya.Shared/Kotovskaya.Shared.csproj", "Kotovskaya.Shared/"]
-COPY ["../../Kotovskaya.TelegramApi/Kotovskaya.TelegramApi.csproj", "Kotovskaya.TelegramApi/"]
+COPY ["Kotovskaya.Order/Kotovskaya.Order.csproj", "Kotovskaya.Order/"]
+COPY ["Kotovskaya.DB/Kotovskaya.DB.csproj", "Kotovskaya.DB/"]
+COPY ["Kotovskaya.Shared/Kotovskaya.Shared.csproj", "Kotovskaya.Shared/"]
+COPY ["Kotovskaya.TelegramApi/Kotovskaya.TelegramApi.csproj", "Kotovskaya.TelegramApi/"]
 RUN dotnet restore "Kotovskaya.Order/Kotovskaya.Order.csproj"
 COPY . .
 WORKDIR "/src/Kotovskaya.Order"
