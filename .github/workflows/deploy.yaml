@@ -25,19 +25,19 @@ jobs:
           context: ./Kotovskaya.Order/
           tags: seichocorp/kotovskaya-core-orders:latest
 
-        - name: Push Categories to Docker Hub
-          uses: docker/build-push-action@v2
-          with:
-            push: true
-            context: ./Kotovskaya.Categories/
-            tags: seichocorp/kotovskaya-core-categories:latest
+      - name: Push Categories to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ./Kotovskaya.Categories/
+          tags: seichocorp/kotovskaya-core-categories:latest
 
-        - name: Push Products to Docker Hub
-          uses: docker/build-push-action@v2
-          with:
-            push: true
-            context: ./Kotovskaya.Products/
-            tags: seichocorp/kotovskaya-core-products:latest          
+      - name: Push Products to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ./Kotovskaya.Products/
+          tags: seichocorp/kotovskaya-core-products:latest          
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
