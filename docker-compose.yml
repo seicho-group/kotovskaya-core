@@ -2,8 +2,7 @@
   kotovskaya.order:
     image: kotovskaya.order
     env_file:
-      - path: ./.env
-        required: true
+      - .env
     ports:
       - "8003:8003"
     environment:
@@ -17,7 +16,7 @@
     environment:
       - ASPNETCORE_HTTP_PORTS=8004
     env_file:
-      - ./.env
+      - .env
     ports:
       - "8004:8004"
     build:
@@ -29,7 +28,7 @@
     environment:
       - ASPNETCORE_HTTP_PORTS=8001
     env_file:
-      - ./.env
+      - .env
     ports:
       - "8001:8001"
     build:
