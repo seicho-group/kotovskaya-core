@@ -14,8 +14,8 @@ RUN dotnet restore Kotovskaya.Order/Kotovskaya.Order.csproj
 # copy and build app and libraries
 COPY Kotovskaya.Order/ Kotovskaya.Order/
 COPY Kotovskaya.DB/ Kotovskaya.DB/
-COPY Kotovskaya.Shared/ Kotovskaya.Shared/
-COPY Kotovskaya.TelegramApi/ Kotovskaya.TelegramApi/
+COPY ../Kotovskaya.Shared/ Kotovskaya.Shared/
+COPY ../Kotovskaya.TelegramApi/ Kotovskaya.TelegramApi/
 
 FROM build AS publish
 WORKDIR /source/Kotovskaya.Order
