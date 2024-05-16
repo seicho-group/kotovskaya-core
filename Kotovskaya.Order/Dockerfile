@@ -7,7 +7,6 @@ ENV ASPNETCORE_HTTP_PORTS 8003
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-RUN dotnet restore "Kotovskaya.Order/Kotovskaya.Order.csproj"
 COPY ../ .
 RUN dotnet publish -o /app/publish
 
