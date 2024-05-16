@@ -10,6 +10,15 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
 {
     public IServiceCollection Configure()
     {
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: "*",
+                policy  =>
+                {
+                    policy.WithOrigins("http://example.com",
+                        "http://www.contoso.com");
+                });
+        });
         DotNetEnv.Env.TraversePath().Load();
 
         var mapperConfig = new MapperConfiguration(mc =>

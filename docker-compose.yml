@@ -1,30 +1,37 @@
 ﻿services:
   kotovskaya.order:
-    image: seichocorp/kotovskaya-core-orders:latest
+    image: kotovskaya.order
+    env_file:
+      - path: ./.env
+        required: true
     ports:
       - "8003:8003"
-    restart: always
-    env_file:
-      - .env
     environment:
       - ASPNETCORE_HTTP_PORTS=8003
+    build:
+      context: .
+      dockerfile: Kotovskaya.Order/Dockerfile
 
   kotovskaya.products:
-    image: seichocorp/kotovskaya-core-products:latest
+    image: kotovskaya.products
     environment:
       - ASPNETCORE_HTTP_PORTS=8004
+    env_file:
+      - ./.env
     ports:
       - "8004:8004"
-    restart: always
-    env_file:
-      - .env
+    build:
+      context: .
+      dockerfile: Kotovskaya.Products/Dockerfile
 
   kotovskaya.categories:
-    image: seichocorp/kotovskaya-core-categories:latest
+    image: kotovskaya.categories
     environment:
       - ASPNETCORE_HTTP_PORTS=8001
+    env_file:
+      - ./.env
     ports:
       - "8001:8001"
-    restart: always
-    env_file:
-      - .env
+    build:
+      context: .
+      dockerfile: Kotovskaya.Categories/Dockerfile

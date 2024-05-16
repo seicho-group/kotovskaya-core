@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ master, feat/kot-21-ci-cd-initial ]
+    branches: [ master, feat/kot-23-cors-fixes ]
 
 jobs:
   deploy:

@@ -13,7 +13,6 @@ namespace Kotovskaya.Products
             
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-            
             services.AddControllers();
             services.AddSingleton<ProductsController>();
         }
