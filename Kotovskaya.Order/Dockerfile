@@ -8,9 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY . .
-RUN dotnet restore "Kotovskaya.Order/Kotovskaya.Order.csproj"
-COPY . .
-WORKDIR "/src/Kotovskaya.Order"
 RUN dotnet build "Kotovskaya.Order.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
