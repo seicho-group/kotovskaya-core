@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ master, feat/kot-23-cors-fixes ]
+    branches: [ master, feat/kot-35-cors-fixes ]
 
 jobs:
   deploy:
