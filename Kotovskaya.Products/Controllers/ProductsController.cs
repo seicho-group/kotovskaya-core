@@ -41,7 +41,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     [HttpPost]
     [Route("get_popular_products")]
     public async Task<ActionResult<List<ProductEntityDto>>> GetPopularProducts(
-        [FromBody] GetPopularProductsRequest request,
+        [FromRoute] GetPopularProductsRequest request,
         CancellationToken cancellationToken)
     {
         return Ok(await mediator.Send(request, cancellationToken));
@@ -49,7 +49,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
 
     [HttpPost]
     [Route("get_sale_products")]
-    public async Task<ActionResult<List<ProductEntityDto>>> GetSaleProducts([FromBody] GetSaleProductsRequest request,
+    public async Task<ActionResult<List<ProductEntityDto>>> GetSaleProducts([FromRoute] GetSaleProductsRequest request,
         CancellationToken cancellationToken)
     {
         return Ok(await mediator.Send(request, cancellationToken));

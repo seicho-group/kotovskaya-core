@@ -17,8 +17,6 @@ public class Startup(IConfiguration configuration)
     {
         if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-        app.UseHttpsRedirection();
-
         app.UseRouting();
 
         app.UseAuthorization();

@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "mkotovskaya-api.ru",
           "Port": 8003
         }
       ],
@@ -20,7 +20,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "mkotovskaya-api.ru",
           "Port": 8002
         }
       ],
@@ -35,7 +35,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "mkotovskaya-api.ru",
           "Port": 8001
         }
       ],
@@ -50,7 +50,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "mkotovskaya-api.ru",
           "Port": 8004
         }
       ],
@@ -62,6 +62,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:8000"
+    "BaseUrl": "http://localhost:8000"
   }
 }
