@@ -10,7 +10,7 @@ public class CategoriesMapperProfile : Profile
     {
         CreateMap<Category, CategoryDto>()
             .ReverseMap();
-        
+
         CreateMap<Category, CategoryDtoBranch>()
             .ReverseMap();
     }

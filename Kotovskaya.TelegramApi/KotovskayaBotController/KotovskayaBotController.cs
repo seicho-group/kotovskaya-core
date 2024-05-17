@@ -8,4 +8,4 @@ public class KotovskayaBotController(string token) : TelegramBotClient(token)
     {
         await this.SendTextMessageAsync(Environment.GetEnvironmentVariable("TG_CHAT")!, message);
     }
-};
+}

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using AutoMapper;
+using DotNetEnv;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Shared.Application.MapperProfiles;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,14 +13,14 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
     {
         services.AddCors(options =>
         {
-            options.AddPolicy(name: "*",
-                policy  =>
+            options.AddPolicy("*",
+                policy =>
                 {
                     policy.WithOrigins("http://example.com",
                         "http://www.contoso.com");
                 });
         });
-        DotNetEnv.Env.TraversePath().Load();
+        Env.TraversePath().Load();
 
         var mapperConfig = new MapperConfiguration(mc =>
         {
@@ -27,13 +28,12 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
             mc.AddProfile(new CategoriesMapperProfile());
         });
 
-        IMapper mapper = mapperConfig.CreateMapper();
+        var mapper = mapperConfig.CreateMapper();
         services.AddSingleton(mapper);
-            
+
         services.AddSingleton<KotovskayaDbContext>();
         services.AddSingleton<KotovskayaMsContext>();
-        
+
         return services;
     }
-
 }

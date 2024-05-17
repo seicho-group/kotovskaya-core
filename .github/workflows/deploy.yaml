@@ -47,7 +47,7 @@ jobs:
     name: Create compose-file, pull all images and deploy containers
     runs-on: ubuntu-latest
     environment: env
-    needs: [build_and_push_to_docker_hub]
+    needs: [ build_and_push_to_docker_hub ]
     steps:
       - uses: actions/checkout@v4
       - name: install ssh keys

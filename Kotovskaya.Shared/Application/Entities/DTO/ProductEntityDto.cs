@@ -6,4 +6,6 @@ public class ProductEntityDto
     public required string Name { get; init; }
     public string? Description { get; init; }
     public int Quantity { get; init; }
+    public required int SalePrice { get; init; } = 0;
+    public int? OldPrice { get; init; } = null;
 }

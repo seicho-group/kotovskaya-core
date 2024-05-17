@@ -7,14 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="13.0.1" />
-      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.3.24172.9" />
+        <PackageReference Include="AutoMapper" Version="13.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.3.24172.9"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Kotovskaya.DB\Kotovskaya.DB.csproj" />
-      <ProjectReference Include="..\Kotovskaya.TelegramApi\Kotovskaya.TelegramApi.csproj" />
+        <ProjectReference Include="..\Kotovskaya.DB\Kotovskaya.DB.csproj"/>
+        <ProjectReference Include="..\Kotovskaya.TelegramApi\Kotovskaya.TelegramApi.csproj"/>
     </ItemGroup>
 
 </Project>

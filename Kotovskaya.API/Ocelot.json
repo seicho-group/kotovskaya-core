@@ -10,7 +10,10 @@
         }
       ],
       "UpstreamPathTemplate": "/order/{catchAll8003}",
-      "UpstreamHttpMethod": ["GET", "POST"]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/images/{catchAll8002}",
@@ -22,7 +25,10 @@
         }
       ],
       "UpstreamPathTemplate": "/images/{catchAll8002}",
-      "UpstreamHttpMethod": ["GET", "POST"]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/categories/{catchAll8001}",
@@ -34,7 +40,10 @@
         }
       ],
       "UpstreamPathTemplate": "/categories/{catchAll8001}",
-      "UpstreamHttpMethod": ["GET", "POST"]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/products/{catchAll8004}",
@@ -46,7 +55,10 @@
         }
       ],
       "UpstreamPathTemplate": "/products/{catchAll8004}",
-      "UpstreamHttpMethod": ["GET", "POST"]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
     }
   ],
   "GlobalConfiguration": {

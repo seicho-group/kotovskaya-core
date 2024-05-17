@@ -10,7 +10,8 @@ namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
 public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapper)
     : IRequestHandler<GetCategoryItemsRequest, GetCategoryItemsResponse>
 {
-    public async Task<GetCategoryItemsResponse> Handle(GetCategoryItemsRequest request, CancellationToken cancellationToken)
+    public async Task<GetCategoryItemsResponse> Handle(GetCategoryItemsRequest request,
+        CancellationToken cancellationToken)
     {
         var category = await dbContext.Categories
             .Include(category => category.Products)
@@ -24,7 +25,7 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
             .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
 
-        return new GetCategoryItemsResponse()
+        return new GetCategoryItemsResponse
         {
             CategoryName = category.Name,
             CategoryId = category.Id,

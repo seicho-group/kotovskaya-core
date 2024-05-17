@@ -1,7 +1,4 @@
-﻿using System.Net;
-using Confiti.MoySklad.Remap.Entities;
-
-namespace Kotovskaya.DB.Domain.Entities.Requests;
+﻿namespace Kotovskaya.DB.Domain.Entities.Requests;
 
 public class CreateMoySkladOrderPositionRequestAssortment
 {

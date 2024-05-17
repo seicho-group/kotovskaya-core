@@ -6,11 +6,12 @@ using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 namespace Kotovskaya.DB.Application.Services.MoySkladMigration;
 
-public class CategoriesMoySkladMigrationController : IMigrationController<MoySkladApi, KotovskayaDbContext>
+public class CategoriesMoySkladMigrationController : IMigrationController<KotovskayaMsContext, KotovskayaDbContext>
 {
     private MoySkladApi? Api { get; set; }
     private KotovskayaDbContext? KotovskayaDbContext { get; set; }
-    public async Task Migrate(MoySkladApi api, KotovskayaDbContext apiTo)
+
+    public async Task Migrate(KotovskayaMsContext api, KotovskayaDbContext apiTo)
     {
         Api = api;
         KotovskayaDbContext = apiTo;
@@ -27,30 +28,25 @@ public class CategoriesMoySkladMigrationController : IMigrationController<MoySkl
         var childCategories = categories.Where(c => c.PathName.Split("/")[0] == pathName);
 
         if (KotovskayaDbContext != null)
-        {
             childCategories.ToList().ForEach(childCategory =>
             {
                 var existingCategory = KotovskayaDbContext.Categories
                     .FirstOrDefault(cat => cat.Id == childCategory.Id.ToString());
-                
+
                 var newCategoryModel = new Category
                 {
-                    ParentCategory = parentFolder, 
-                    Id = childCategory.Id.ToString() ?? Guid.NewGuid().ToString(), 
+                    ParentCategory = parentFolder,
+                    Id = childCategory.Id.ToString() ?? Guid.NewGuid().ToString(),
                     Name = childCategory.Name,
                     Type = existingCategory?.Type ?? CategoryType.Soapmaking,
                     IsVisible = existingCategory?.IsVisible ?? true,
                     MsId = childCategory.Id.ToString()
                 };
 
-                if (existingCategory != null)
-                {
-                    KotovskayaDbContext.Categories.Remove(existingCategory);    
-                }
+                if (existingCategory != null) KotovskayaDbContext.Categories.Remove(existingCategory);
                 KotovskayaDbContext.Categories.Add(newCategoryModel);
 
                 MigrateCategoriesByPathName(categories, childCategory.Name, newCategoryModel);
             });
-        }
     }
 }
