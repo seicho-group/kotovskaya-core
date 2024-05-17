@@ -1,44 +1,32 @@
-﻿using AutoMapper;
-using Kotovskaya.Categories.Controllers;
-using Kotovskaya.Categories.Domain.DTO;
-using Kotovskaya.DB.Domain.Context;
+﻿using Kotovskaya.Categories.Controllers;
+using Kotovskaya.Shared.Application.ServiceConfiguration;
 
 namespace Kotovskaya.Categories
 {
-    public class Startup
+    public class Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; } = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // automapper
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new CategoriesMapperProfile());
-            });
-
-            IMapper mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
-            
-            // database
-            services.AddSingleton<KotovskayaDbContext>();
-            
+            new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
             // redis
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Environment.GetEnvironmentVariable("PG_HOST");
                 options.InstanceName = "kot-redis";
             });
-            
-            services.AddControllers();
-            services.AddSingleton<MsCategoriesController>();
+          
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+            services.AddCors(options => options.AddPolicy("policy", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()));
+
+            services.AddControllers();
+            services.AddSingleton<MsCategoriesController>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

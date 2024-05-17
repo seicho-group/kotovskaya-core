@@ -1,22 +1,23 @@
 using Kotovskaya.Products.Controllers;
+using Kotovskaya.Shared.Application.ServiceConfiguration;
 
 namespace Kotovskaya.Products
 {
-    public class Startup
+    public class Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; } = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSingleton<ProductsController>();
+            new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
+            services.AddCors(options => options.AddPolicy("policy", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()));
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            services.AddControllers();
+            services.AddSingleton<ProductsController>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

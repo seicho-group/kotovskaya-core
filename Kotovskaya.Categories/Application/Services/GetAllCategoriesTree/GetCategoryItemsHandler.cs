@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Kotovskaya.Categories.Domain.DTO;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.DB.Domain.Entities;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
+using Kotovskaya.Shared.Application.Entities.DTO;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +12,7 @@ public class GetAllCategoriesTreeHandler(KotovskayaDbContext dbContext, IMapper 
 {
     public async Task<List<CategoryDtoBranch>> Handle(GetAllCategoriesTreeRequest request, CancellationToken cancellationToken)
     {
+        // todo: redis
         // taking all visible categories without parents - high-layer categories 
         var categoriesData = await dbContext.Categories
             .Where(cat => cat.IsVisible == true)

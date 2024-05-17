@@ -1,5 +1,5 @@
-using Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Domain.DTO;
+using Kotovskaya.Shared.Application.Entities.DTO;
 
-namespace Kotovskaya.Order.Controllers.Order.Controllers.Categories.Application.Services.GetCategoryItems.Order.Application.Services.GetOrder;
+namespace Kotovskaya.Order.Application.Services.GetOrder;
 
-public record GetOrderResponse(IOrderDTO Order);
+public record GetOrderResponse(OrderDto Order);

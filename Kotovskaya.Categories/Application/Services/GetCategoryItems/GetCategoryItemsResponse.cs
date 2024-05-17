@@ -1,4 +1,4 @@
-﻿using Kotovskaya.Categories.Domain.DTO;
+﻿using Kotovskaya.Shared.Application.Entities.DTO;
 
 namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
 
@@ -10,5 +10,5 @@ public record GetCategoryItemsResponse
     
     public ProductEntityDto[] CategoryItems { get; init; } = null!;
     
-    public CategoryDto[] CategoryChilds { get; init; } = null!;
+    public CategoryDto[] CategoryChildren { get; init; } = null!;
 }
