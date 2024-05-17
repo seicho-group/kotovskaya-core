@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_and_push_to_docker_hub:
-    name: Push Docker image to Docker Hub
+    name: Build and push images to docker hub
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -44,6 +44,7 @@ jobs:
           file: ./Kotovskaya.Products/Dockerfile
           tags: seichocorp/kotovskaya-core-products:latest
   deploy:
+    name: Create compose-file, pull all images and deploy containers
     runs-on: ubuntu-latest
     environment: env
     needs: [build_and_push_to_docker_hub]

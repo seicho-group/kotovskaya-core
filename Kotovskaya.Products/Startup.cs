@@ -10,7 +10,10 @@ namespace Kotovskaya.Products
         public void ConfigureServices(IServiceCollection services)
         {
             new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
-            
+            services.AddCors(options => options.AddPolicy("policy", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()));
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             services.AddControllers();

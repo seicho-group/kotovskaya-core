@@ -13,6 +13,12 @@ namespace Kotovskaya.Categories
             
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+            services.AddCors(options => options.AddPolicy("policy", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()));
+
             services.AddControllers();
             services.AddSingleton<MsCategoriesController>();
         }
