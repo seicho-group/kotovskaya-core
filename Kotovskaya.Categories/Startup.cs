@@ -10,7 +10,13 @@ namespace Kotovskaya.Categories
         public void ConfigureServices(IServiceCollection services)
         {
             new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
-            
+            // redis
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Environment.GetEnvironmentVariable("PG_HOST");
+                options.InstanceName = "kot-redis";
+            });
+          
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
