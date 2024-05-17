@@ -38,6 +38,5 @@
 #      context: .
 #      dockerfile: Kotovskaya.API/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:8000
     restart: always
