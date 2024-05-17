@@ -31,9 +31,13 @@
 
   kotovskaya.api:
     image: seichocorp/kotovskaya-core-api:latest
+#    image: kotovskaya-core-api
     ports:
-      - "8000:8000"
-    restart: always
+      - "80:8000"
+#    build:
+#      context: .
+#      dockerfile: Kotovskaya.API/Dockerfile
     environment:
-      - ASPNETCORE_HTTP_PORTS=8000
-      - ASPNETCORE_HTTPS_PORTS=8000
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:8000
+    restart: always

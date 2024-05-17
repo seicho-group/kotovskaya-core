@@ -62,6 +62,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:8000"
+    "BaseUrl": "http://localhost:8000"
   }
 }
