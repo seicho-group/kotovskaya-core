@@ -24,21 +24,24 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          context: ./Kotovskaya.Order/
+          context: .
+          file: ./Kotovskaya.Order/Dockerfile
           tags: seichocorp/kotovskaya-core-orders:latest
 
       - name: Push Categories to Docker Hub
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./Kotovskaya.Categories/
+          context: .
+          file: ./Kotovskaya.Categories/Dockerfile
           tags: seichocorp/kotovskaya-core-categories:latest
 
       - name: Push Products to Docker Hub
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./Kotovskaya.Products/
+          context: .
+          file: ./Kotovskaya.Products/Dockerfile
           tags: seichocorp/kotovskaya-core-products:latest
   deploy:
     runs-on: ubuntu-latest
