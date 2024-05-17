@@ -1,53 +1,46 @@
 using Kotovskaya.Order.Controllers;
 using Kotovskaya.Shared.Application.ServiceConfiguration;
 
-namespace Kotovskaya.Order
+namespace Kotovskaya.Order;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
+
+        services
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+        services.AddCors(options =>
         {
-            Configuration = configuration;
-        }
+            options.AddPolicy("*", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+        });
+        services.AddControllers();
+        services.AddSingleton<OrderController>();
+    }
 
-        public IConfiguration Configuration { get; }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
-            
-            services
-                .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-            services.AddCors(options =>
-            {
-                options.AddPolicy("*", builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
-            services.AddControllers();
-            services.AddSingleton<OrderController>();
-        }
+        app.UseHttpsRedirection();
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+        app.UseRouting();
 
-            app.UseHttpsRedirection();
+        app.UseCors("*");
 
-            app.UseRouting();
+        app.UseAuthorization();
 
-            app.UseCors("*");
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 }

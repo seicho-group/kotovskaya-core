@@ -13,13 +13,13 @@ public class GetNewProductsHandler(KotovskayaMsContext msContext, KotovskayaDbCo
     public async Task<List<ProductEntityDto>> Handle(GetNewProductsRequest request, CancellationToken cancellationToken)
     {
         var newProductsIds = await msContext.FindProductsIdByMoySkladAttribute(MsAttributes.IsNew, true);
-        
-        var products =  await dbContext.Products
+
+        var products = await dbContext.Products
             .Where(pr => pr.MsId != null && newProductsIds
                 .Contains(pr.MsId.ToString() ?? string.Empty))
             .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
-        
+
         return products;
     }
 }

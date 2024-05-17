@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Products.Application.Services.SearchForProducts;
 
-public class SearchForProductsHandler(KotovskayaDbContext dbContext, IMapper mapper): IRequestHandler<SearchForProductsRequest, List<ProductEntityDto>>
+public class SearchForProductsHandler(KotovskayaDbContext dbContext, IMapper mapper)
+    : IRequestHandler<SearchForProductsRequest, List<ProductEntityDto>>
 {
-    public async Task<List<ProductEntityDto>> Handle(SearchForProductsRequest request, CancellationToken cancellationToken)
+    public async Task<List<ProductEntityDto>> Handle(SearchForProductsRequest request,
+        CancellationToken cancellationToken)
     {
         return await dbContext.Products
             .Where(pr => pr.Name
@@ -20,4 +22,4 @@ public class SearchForProductsHandler(KotovskayaDbContext dbContext, IMapper map
             .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
-}   
+}

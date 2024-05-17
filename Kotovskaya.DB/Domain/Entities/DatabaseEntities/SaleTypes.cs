@@ -5,13 +5,11 @@ namespace Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 public class SaleTypes
 {
-    [Key]
-    public Guid Id { get; init; }
-    
-    [ForeignKey("ProductId")]
-    public required ProductEntity Product { get; init; }
-    
-    public int Price { get; init; }
-    
-    public int? OldPrice { get; init; }
+    [Key] public Guid Id { get; init; }
+
+    [ForeignKey("ProductId")] public required ProductEntity Product { get; init; }
+
+    public int Price { get; set; }
+
+    public int? OldPrice { get; set; }
 }

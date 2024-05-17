@@ -18,8 +18,8 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 
         if (msId == null && msId?.Payload.Id == null)
             throw new ApiException(500, "Couldn't create order in MS for some reason");
-        
-        var orderDbEntity = new DB.Domain.Entities.DatabaseEntities.Order()
+
+        var orderDbEntity = new DB.Domain.Entities.DatabaseEntities.Order
         {
             MoySkladNumber = msId.Payload.Name,
             AuthorName = request.AuthorName,
@@ -38,10 +38,9 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
                 throw new ApiException(404, $"Product: {product?.Id} not found, but MS order created");
 
             if (msId.Payload.Id != null && product.MsId != null)
-            {
-                await msContext.CreateOrderPositionByOrderId(msId.Payload.Id.Value, product.MsId.Value, position.Quantity,
+                await msContext.CreateOrderPositionByOrderId(msId.Payload.Id.Value, product.MsId.Value,
+                    position.Quantity,
                     product.SaleTypes?.Price ?? 0);
-            }
 
             await SaveOrderPosition(orderDbEntity, product, cancellationToken);
         }
@@ -53,14 +52,15 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
                                $"Позиции: \n {string.Join("\n", request.Positions.Select(pos => $"* {pos.ProductId} : {pos.Quantity}"))}");
 
         await dbContext.AddAsync(orderDbEntity, cancellationToken);
-        await dbContext.SaveChangesAsync(cancellationToken); 
-        
+        await dbContext.SaveChangesAsync(cancellationToken);
+
         return orderDbEntity.MoySkladNumber;
     }
 
-    private async Task SaveOrderPosition(DB.Domain.Entities.DatabaseEntities.Order parentOrder, ProductEntity product, CancellationToken cancellationToken)
+    private async Task SaveOrderPosition(DB.Domain.Entities.DatabaseEntities.Order parentOrder, ProductEntity product,
+        CancellationToken cancellationToken)
     {
-        var orderPosition = new OrderPosition()
+        var orderPosition = new OrderPosition
         {
             OrderId = parentOrder.Id,
             Order = parentOrder,
@@ -70,7 +70,8 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
         await dbContext.AddAsync(orderPosition, cancellationToken);
     }
 
-    private async Task<ApiResponse<CustomerOrder>?> SaveOrderOnMs(CreateOrderRequest request, CancellationToken cancellationToken)
+    private async Task<ApiResponse<CustomerOrder>?> SaveOrderOnMs(CreateOrderRequest request,
+        CancellationToken cancellationToken)
     {
         var organizationId = Environment.GetEnvironmentVariable("MS_ORG_ID");
         if (organizationId == null)
@@ -84,10 +85,10 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 
         var agent = await msContext.Counterparty.GetAsync(Guid.Parse(counterAgentId));
 
-        var moySkladRequest = new CustomerOrder()
+        var moySkladRequest = new CustomerOrder
         {
             Organization = organization.Payload,
-            Agent = agent.Payload,
+            Agent = agent.Payload
         };
 
         return await msContext.CustomerOrder.CreateAsync(moySkladRequest);
