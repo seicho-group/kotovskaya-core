@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 COPY . ./
 
-RUN dotnet publish ./Kotovskaya.Order.csproj -c Release -o out --no-self-contained
+RUN dotnet publish ./Kotovskaya.Order/Kotovskaya.Order.csproj -c Release -o out --no-self-contained
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0
 
