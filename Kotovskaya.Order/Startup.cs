@@ -18,10 +18,13 @@ namespace Kotovskaya.Order
             
             services
                 .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-            services.AddCors(options => options.AddPolicy("policy", builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod()));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("*", builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
             services.AddControllers();
             services.AddSingleton<OrderController>();
         }
@@ -36,6 +39,8 @@ namespace Kotovskaya.Order
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("*");
 
             app.UseAuthorization();
 
