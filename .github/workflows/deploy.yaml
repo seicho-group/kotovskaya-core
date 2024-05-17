@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, feat/kot-46-api-gateway-deploy ]
 
 jobs:
   build_and_push_to_docker_hub:
@@ -43,6 +43,14 @@ jobs:
           context: .
           file: ./Kotovskaya.Products/Dockerfile
           tags: seichocorp/kotovskaya-core-products:latest
+
+      - name: Push API to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          file: ./Kotovskaya.API/Dockerfile
+          tags: seichocorp/kotovskaya-core-api:latest
   deploy:
     name: Create compose-file, pull all images and deploy containers
     runs-on: ubuntu-latest

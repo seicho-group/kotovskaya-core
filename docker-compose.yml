@@ -28,3 +28,12 @@
     restart: always
     env_file:
       - .env
+
+  kotovskaya.api:
+    image: seichocorp/kotovskaya-core-api:latest
+    ports:
+      - "8000:8000"
+    restart: always
+    environment:
+      - ASPNETCORE_HTTP_PORTS=8000
+      - ASPNETCORE_HTTPS_PORTS=8000
