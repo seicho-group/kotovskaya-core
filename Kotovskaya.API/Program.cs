@@ -13,8 +13,9 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); }).ConfigureAppConfiguration(
                 (hostingContext, config) =>
                 {
+                    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                     config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                        .AddJsonFile("Ocelot.json", false, true);
+                        .AddJsonFile("Ocelot.prod.json", false, true);
                 });
     }
 }

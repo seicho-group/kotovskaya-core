@@ -1,0 +1,67 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/order/{catchAll8003}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "mkotovskaya-api.ru",
+          "Port": 8003
+        }
+      ],
+      "UpstreamPathTemplate": "/order/{catchAll8003}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/images/{catchAll8002}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "mkotovskaya-api.ru",
+          "Port": 8002
+        }
+      ],
+      "UpstreamPathTemplate": "/images/{catchAll8002}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/categories/{catchAll8001}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "mkotovskaya-api.ru",
+          "Port": 8001
+        }
+      ],
+      "UpstreamPathTemplate": "/categories/{catchAll8001}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/products/{catchAll8004}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "mkotovskaya-api.ru",
+          "Port": 8004
+        }
+      ],
+      "UpstreamPathTemplate": "/products/{catchAll8004}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8000"
+  }
+}
