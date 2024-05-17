@@ -8,4 +8,5 @@ public class ProductEntityDto
     public int Quantity { get; init; }
     public required int SalePrice { get; init; } = 0;
     public int? OldPrice { get; init; } = null;
+    public string? ImageLink { get; init; } = null;
 }

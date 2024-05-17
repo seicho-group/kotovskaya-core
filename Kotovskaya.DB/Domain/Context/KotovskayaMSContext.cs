@@ -40,6 +40,42 @@ public class KotovskayaMsContext : MoySkladApi
 
     /**
      * !! DANGEROUS METHOD !!
+     * get product images
+     */
+    public async Task<Stream?> FetchProductImage(string imageUrl)
+    {
+        try
+        {
+            var productImages = await GetAsyncStream(imageUrl);
+            return productImages;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
+
+    /**
+     * !! DANGEROUS METHOD !!
+     * get product images
+     */
+    public async Task<PagedEntities<Image>?> FetchProductImagesExtended(Guid productId)
+    {
+        try
+        {
+            var productImages = await GetAsyncJson<PagedEntities<Image>?>($"entity/product/{productId}/images");
+            return productImages;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
+
+    /**
+     * !! DANGEROUS METHOD !!
      * get product info
      */
     public async Task<Product?> FetchProductInfoExtended(Guid productId)
@@ -109,5 +145,17 @@ public class KotovskayaMsContext : MoySkladApi
         if (responseJson == null) throw new DataException("Response deserialization fault");
 
         return responseJson;
+    }
+
+    /**
+ * get request to ms with credentials
+ */
+    private async Task<Stream> GetAsyncStream(string url)
+    {
+        var responseMessage = await Client.GetAsync(url);
+        // decomposing gzip format to json string
+        var response = await responseMessage.Content.ReadAsStreamAsync();
+
+        return response;
     }
 }

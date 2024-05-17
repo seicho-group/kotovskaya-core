@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AspNetCore.Yandex.ObjectStorage.Extensions;
 using AutoMapper;
 using DotNetEnv;
 using Kotovskaya.DB.Domain.Context;
@@ -20,6 +21,7 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
                         "http://www.contoso.com");
                 });
         });
+
         Env.TraversePath().Load();
 
         var mapperConfig = new MapperConfiguration(mc =>
