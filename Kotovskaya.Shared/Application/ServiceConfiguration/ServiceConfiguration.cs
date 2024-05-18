@@ -33,7 +33,7 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
         var mapper = mapperConfig.CreateMapper();
         services.AddSingleton(mapper);
 
-        services.AddSingleton<KotovskayaDbContext>();
+        services.AddTransient<KotovskayaDbContext>();
         services.AddSingleton<KotovskayaMsContext>();
 
         return services;

@@ -14,7 +14,8 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
         CancellationToken cancellationToken)
     {
         var category = await dbContext.Categories
-            .Include(category => category.Products)
+            .Include(category => category.Products)!
+                .ThenInclude(pr => pr.SaleTypes)
             .FirstOrDefaultAsync(cat => cat.Id == request.CategoryId, cancellationToken);
 
         if (category == null)
@@ -25,11 +26,13 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
             .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
 
+        var items = mapper.Map<ProductEntityDto[]>(category.Products);
+
         return new GetCategoryItemsResponse
         {
             CategoryName = category.Name,
             CategoryId = category.Id,
-            CategoryItems = mapper.Map<ProductEntityDto[]>(category.Products),
+            CategoryItems = items,
             CategoryChildren = subcategories
         };
     }
