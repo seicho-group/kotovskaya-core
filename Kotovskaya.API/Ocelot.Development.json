@@ -16,21 +16,6 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/images/{catchAll8002}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 8002
-        }
-      ],
-      "UpstreamPathTemplate": "/images/{catchAll8002}",
-      "UpstreamHttpMethod": [
-        "GET",
-        "POST"
-      ]
-    },
-    {
       "DownstreamPathTemplate": "/api/categories/{catchAll8001}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -62,6 +47,10 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:8000"
+    "BaseUrl": "http://localhost:8000",
+    "FileCacheOptions": {
+      "TtlSeconds": 0,
+      "Region": "europe-central"
+    }
   }
 }

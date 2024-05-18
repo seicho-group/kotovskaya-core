@@ -9,20 +9,22 @@ public class Startup(IConfiguration configuration)
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
-        services.AddOcelot();
+        services.AddCors(options =>
+        {
+            options.AddPolicy("*", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+        });
+        services.AddMvc();
+        services.AddOcelot(Configuration);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
+        app.UseCors("*");
         app.UseOcelot().Wait();
     }
 }

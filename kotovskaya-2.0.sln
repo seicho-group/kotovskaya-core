@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.Order", "Kotovsk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.API", "Kotovskaya.API\Kotovskaya.API.csproj", "{56647983-B223-416B-9DC3-25CAD6B792B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.Images", "Kotovskaya.Images\Kotovskaya.Images.csproj", "{0A29BF69-6652-4B47-9772-56C0B6B097E2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.DB", "Kotovskaya.DB\Kotovskaya.DB.csproj", "{579D178B-B2E6-403F-ADF5-9C30283937DA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kotovskaya.Products", "Kotovskaya.Products\Kotovskaya.Products.csproj", "{058662E0-375E-4B9E-8C84-932E180EC326}"
@@ -47,10 +45,6 @@ Global
 		{56647983-B223-416B-9DC3-25CAD6B792B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56647983-B223-416B-9DC3-25CAD6B792B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56647983-B223-416B-9DC3-25CAD6B792B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A29BF69-6652-4B47-9772-56C0B6B097E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A29BF69-6652-4B47-9772-56C0B6B097E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A29BF69-6652-4B47-9772-56C0B6B097E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A29BF69-6652-4B47-9772-56C0B6B097E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{579D178B-B2E6-403F-ADF5-9C30283937DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{579D178B-B2E6-403F-ADF5-9C30283937DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{579D178B-B2E6-403F-ADF5-9C30283937DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
