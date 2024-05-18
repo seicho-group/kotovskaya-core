@@ -8,13 +8,13 @@
       - .env
     environment:
       - ASPNETCORE_HTTP_PORTS=8003
-      - ASPNETCORE_ENVIRONMENT=prod
+      - ASPNETCORE_ENVIRONMENT=Prod
 
   kotovskaya.products:
     image: seichocorp/kotovskaya-core-products:latest
     environment:
       - ASPNETCORE_HTTP_PORTS=8004
-      - ASPNETCORE_ENVIRONMENT=prod
+      - ASPNETCORE_ENVIRONMENT=Prod
     ports:
       - "8004:8004"
     restart: always
@@ -25,7 +25,7 @@
     image: seichocorp/kotovskaya-core-categories:latest
     environment:
       - ASPNETCORE_HTTP_PORTS=8001
-      - ASPNETCORE_ENVIRONMENT=prod
+      - ASPNETCORE_ENVIRONMENT=Prod
     ports:
       - "8001:8001"
     restart: always
@@ -38,5 +38,5 @@
       - "80:8000"
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:8000
-      - ASPNETCORE_ENVIRONMENT=prod
+      - ASPNETCORE_ENVIRONMENT=Prod
     restart: always
