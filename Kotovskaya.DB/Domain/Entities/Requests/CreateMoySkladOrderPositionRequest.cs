@@ -15,5 +15,6 @@ public class CreateMoySkladOrderPositionRequestAssortmentMeta
 public class CreateMoySkladOrderPositionRequest
 {
     public int quantity { get; set; } = 0;
+    public int price { get; set; } = 0;
     public required CreateMoySkladOrderPositionRequestAssortment assortment { get; set; }
 }

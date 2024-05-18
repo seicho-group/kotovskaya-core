@@ -114,6 +114,7 @@ public class KotovskayaMsContext : MoySkladApi
         var request = new CreateMoySkladOrderPositionRequest
         {
             quantity = quantity,
+            price = price,
             assortment = new CreateMoySkladOrderPositionRequestAssortment
             {
                 meta = new CreateMoySkladOrderPositionRequestAssortmentMeta

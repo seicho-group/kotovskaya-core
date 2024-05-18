@@ -85,10 +85,18 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 
         var agent = await msContext.Counterparty.GetAsync(Guid.Parse(counterAgentId));
 
+        var description =
+            $"Имя: {request.AuthorName}\n" +
+            $"Почта: {request.AuthorMail}\n " +
+            $"Телефон:{request.AuthorPhone}\n " +
+            $"Способ доставки: {request.DeliveryWay}\n" +
+            $"Комментарий: {request.Comment}";
+
         var moySkladRequest = new CustomerOrder
         {
             Organization = organization.Payload,
-            Agent = agent.Payload
+            Agent = agent.Payload,
+            Description = description
         };
 
         return await msContext.CustomerOrder.CreateAsync(moySkladRequest);
