@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Yandex.ObjectStorage.Configuration;
 using DotNetEnv;
+using Kotovskaya.DB.Application.Services;
 using Kotovskaya.DB.Application.Services.Interfaces;
 using Kotovskaya.DB.Application.Services.MoySkladMigration;
 using Kotovskaya.DB.Domain.Context;
@@ -30,5 +31,6 @@ var controllers = new List<IMigrationController<KotovskayaMsContext, KotovskayaD
 
 await using var dbContext = new KotovskayaDbContext();
 var msContext = new KotovskayaMsContext();
-var integrator = new MoySkladMigrator(dbContext, msContext);
-await integrator.Migrate(controllers);
+// var integrator = new MoySkladMigrator(dbContext, msContext);
+// await integrator.Migrate(controllers);
+await new RemoveProductDublicatesController().Remove(dbContext);
