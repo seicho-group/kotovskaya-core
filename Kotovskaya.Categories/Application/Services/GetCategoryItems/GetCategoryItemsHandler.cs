@@ -27,7 +27,7 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
             .ToArrayAsync(cancellationToken);
 
         var items = mapper.Map<ProductEntityDto[]>(category.Products)
-            .OrderBy(pr1 => pr1.Quantity)
+            .OrderByDescending(pr => pr.Quantity)
             .ToArray();
 
         return new GetCategoryItemsResponse
