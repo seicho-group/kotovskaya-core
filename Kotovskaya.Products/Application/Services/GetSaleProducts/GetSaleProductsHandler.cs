@@ -18,6 +18,7 @@ public class GetSaleProductsHandler(KotovskayaMsContext msContext, KotovskayaDbC
         var products = await dbContext.Products
             .Where(pr => pr.MsId != null && newProductsIds
                 .Contains(pr.MsId.ToString() ?? string.Empty))
+            .OrderBy(pr => pr.Quantity)
             .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
