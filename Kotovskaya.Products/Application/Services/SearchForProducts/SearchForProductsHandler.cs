@@ -19,6 +19,7 @@ public class SearchForProductsHandler(KotovskayaDbContext dbContext, IMapper map
                 .Contains(request.SearchString.ToLower()))
             .Skip(request.Limit * (request.Page - 1))
             .Take(request.Limit)
+            .OrderBy(pr => pr.Quantity)
             .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
