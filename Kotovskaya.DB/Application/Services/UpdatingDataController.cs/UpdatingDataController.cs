@@ -22,7 +22,6 @@ public class UpdatingDataController(KotovskayaMsContext msContext, KotovskayaDbC
             if (productFromMoySklad == null) continue;
 
             product.Quantity = productFromMoySklad.Quantity != null ? (int)productFromMoySklad.Quantity.Value : 0;
-            product.Description = productFromMoySklad.Product.Description;
 
             await dbContext.SaveChangesAsync();
         }
