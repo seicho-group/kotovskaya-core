@@ -1,6 +1,7 @@
 using Confiti.MoySklad.Remap.Client;
 using Confiti.MoySklad.Remap.Entities;
 using Confiti.MoySklad.Remap.Models;
+using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Kotovskaya.TelegramApi.KotovskayaBotController;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Order.Application.Services.CreateOrder;
 
+// todo: ОТРЕФАЧИТЬ И ВЫНЕСТИ ВСЕ КУДА-НИБУДЬ + навесить сюда кролика
 public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsContext msContext)
     : IRequestHandler<CreateOrderRequest, string>
 {
@@ -27,6 +29,7 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
             AuthorPhone = request.AuthorPhone
         };
 
+        var positionsList = new List<ProductEntity>();
         foreach (var position in request.Positions)
         {
             var product = await dbContext.Products
@@ -37,6 +40,7 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
             if (product == null)
                 throw new ApiException(404, $"Product: {product?.Id} not found, but MS order created");
 
+            positionsList.Add(product);
             if (msId.Payload.Id != null && product.MsId != null)
                 await msContext.CreateOrderPositionByOrderId(msId.Payload.Id.Value, product.MsId.Value,
                     position.Quantity,
@@ -45,6 +49,7 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
             await SaveOrderPosition(orderDbEntity, product, cancellationToken);
         }
 
+        // убрать в кролика
         await new KotovskayaBotController(Environment.GetEnvironmentVariable("TG_TOKEN")!)
             .SendMessageToChat($"Заказ создан, номер заказа: {msId.Payload.Name} \n \n" +
                                $"Ссылка: https://online.moysklad.ru/app/#customerorder/edit?id={msId.Payload.Id};\n \n" +
@@ -54,6 +59,9 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
         await dbContext.AddAsync(orderDbEntity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
+        // обновляем данные по продуктам - убрать в кролика
+        await new UpdatingDataController(msContext, dbContext)
+            .UpdateProductData(positionsList.Select(pos => pos.Id).ToList());
         return orderDbEntity.MoySkladNumber;
     }
 

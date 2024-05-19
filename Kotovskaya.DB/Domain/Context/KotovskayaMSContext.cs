@@ -93,6 +93,24 @@ public class KotovskayaMsContext : MoySkladApi
     }
 
     /**
+     * !! DANGEROUS METHOD !!
+     * get product info
+     */
+    public async Task<Assortment?> FetchAssortmentInfoExtended(Guid productId)
+    {
+        try
+        {
+            var products = await GetAsyncJson<Assortment?>($"entity/assortment/{productId}");
+            return products;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
+
+    /**
      * get all products with specified attribute
      */
     public async Task<List<string>> FindProductsIdByMoySkladAttribute<T>(string attribute, T value, int? limit = 8)
