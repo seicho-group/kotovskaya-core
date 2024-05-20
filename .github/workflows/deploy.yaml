@@ -76,4 +76,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker-compose pull
+            docker network inspect kotovskaya-network || docker network create kotovskaya-network
             sudo docker-compose up -d
