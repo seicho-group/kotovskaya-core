@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "mkotovskaya-api.ru",
+          "Host": "kotovskaya.order",
           "Port": 8003
         }
       ],
@@ -16,26 +16,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/images/{catchAll8002}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "mkotovskaya-api.ru",
-          "Port": 8002
-        }
-      ],
-      "UpstreamPathTemplate": "/images/{catchAll8002}",
-      "UpstreamHttpMethod": [
-        "GET",
-        "POST"
-      ]
-    },
-    {
       "DownstreamPathTemplate": "/api/categories/{catchAll8001}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "mkotovskaya-api.ru",
+          "Host": "kotovskaya.categories",
           "Port": 8001
         }
       ],
@@ -50,7 +35,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "mkotovskaya-api.ru",
+          "Host": "kotovskaya.products",
           "Port": 8004
         }
       ],
