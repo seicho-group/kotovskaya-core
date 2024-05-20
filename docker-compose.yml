@@ -40,3 +40,8 @@
       - ASPNETCORE_URLS=http://0.0.0.0:8000
       - ASPNETCORE_ENVIRONMENT=Prod
     restart: always
+
+networks:
+  kotovskaya-network:
+    name: kotovskaya-network
+    external: true
