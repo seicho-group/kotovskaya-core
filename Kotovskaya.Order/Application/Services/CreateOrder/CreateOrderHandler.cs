@@ -4,6 +4,7 @@ using Confiti.MoySklad.Remap.Models;
 using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
+using Kotovskaya.DB.Domain.Entities.Enum;
 using Kotovskaya.TelegramApi.KotovskayaBotController;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -97,7 +98,7 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
             $"Имя: {request.AuthorName}\n" +
             $"Почта: {request.AuthorMail}\n " +
             $"Телефон:{request.AuthorPhone}\n " +
-            $"Способ доставки: {request.DeliveryWay}\n" +
+            $"Способ доставки: {request.DeliveryWay.GetDeliveryWayName()}\n" +
             $"Комментарий: {request.Comment}";
 
         var moySkladRequest = new CustomerOrder
