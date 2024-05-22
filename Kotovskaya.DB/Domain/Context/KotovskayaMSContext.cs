@@ -100,8 +100,10 @@ public class KotovskayaMsContext : MoySkladApi
     {
         try
         {
-            var products = await GetAsyncJson<Assortment?>($"entity/assortment/{productId}");
-            return products;
+            var products = await GetAsyncJson<EntitiesResponse<Assortment?>>($"entity/assortment?filter=" +
+                                                                             $"id={productId};" +
+                                                                             $"stockStore=https://api.moysklad.ru/api/remap/1.2/entity/store/0f06c398-00a0-4db2-af9d-d48d0a02a5b4");
+            return products.Rows[0];
         }
         catch (Exception e)
         {
