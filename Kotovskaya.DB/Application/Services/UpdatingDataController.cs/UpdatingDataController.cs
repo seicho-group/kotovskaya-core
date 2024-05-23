@@ -13,7 +13,7 @@ public class UpdatingDataController(KotovskayaMsContext msContext, KotovskayaDbC
             if (product?.MsId == null) continue;
 
             // if updated before last night, updating info
-            if ((DateTime.Now - (product.LastUpdatedAt ?? DateTime.Now)).TotalDays <= 0)
+            if (product.LastUpdatedAt != null && (DateTime.Now - product.LastUpdatedAt).Value.TotalDays <= 1)
             {
                 continue;
             }
