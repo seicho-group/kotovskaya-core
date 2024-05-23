@@ -16,6 +16,7 @@ public class GetPopularProductsHandler(KotovskayaMsContext msContext, Kotovskaya
         var newProductsIds = await msContext.FindProductsIdByMoySkladAttribute(MsAttributes.IsPopular, true);
 
         var products = await dbContext.Products
+            .Include(pr => pr.SaleTypes)
             .Where(pr => pr.MsId != null && newProductsIds
                 .Contains(pr.MsId.ToString() ?? string.Empty))
             .OrderByDescending(pr => pr.Quantity)

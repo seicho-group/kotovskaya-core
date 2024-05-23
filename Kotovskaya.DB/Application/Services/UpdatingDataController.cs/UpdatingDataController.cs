@@ -37,7 +37,7 @@ public class UpdatingDataController(KotovskayaMsContext msContext, KotovskayaDbC
             var oldSalePrice = await dbContext.SaleTypes.Where(st => product.Id == st.Product.Id).FirstOrDefaultAsync();
             if (oldSalePrice != null) dbContext.SaleTypes.Remove(oldSalePrice);
             product.SaleTypes = newSalePrice;
+            await dbContext.SaveChangesAsync();
         }
-        await dbContext.SaveChangesAsync();
     }
 }
