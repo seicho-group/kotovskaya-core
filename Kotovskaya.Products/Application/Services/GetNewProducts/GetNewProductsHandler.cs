@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Shared.Application.Entities.DTO;
@@ -19,11 +18,10 @@ public class GetNewProductsHandler(KotovskayaMsContext msContext, KotovskayaDbCo
             .Where(pr => pr.MsId != null && newProductsIds
                 .Contains(pr.MsId.ToString() ?? string.Empty))
             .OrderByDescending(pr => pr.Quantity)
-            .ProjectTo<ProductEntityDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        await new UpdatingDataController(msContext, dbContext).UpdateProductData(products.Select(pr => pr.Id).ToList());
+        await new UpdatingDataController(msContext, dbContext).UpdateProductData(products.ToList());
 
-        return products;
+        return mapper.Map<List<ProductEntityDto>>(products);
     }
 }

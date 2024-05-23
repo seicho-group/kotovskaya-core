@@ -31,7 +31,12 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
             .OrderByDescending(pr => pr.Quantity)
             .ToArray();
 
-        await new UpdatingDataController(msContext, dbContext).UpdateProductData(items.Select(pr => pr.Id).ToList());
+        if (category.Products?.Any(pr => pr.LastUpdatedAt != null &&
+                                         pr.LastUpdatedAt.Value < DateTime.Now.AddDays(-1)) == true)
+        {
+            await new UpdatingDataController(msContext, dbContext).UpdateProductData(category.Products);
+        }
+
 
         return new GetCategoryItemsResponse
         {
