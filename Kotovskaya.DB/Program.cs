@@ -28,7 +28,7 @@ var controllers = new List<IMigrationController<KotovskayaMsContext, KotovskayaD
     { imagesController };
 
 // migrating to database using all controllers
-
+// todo: сделать джобу запускающую все это говно и разделить это по файлам
 await using var dbContext = new KotovskayaDbContext();
 var msContext = new KotovskayaMsContext();
 // var integrator = new MoySkladMigrator(dbContext, msContext);

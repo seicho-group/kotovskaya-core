@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Shared.Application.Entities.DTO;
@@ -20,7 +19,6 @@ public class GetPopularProductsHandler(KotovskayaMsContext msContext, Kotovskaya
             .Where(pr => pr.MsId != null && newProductsIds
                 .Contains(pr.MsId.ToString() ?? string.Empty))
             .OrderByDescending(pr => pr.Quantity)
-
             .ToListAsync(cancellationToken);
 
         await new UpdatingDataController(msContext, dbContext).UpdateProductData(products.ToList());
