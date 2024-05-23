@@ -31,8 +31,8 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
             .OrderByDescending(pr => pr.Quantity)
             .ToArray();
 
-        if (category.Products?.Any(pr => pr.LastUpdatedAt != null &&
-                                         pr.LastUpdatedAt.Value < DateTime.Now.AddDays(-1)) == true)
+        if (category.Products?.Any(pr => pr.LastUpdatedAt != null
+                                         && (DateTime.Now - pr.LastUpdatedAt).Value.TotalDays <= 1) == true)
         {
             await new UpdatingDataController(msContext, dbContext).UpdateProductData(category.Products);
         }
