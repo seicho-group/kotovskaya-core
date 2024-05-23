@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Shared.Application.Entities.DTO;
 using MediatR;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Categories.Application.Services.GetCategoryItems;
 
-public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapper)
+public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapper, KotovskayaMsContext msContext)
     : IRequestHandler<GetCategoryItemsRequest, GetCategoryItemsResponse>
 {
     public async Task<GetCategoryItemsResponse> Handle(GetCategoryItemsRequest request,
@@ -29,6 +30,13 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
         var items = mapper.Map<ProductEntityDto[]>(category.Products)
             .OrderByDescending(pr => pr.Quantity)
             .ToArray();
+
+        if (category.Products?.Any(pr => pr.LastUpdatedAt != null &&
+                                         pr.LastUpdatedAt.Value < DateTime.Now.AddDays(-1)) == true)
+        {
+            await new UpdatingDataController(msContext, dbContext).UpdateProductData(category.Products);
+        }
+
 
         return new GetCategoryItemsResponse
         {

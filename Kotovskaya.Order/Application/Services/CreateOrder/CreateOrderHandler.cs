@@ -62,7 +62,7 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 
         // обновляем данные по продуктам - убрать в кролика
         await new UpdatingDataController(msContext, dbContext)
-            .UpdateProductData(positionsList.Select(pos => pos.Id).ToList());
+            .UpdateProductData(positionsList.ToList());
         return orderDbEntity.MoySkladNumber;
     }
 
