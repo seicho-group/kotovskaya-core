@@ -17,7 +17,7 @@ public class GetPopularProductsHandler(KotovskayaMsContext msContext, Kotovskaya
 
         var products = await dbContext.Products
             .Include(pr => pr.SaleTypes)
-            .Where(pr => pr.MsId == null && pr.Quantity > 0 && newProductsIds
+            .Where(pr => pr.MsId != null && pr.Quantity > 0 && newProductsIds
                 .Contains(pr.MsId.ToString() ?? string.Empty))
             .OrderByDescending(pr => pr.Quantity)
             .ToListAsync(cancellationToken);

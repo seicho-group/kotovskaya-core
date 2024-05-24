@@ -5,6 +5,7 @@ using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Kotovskaya.DB.Domain.Entities.Enum;
+using Kotovskaya.Order.Domain.PositionService;
 using Kotovskaya.TelegramApi.KotovskayaBotController;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -30,25 +31,9 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
             AuthorPhone = request.AuthorPhone
         };
 
-        var positionsList = new List<ProductEntity>();
-        foreach (var position in request.Positions)
-        {
-            var product = await dbContext.Products
-                .Include(productEntity => productEntity.SaleTypes)
-                .FirstOrDefaultAsync(pr => pr.Id == position.ProductId.ToString(), cancellationToken);
+        var positionsService = new PositionService(dbContext, msContext);
+        var positionsList = await positionsService.SavePositionsOnMoySklad(request.Positions, orderDbEntity, msId.Payload.Id);
 
-            // Shouldn't go here
-            if (product == null)
-                throw new ApiException(404, $"Product: {product?.Id} not found, but MS order created");
-
-            positionsList.Add(product);
-            if (msId.Payload.Id != null && product.MsId != null)
-                await msContext.CreateOrderPositionByOrderId(msId.Payload.Id.Value, product.MsId.Value,
-                    position.Quantity,
-                    product.SaleTypes?.Price ?? 0);
-
-            await SaveOrderPosition(orderDbEntity, product, cancellationToken);
-        }
 
         // убрать в кролика
         await new KotovskayaBotController(Environment.GetEnvironmentVariable("TG_TOKEN")!)
@@ -62,21 +47,8 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
 
         // обновляем данные по продуктам - убрать в кролика
         await new UpdatingDataController(msContext, dbContext)
-            .UpdateProductData(positionsList.ToList());
+            .UpdateProductData(positionsList);
         return orderDbEntity.MoySkladNumber;
-    }
-
-    private async Task SaveOrderPosition(DB.Domain.Entities.DatabaseEntities.Order parentOrder, ProductEntity product,
-        CancellationToken cancellationToken)
-    {
-        var orderPosition = new OrderPosition
-        {
-            OrderId = parentOrder.Id,
-            Order = parentOrder,
-            Product = product,
-            ProductId = product.Id
-        };
-        await dbContext.AddAsync(orderPosition, cancellationToken);
     }
 
     private async Task<ApiResponse<CustomerOrder>?> SaveOrderOnMs(CreateOrderRequest request,
