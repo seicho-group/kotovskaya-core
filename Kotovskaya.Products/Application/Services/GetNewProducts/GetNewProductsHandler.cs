@@ -16,7 +16,7 @@ public class GetNewProductsHandler(KotovskayaMsContext msContext, KotovskayaDbCo
 
         var products = await dbContext.Products
             .Include(pr => pr.SaleTypes)
-            .Where(pr => pr.MsId != null && newProductsIds
+            .Where(pr => pr.MsId != null && pr.Quantity > 0 && newProductsIds
                 .Contains(pr.MsId.ToString() ?? string.Empty))
             .OrderByDescending(pr => pr.Quantity)
             .ToListAsync(cancellationToken);
