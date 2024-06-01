@@ -11,3 +11,4 @@ Kotovskaya.Order/obj/
 */obj/
 .idea/  
 .env
+.env.hangfire
