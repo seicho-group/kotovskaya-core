@@ -1,4 +1,5 @@
-﻿using Kotovskaya.DB.Domain.Context;
+﻿using Confiti.MoySklad.Remap.Entities;
+using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,34 +11,52 @@ public class UpdatingDataController(KotovskayaMsContext msContext, KotovskayaDbC
     {
         foreach (var product in products)
         {
-            if (product?.MsId == null) continue;
+            if (product.MsId == null)
+            {
+                SentrySdk.CaptureMessage($"Product: {product.Id} has no MoySklad ID");
+                continue;
+            }
 
             // if updated before last night, updating info
             if (product.LastUpdatedAt != null && (DateTime.Now - product.LastUpdatedAt).Value.TotalDays <= 1)
-            {
                 continue;
-            }
+
             product.LastUpdatedAt = DateTime.Now.ToUniversalTime();
 
-            var productAssortmentFromMoySklad = await msContext.FetchAssortmentInfoExtended(product.MsId.Value);
-            var productFromMoySklad = await msContext.FetchProductInfoExtended(product.MsId.Value);
-            if (productFromMoySklad == null) continue;
-
-            product.Quantity = productAssortmentFromMoySklad?.Quantity != null ?
-                (int)productAssortmentFromMoySklad.Quantity.Value
-                : 0;
-
-            var newSalePrice = new SaleTypes()
+            try
             {
-                Product = product,
-                OldPrice = (int)(productFromMoySklad.SalePrices[2].Value ?? 0),
-                Price = (int)(productFromMoySklad.SalePrices[0].Value ?? 0)
-            };
-
-            var oldSalePrice = await dbContext.SaleTypes.Where(st => product.Id == st.Product.Id).FirstOrDefaultAsync();
-            if (oldSalePrice != null) dbContext.SaleTypes.Remove(oldSalePrice);
-            product.SaleTypes = newSalePrice;
-            await dbContext.SaveChangesAsync();
+                var productAssortmentFromMoySklad = await msContext.FetchAssortmentInfoExtended(product.MsId.Value);
+                var productFromMoySklad = await msContext.FetchProductInfoExtended(product.MsId.Value);
+                await SaveDataAsync(product, productFromMoySklad, productAssortmentFromMoySklad);
+            }
+            catch
+            {
+                SentrySdk.CaptureMessage($"Product or assortment with ID: {product.Id} is null");
+            }
         }
+    }
+
+    private async Task SaveDataAsync(ProductEntity productEntity, Product? product, Assortment? assortment)
+    {
+        if (product == null || assortment == null)
+        {
+            throw new ApplicationException("Not found");
+        }
+
+        productEntity.Quantity = assortment?.Quantity != null ?
+            (int)assortment.Quantity.Value
+            : 0;
+
+        var newSalePrice = new SaleTypes()
+        {
+            Product = productEntity,
+            OldPrice = (int)(product.SalePrices[2].Value ?? 0),
+            Price = (int)(product.SalePrices[0].Value ?? 0)
+        };
+
+        var oldSalePrice = await dbContext.SaleTypes.Where(st => productEntity.Id == st.Product.Id).FirstOrDefaultAsync();
+        if (oldSalePrice != null) dbContext.SaleTypes.Remove(oldSalePrice);
+        productEntity.SaleTypes = newSalePrice;
+        await dbContext.SaveChangesAsync();
     }
 }

@@ -22,6 +22,8 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
                 });
         });
 
+        services.AddSentry();
+
         Env.TraversePath().Load();
 
         var mapperConfig = new MapperConfiguration(mc =>
