@@ -62,6 +62,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: env
     needs: [ build_and_push_to_docker_hub ]
+    permissions:
+      contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
       - name: install ssh keys
