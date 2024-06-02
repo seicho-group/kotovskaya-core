@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ master, feat/kot-46-api-gateway-deploy ]
+    branches: [ master, feat/kot-github-registry ]
 
 jobs:
   build_and_push_to_docker_hub:
