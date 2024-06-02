@@ -41,6 +41,14 @@
       - ASPNETCORE_ENVIRONMENT=Prod
     restart: always
 
+  hangfire.server:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Kotovskaya123
+    ports:
+      - "1433:1433"
+
 networks:
   kotovskaya-network:
     name: kotovskaya-network
