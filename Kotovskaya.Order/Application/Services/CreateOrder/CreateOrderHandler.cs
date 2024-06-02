@@ -79,7 +79,14 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
             Agent = agent.Payload,
             Description = description
         };
-
-        return await msContext.CustomerOrder.CreateAsync(moySkladRequest);
+        try
+        {
+            return await msContext.CustomerOrder.CreateAsync(moySkladRequest);
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureMessage("Error happened while creating order on MS");
+            throw new ApiException(500, "Couldn't create order in MS reason");
+        }
     }
 }

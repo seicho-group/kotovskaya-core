@@ -24,12 +24,18 @@ public class PositionService(KotovskayaDbContext dbContext, KotovskayaMsContext 
                 throw new ApiException(404, $"Product: {product?.Id} not found, but MS order created");
 
             positionsList.Add(product);
-            if (moySkladOrderId != null && product.MsId != null)
+            if (moySkladOrderId == null || product.MsId == null) continue;
+
+            try
+            {
                 await msContext.CreateOrderPositionByOrderId(moySkladOrderId.Value, product.MsId.Value,
                     position.Quantity,
                     product.SaleTypes?.Price ?? 0);
-
-            await SaveOrderPosition(orderDbEntity, product);
+            }
+            catch
+            {
+                SentrySdk.CaptureMessage($"Order position {moySkladOrderId}:{product.MsId} not created in moysklad");
+            }
         }
 
         return positionsList;
@@ -44,6 +50,15 @@ public class PositionService(KotovskayaDbContext dbContext, KotovskayaMsContext 
             Product = product,
             ProductId = product.Id
         };
-        await dbContext.AddAsync(orderPosition);
+        try
+        {
+            await dbContext.AddAsync(orderPosition);
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureMessage($"Order position {parentOrder.Id}:{product.Id} not created");
+            throw;
+        }
+
     }
 }
