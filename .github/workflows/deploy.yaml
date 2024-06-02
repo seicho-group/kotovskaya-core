@@ -32,7 +32,7 @@ jobs:
           push: true
           context: .
           file: ./Kotovskaya.Order/Dockerfile
-          tags: seichocorp/kotovskaya-core-orders:latest
+          tags: ghcr.io/seicho-group/kotovskaya-orders:latest
 
       - name: Push Categories to Docker Hub
         uses: docker/build-push-action@v2
@@ -40,7 +40,7 @@ jobs:
           push: true
           context: .
           file: ./Kotovskaya.Categories/Dockerfile
-          tags: seichocorp/kotovskaya-core-categories:latest
+          tags: ghcr.io/seicho-group/kotovskaya-categories:latest
 
       - name: Push Products to Docker Hub
         uses: docker/build-push-action@v2
@@ -48,7 +48,7 @@ jobs:
           push: true
           context: .
           file: ./Kotovskaya.Products/Dockerfile
-          tags: seichocorp/kotovskaya-core-products:latest
+          tags: ghcr.io/seicho-group/kotovskaya-products:latest
 
       - name: Push API to Docker Hub
         uses: docker/build-push-action@v2
@@ -56,7 +56,7 @@ jobs:
           push: true
           context: .
           file: ./Kotovskaya.API/Dockerfile
-          tags: seichocorp/kotovskaya-core-api:latest
+          tags: ghcr.io/seicho-group/kotovskaya-api:latest
   deploy:
     name: Create compose-file, pull all images and deploy containers
     runs-on: ubuntu-latest
