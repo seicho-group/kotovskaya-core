@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Kotovskaya.DB.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class idsguids : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,10 +15,10 @@ namespace Kotovskaya.DB.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", maxLength: 150, nullable: false),
                     Name = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    MsId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
-                    ParentCategoryId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    MsId = table.Column<Guid>(type: "uuid", maxLength: 150, nullable: false),
+                    ParentCategoryId = table.Column<Guid>(type: "uuid", maxLength: 150, nullable: true),
                     IsVisible = table.Column<bool>(type: "boolean", nullable: true),
                     Type = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -38,11 +38,11 @@ namespace Kotovskaya.DB.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     MoySkladNumber = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    AuthorName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    AuthorName = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     AuthorPhone = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     AuthorEmail = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     HasAuthorDiscount = table.Column<bool>(type: "boolean", nullable: false),
-                    Comment = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Comment = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
                     DeliveryWay = table.Column<int>(type: "integer", nullable: false),
                     DeliveryAddress = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     OrderDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -59,14 +59,15 @@ namespace Kotovskaya.DB.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
-                    MsId = table.Column<Guid>(type: "uuid", nullable: true),
+                    MsId = table.Column<Guid>(type: "uuid", nullable: false),
                     Article = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    CategoryId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
-                    ImageLink = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true)
+                    CategoryId = table.Column<Guid>(type: "uuid", maxLength: 150, nullable: false),
+                    ImageLink = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,7 +76,8 @@ namespace Kotovskaya.DB.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +87,7 @@ namespace Kotovskaya.DB.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     OrderId = table.Column<Guid>(type: "uuid", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    ProductId = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false)
+                    ProductId = table.Column<Guid>(type: "uuid", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,7 +111,7 @@ namespace Kotovskaya.DB.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProductId = table.Column<string>(type: "character varying(150)", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     Price = table.Column<int>(type: "integer", nullable: false),
                     OldPrice = table.Column<int>(type: "integer", nullable: true)
                 },

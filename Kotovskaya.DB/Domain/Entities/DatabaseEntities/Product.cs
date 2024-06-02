@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 
 public class ProductEntity
 {
-    public Guid Id { get; } = Guid.NewGuid();
+    [Key] public Guid Id { get; init; } = Guid.NewGuid();
 
     [StringLength(150, MinimumLength = 5)]
     public string Name { get; set; } = "Без имени";

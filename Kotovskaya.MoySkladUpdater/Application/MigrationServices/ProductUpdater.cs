@@ -34,7 +34,11 @@ public class ProductUpdater(KotovskayaMsContext msContext, KotovskayaDbContext d
 
     private async Task<List<KotovskayaAssortment>> GetNotImplementedProducts(List<Guid> productIds)
     {
-        var assortment = await msContext.FetchAssortmentInfoExtended();
+        var assortment = await msContext.FetchAssortmentInfoExtended("quantityMode=positiveOnly;");
+        if (assortment == null)
+        {
+            throw new ApiException(500, "Assortment not found");
+        }
         return assortment.Where(kotovskayaAssortment => kotovskayaAssortment != null && !productIds.Contains((Guid)kotovskayaAssortment.Id)).ToList();
     }
 

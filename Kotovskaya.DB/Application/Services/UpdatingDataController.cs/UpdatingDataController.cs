@@ -40,6 +40,7 @@ public class UpdatingDataController(KotovskayaMsContext msContext, KotovskayaDbC
         var newSalePrice = new SaleTypes()
         {
             Product = productEntity,
+            ProductId = productEntity.Id,
             OldPrice = (int)(product.SalePrices[2].Value ?? 0),
             Price = (int)(product.SalePrices[0].Value ?? 0)
         };

@@ -23,7 +23,7 @@ public class Category
 
     public List<ProductEntity>? Products { get; init; } = null;
 
-    public bool? IsVisible { get; init; }
+    public bool? IsVisible { get; init; } = true;
 
     public CategoryType? Type { get; init; }
 }

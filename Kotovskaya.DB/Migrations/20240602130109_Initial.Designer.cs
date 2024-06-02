@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kotovskaya.DB.Migrations
 {
     [DbContext(typeof(KotovskayaDbContext))]
-    [Migration("20240513001702_ICollection у OrderPoses")]
-    partial class ICollectionуOrderPoses
+    [Migration("20240602130109_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,25 +27,26 @@ namespace Kotovskaya.DB.Migrations
 
             modelBuilder.Entity("Kotovskaya.DB.Domain.Entities.DatabaseEntities.Category", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("uuid");
 
                     b.Property<bool?>("IsVisible")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("MsId")
+                    b.Property<Guid>("MsId")
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<string>("ParentCategoryId")
+                    b.Property<Guid?>("ParentCategoryId")
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("uuid");
 
                     b.Property<int?>("Type")
                         .HasColumnType("integer");
@@ -124,10 +125,9 @@ namespace Kotovskaya.DB.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
+                    b.Property<Guid>("ProductId")
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
@@ -143,17 +143,17 @@ namespace Kotovskaya.DB.Migrations
 
             modelBuilder.Entity("Kotovskaya.DB.Domain.Entities.DatabaseEntities.ProductEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Article")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<string>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .HasMaxLength(2048)
@@ -163,7 +163,10 @@ namespace Kotovskaya.DB.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
 
-                    b.Property<Guid?>("MsId")
+                    b.Property<DateTime?>("LastUpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("MsId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -193,9 +196,8 @@ namespace Kotovskaya.DB.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("character varying(150)");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -237,7 +239,9 @@ namespace Kotovskaya.DB.Migrations
                 {
                     b.HasOne("Kotovskaya.DB.Domain.Entities.DatabaseEntities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });

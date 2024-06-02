@@ -5,7 +5,7 @@
 namespace Kotovskaya.DB.Migrations
 {
     /// <inheritdoc />
-    public partial class _123 : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
