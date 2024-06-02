@@ -15,10 +15,7 @@ public class SaleTypesMoySkladMigrationController : IMigrationController<Kotovsk
 
         foreach (var product in products.Where(product => product.SaleTypes == null))
         {
-            // id no msid we cant get prices
-            if (product.MsId == null) continue;
-
-            var productFromMs = await api.FetchProductInfoExtended(product.MsId.Value);
+            var productFromMs = await api.FetchProductInfoExtended(product.MsId);
             // if we got no sale prices we cant fill them in db
             if (productFromMs?.SalePrices == null) continue;
 

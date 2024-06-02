@@ -6,6 +6,7 @@ using Confiti.MoySklad.Remap.Client;
 using Confiti.MoySklad.Remap.Entities;
 using Confiti.MoySklad.Remap.Models;
 using DotNetEnv;
+using Kotovskaya.DB.Domain.Entities.MoySkladExtensions;
 using Kotovskaya.DB.Domain.Entities.Requests;
 using Newtonsoft.Json;
 
@@ -96,14 +97,14 @@ public class KotovskayaMsContext : MoySkladApi
      * !! DANGEROUS METHOD !!
      * get product info
      */
-    public async Task<Assortment?> FetchAssortmentInfoExtended(Guid productId)
+    public async Task<KotovskayaAssortment?[]> FetchAssortmentInfoExtended(string filter = "")
     {
         try
         {
-            var products = await GetAsyncJson<EntitiesResponse<Assortment?>>($"entity/assortment?filter=" +
-                                                                             $"id={productId};" +
+            var products = await GetAsyncJson<EntitiesResponse<KotovskayaAssortment?>>($"entity/assortment?filter=" +
+                                                                             $"{filter}" +
                                                                              $"stockStore=https://api.moysklad.ru/api/remap/1.2/entity/store/0f06c398-00a0-4db2-af9d-d48d0a02a5b4");
-            return products.Rows[0];
+            return products.Rows;
         }
         catch (Exception e)
         {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Hangfire;
 using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.Shared.Application.Entities.DTO;
@@ -14,6 +15,7 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
     public async Task<GetCategoryItemsResponse> Handle(GetCategoryItemsRequest request,
         CancellationToken cancellationToken)
     {
+        BackgroundJob.Enqueue(() => Console.WriteLine("123123"));
         var category = await dbContext.Categories
             .Include(category => category.Products)!
                 .ThenInclude(pr => pr.SaleTypes)
@@ -37,7 +39,6 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
         {
             await new UpdatingDataController(msContext, dbContext).UpdateProductData(category.Products);
         }
-
 
         return new GetCategoryItemsResponse
         {

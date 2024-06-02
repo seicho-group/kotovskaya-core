@@ -23,17 +23,16 @@ public class ProductsMoySkladMigrationController : IMigrationController<Kotovska
         {
             var assortment = await GetAllAssortmentByFolder(api, category);
             var products = assortment
-                .Where(pr => currentProductsMsIds.Contains(pr.Id) == false)
+                .Where(pr => pr.Id != null && currentProductsMsIds.Contains((Guid)pr.Id) == false)
                 .Select(product =>
                 {
                     var desc = product.Product.Description ?? "";
-
                     var productEntity = new ProductEntity
                     {
-                        Id = Guid.NewGuid().ToString(),
                         Category = category,
                         CategoryId = category.Id,
-                        MsId = product.Id,
+                        // проверяем на наличие в where
+                        MsId = (Guid)product.Id!,
                         Name = product.Name,
                         Description = desc.Substring(0, desc.Length > 2040 ? 2040 : desc.Length),
                         Quantity = (int)(product.Quantity ?? 0),
@@ -49,9 +48,7 @@ public class ProductsMoySkladMigrationController : IMigrationController<Kotovska
 
     private async Task<Assortment[]> GetAllAssortmentByFolder(MoySkladApi api, Category category)
     {
-        if (category.MsId == null) return [];
-
-        var productFolder = await api.ProductFolder.GetAsync(Guid.Parse(category.MsId));
+        var productFolder = await api.ProductFolder.GetAsync((Guid)category.MsId!);
 
         var query = new AssortmentApiParameterBuilder();
         query.Parameter(p => p.ProductFolder).Should().Be(productFolder.Payload);

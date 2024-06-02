@@ -33,17 +33,17 @@ public class CategoriesMoySkladMigrationController : IMigrationController<Kotovs
         foreach (var childCategory in childCategories.ToList())
         {
             var existingCategory = await KotovskayaDbContext.Categories
-                .FirstOrDefaultAsync(cat => cat.Id == childCategory.Id.ToString());
+                .FirstOrDefaultAsync(cat => cat.Id == childCategory.Id);
 
             var newCategoryModel = new Category
             {
                 ParentCategory = parentFolder,
                 ParentCategoryId = parentFolder?.Id,
-                Id = existingCategory?.Id ?? childCategory.Id.ToString() ?? Guid.NewGuid().ToString(),
+                Id = existingCategory?.Id ?? childCategory.Id ?? Guid.NewGuid(),
                 Name = childCategory.Name,
                 Type = existingCategory?.Type ?? CategoryType.Soapmaking,
                 IsVisible = existingCategory?.IsVisible ?? true,
-                MsId = childCategory.Id.ToString()
+                MsId = (Guid)childCategory.Id!
             };
 
             if (existingCategory != null) KotovskayaDbContext.Categories.Remove(existingCategory);

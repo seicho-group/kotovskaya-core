@@ -12,7 +12,7 @@ public class OrderPosition
 
     public int Quantity { get; set; }
 
-    [StringLength(150, MinimumLength = 5)] public required string ProductId { get; set; }
+    [StringLength(150, MinimumLength = 5)] public required Guid ProductId { get; set; }
 
     public required ProductEntity Product { get; set; }
 }

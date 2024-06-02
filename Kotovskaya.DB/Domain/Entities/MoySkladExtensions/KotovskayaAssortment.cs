@@ -1,0 +1,8 @@
+﻿using Confiti.MoySklad.Remap.Entities;
+
+namespace Kotovskaya.DB.Domain.Entities.MoySkladExtensions;
+
+public class KotovskayaAssortment : Assortment
+{
+    public Price[] SalePrices { get; set; }
+}

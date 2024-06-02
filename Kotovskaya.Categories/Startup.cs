@@ -1,4 +1,5 @@
-﻿using Kotovskaya.Categories.Controllers;
+﻿using Hangfire;
+using Kotovskaya.Categories.Controllers;
 using Kotovskaya.Shared.Application.ServiceConfiguration;
 
 namespace Kotovskaya.Categories;
@@ -10,7 +11,11 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         new KotovskayaServicesConfiguration(services, typeof(Program).Assembly).Configure();
-
+        services.AddHangfire(opt =>
+        {
+            opt.UseSqlServerStorage("Server=31.184.240.134,1433;User Id=sa;Password=Kotovskaya123;TrustServerCertificate=True");
+        });
+        services.AddHangfireServer();
         services
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
@@ -34,6 +39,8 @@ public class Startup(IConfiguration configuration)
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCors("*");
+
+        app.UseHangfireDashboard("/dashboard");
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }

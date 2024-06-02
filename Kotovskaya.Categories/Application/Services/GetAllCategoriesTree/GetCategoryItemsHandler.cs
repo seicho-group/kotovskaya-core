@@ -34,7 +34,7 @@ public class GetAllCategoriesTreeHandler(KotovskayaDbContext dbContext, IMapper 
         List<Category> possibleChildCategories)
     {
         var subcategories = possibleChildCategories
-            .Where(cat => cat.ParentCategory != null && cat.ParentCategory.Id == parentBranch.Id)
+            .Where(cat => cat.ParentCategory != null && cat.ParentCategory?.Id == parentBranch.Id)
             .ToList();
 
         return mapper.Map<List<CategoryDtoBranch>>(subcategories);

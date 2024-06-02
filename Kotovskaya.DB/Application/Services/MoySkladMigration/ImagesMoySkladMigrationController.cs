@@ -12,7 +12,7 @@ public class ImagesMoySkladMigrationController(KotovskayaYandexObjectStorageCont
         foreach (var productEntity in productEntities)
         {
             if (productEntity?.MsId == null) continue;
-            var productImages = await msContext.FetchProductImagesExtended(productEntity.MsId.Value);
+            var productImages = await msContext.FetchProductImagesExtended(productEntity.MsId);
 
             if (productImages?.Rows == null || productImages.Rows.Length == 0) continue;
             var productImage = await msContext.FetchProductImage(productImages.Rows[0].Meta.DownloadHref);
