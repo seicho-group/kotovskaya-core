@@ -2,12 +2,17 @@ name: Deploy
 
 on:
   push:
-    branches: [ master, feat/kot-46-api-gateway-deploy ]
+    branches: [ master ]
 
 jobs:
   build_and_push_to_docker_hub:
     name: Build and push images to docker hub
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -15,18 +20,19 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-flags: --debug
-      - name: Login to Docker
-        uses: docker/login-action@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push Orders to Docker Hub
         uses: docker/build-push-action@v5
         with:
           push: true
           context: .
           file: ./Kotovskaya.Order/Dockerfile
-          tags: seichocorp/kotovskaya-core-orders:latest
+          tags: ghcr.io/seicho-group/kotovskaya-orders:latest
 
       - name: Push Categories to Docker Hub
         uses: docker/build-push-action@v2
@@ -34,7 +40,7 @@ jobs:
           push: true
           context: .
           file: ./Kotovskaya.Categories/Dockerfile
-          tags: seichocorp/kotovskaya-core-categories:latest
+          tags: ghcr.io/seicho-group/kotovskaya-categories:latest
 
       - name: Push Products to Docker Hub
         uses: docker/build-push-action@v2
@@ -42,7 +48,7 @@ jobs:
           push: true
           context: .
           file: ./Kotovskaya.Products/Dockerfile
-          tags: seichocorp/kotovskaya-core-products:latest
+          tags: ghcr.io/seicho-group/kotovskaya-products:latest
 
       - name: Push API to Docker Hub
         uses: docker/build-push-action@v2
@@ -50,12 +56,15 @@ jobs:
           push: true
           context: .
           file: ./Kotovskaya.API/Dockerfile
-          tags: seichocorp/kotovskaya-core-api:latest
+          tags: ghcr.io/seicho-group/kotovskaya-api:latest
   deploy:
     name: Create compose-file, pull all images and deploy containers
     runs-on: ubuntu-latest
     environment: env
     needs: [ build_and_push_to_docker_hub ]
+    permissions:
+      contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
       - name: install ssh keys

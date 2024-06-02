@@ -1,6 +1,6 @@
 ﻿services:
   kotovskaya.order:
-    image: seichocorp/kotovskaya-core-orders:latest
+    image: ghcr.io/seicho-group/kotovskaya-orders:latest
     ports:
       - "8003:8003"
     restart: always
@@ -11,7 +11,7 @@
       - ASPNETCORE_ENVIRONMENT=Prod
 
   kotovskaya.products:
-    image: seichocorp/kotovskaya-core-products:latest
+    image: ghcr.io/seicho-group/kotovskaya-products:latest
     environment:
       - ASPNETCORE_HTTP_PORTS=8004
       - ASPNETCORE_ENVIRONMENT=Prod
@@ -22,7 +22,7 @@
       - .env
 
   kotovskaya.categories:
-    image: seichocorp/kotovskaya-core-categories:latest
+    image: ghcr.io/seicho-group/kotovskaya-categories:latest
     environment:
       - ASPNETCORE_HTTP_PORTS=8001
       - ASPNETCORE_ENVIRONMENT=Prod
@@ -33,7 +33,7 @@
       - .env
 
   kotovskaya.api:
-    image: seichocorp/kotovskaya-core-api:latest
+    image: ghcr.io/seicho-group/kotovskaya-api:latest
     ports:
       - "80:8000"
     environment:
