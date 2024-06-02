@@ -8,6 +8,11 @@ jobs:
   build_and_push_to_docker_hub:
     name: Build and push images to docker hub
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
