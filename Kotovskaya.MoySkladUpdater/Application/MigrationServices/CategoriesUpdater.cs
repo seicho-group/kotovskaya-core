@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.MoySkladUpdater.Application.MigrationServices;
 
-public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContext dbContext) : IMigrationService
+public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContext dbContext, KotovskayaYandexObjectStorageContext yandexObjectStorageContext) : IMigrationService
 {
     public async Task Migrate()
     {
@@ -28,7 +28,7 @@ public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContex
                 .Where(msCategory => !dbCategoriesIds.Contains((Guid)msCategory.Id!))
                 .ToArray();
 
-            await new Creator(dbContext).CreateCategories(newDbCategories);
+            await new Creator(dbContext, msContext, yandexObjectStorageContext).CreateCategories(newDbCategories);
         }
     }
 }

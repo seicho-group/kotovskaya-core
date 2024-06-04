@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.MoySkladUpdater.Application.MigrationServices;
 
-public class Creator(KotovskayaDbContext dbContext)
+public class Creator(KotovskayaDbContext dbContext, KotovskayaMsContext msContext, KotovskayaYandexObjectStorageContext yandexObjectStorageContext)
 {
     public async Task CreateProductOrUpdateCategory(KotovskayaAssortment product, Category category, List<ProductEntity> categoryProducts)
     {
         try
         {
-            var currentProductEntity = categoryProducts
-                .FirstOrDefault(pr => pr.MsId == product.Id);
+            var currentProductEntity = await dbContext.Products
+                .FirstOrDefaultAsync(pr => pr.MsId == product.Id);
 
             if (currentProductEntity != null)
             {
@@ -47,6 +47,25 @@ public class Creator(KotovskayaDbContext dbContext)
         {
             SentrySdk.CaptureException(e);
         }
+    }
+
+    public async Task CreateProductImage(ProductEntity productEntity)
+    {
+        if (productEntity?.MsId == null) return;
+        var productImages = await msContext.FetchProductImagesExtended(productEntity.MsId);
+
+        if (productImages?.Rows == null || productImages.Rows.Length == 0) return;
+        var productImage = await msContext.FetchProductImage(productImages.Rows[0].Meta.DownloadHref);
+
+        if (productImage == null)
+        {
+            SentrySdk.CaptureMessage($"No image present for product: {productEntity.Id}:{productEntity.Name}");
+            return;
+        }
+        await yandexObjectStorageContext.ObjectService.PutAsync(productImage, $"{productEntity.Id}/0.jpg");
+
+        productEntity.ImageLink = $"{productEntity.Id}.jpg";
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task CreateCategories(ProductFolder[] categories)

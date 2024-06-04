@@ -7,7 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.MoySkladUpdater.Application.MigrationServices;
 
-public class ProductUpdater(KotovskayaMsContext msContext, KotovskayaDbContext dbContext) : IMigrationService
+public class ProductUpdater(
+    KotovskayaMsContext msContext, 
+    KotovskayaDbContext dbContext, 
+    KotovskayaYandexObjectStorageContext yandexObjectStorageContext) : IMigrationService
 {
     public async Task Migrate()
     {
@@ -22,8 +25,7 @@ public class ProductUpdater(KotovskayaMsContext msContext, KotovskayaDbContext d
     private async Task ExecuteCategoryUpdate(Category category)
     {
         var currentCategoryProducts =  await dbContext.Products
-            .Include(pr => pr.SaleTypes)
-            .Where(pr => pr.Categories.Any(cat => cat.MsId == category.Id))
+            .Where(pr => pr.Categories.Any(cat => cat.MsId == category.MsId))
             .ToListAsync();
 
         // remove excess
@@ -36,7 +38,8 @@ public class ProductUpdater(KotovskayaMsContext msContext, KotovskayaDbContext d
 
             foreach (var notImplementedProduct in notImplementedProducts)
             {
-                await new Creator(dbContext).CreateProductOrUpdateCategory(notImplementedProduct, category, currentCategoryProducts);
+                await new Creator(dbContext, msContext, yandexObjectStorageContext)
+                    .CreateProductOrUpdateCategory(notImplementedProduct, category, currentCategoryProducts);
             }
         }
         catch (Exception e)
@@ -67,7 +70,10 @@ public class ProductUpdater(KotovskayaMsContext msContext, KotovskayaDbContext d
         {
             throw new ApiException(500, "Assortment not found");
         }
-        return assortment.Where(kotovskayaAssortment => kotovskayaAssortment != null && !productIds.Contains((Guid)kotovskayaAssortment.Id!)).ToList()!;
+        var notIncluded = assortment
+            .Where(kotovskayaAssortment => kotovskayaAssortment != null 
+                                           && productIds.Contains(kotovskayaAssortment.Id!.Value) == false).ToList();
+        return notIncluded!;
     }
 
     private async Task RemoveExcessProducts()

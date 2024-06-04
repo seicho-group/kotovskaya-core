@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Kotovskaya.Order": {
+    "Kotovskaya.MoySkladUpdater": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
