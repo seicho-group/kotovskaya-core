@@ -6,4 +6,5 @@ public class KotovskayaAssortment : Assortment
 {
     public Price[] SalePrices { get; set; } = [];
     public string Description { get; set; } = "";
+    public Group? Group { get; set; }
 }

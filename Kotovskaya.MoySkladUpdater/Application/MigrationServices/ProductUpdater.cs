@@ -11,13 +11,40 @@ public class ProductUpdater(KotovskayaMsContext msContext, KotovskayaDbContext d
 {
     public async Task Migrate()
     {
-        var products = await dbContext.Products
+        var categories = await dbContext.Categories.ToListAsync();
+        foreach (var category in categories)
+        {
+            Console.WriteLine("Updating category " + category.Name);
+            await ExecuteCategoryUpdate(category);
+        }
+    }
+
+    private async Task ExecuteCategoryUpdate(Category category)
+    {
+        var currentCategoryProducts =  await dbContext.Products
             .Include(pr => pr.SaleTypes)
+            .Where(pr => pr.Categories.Any(cat => cat.MsId == category.Id))
             .ToListAsync();
 
-        // Taking not included in db products
-        var notImplemented = await GetNotImplementedProducts(products.Select(pr => pr.MsId).ToList());
-        Console.WriteLine(products);
+        // remove excess
+        // update current
+        // fetch not implemented
+        try
+        {
+            var notImplementedProducts =
+                await GetNotImplementedProducts(currentCategoryProducts.Select(pr => pr.MsId).ToList(), category.MsId);
+
+            foreach (var notImplementedProduct in notImplementedProducts)
+            {
+                await new Creator(dbContext).CreateProductOrUpdateCategory(notImplementedProduct, category, currentCategoryProducts);
+            }
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureMessage($"Failed to update not implemented products to category {category.MsId}");
+        }
+
+        await dbContext.SaveChangesAsync();
     }
 
     private async Task ExecuteProductUpdate(ProductEntity productEntity)
@@ -32,14 +59,15 @@ public class ProductUpdater(KotovskayaMsContext msContext, KotovskayaDbContext d
         }
     }
 
-    private async Task<List<KotovskayaAssortment>> GetNotImplementedProducts(List<Guid> productIds)
+    private async Task<List<KotovskayaAssortment>> GetNotImplementedProducts(List<Guid> productIds, Guid categoryId)
     {
-        var assortment = await msContext.FetchAssortmentInfoExtended("quantityMode=positiveOnly;");
+        var assortment = await msContext.FetchAssortmentInfoExtended($"quantityMode=positiveOnly;" +
+                                                                     $"productFolder=https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{categoryId};");
         if (assortment == null)
         {
             throw new ApiException(500, "Assortment not found");
         }
-        return assortment.Where(kotovskayaAssortment => kotovskayaAssortment != null && !productIds.Contains((Guid)kotovskayaAssortment.Id)).ToList();
+        return assortment.Where(kotovskayaAssortment => kotovskayaAssortment != null && !productIds.Contains((Guid)kotovskayaAssortment.Id!)).ToList()!;
     }
 
     private async Task RemoveExcessProducts()

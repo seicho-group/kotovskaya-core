@@ -20,25 +20,15 @@ public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContex
 
     private async Task AddNotImplemented(List<Category> dbCategories, ProductFolder[]? msCategories)
     {
-
         var dbCategoriesIds = dbCategories.Select(row => row.MsId).ToList();
 
         if (msCategories != null)
         {
             var newDbCategories = msCategories
                 .Where(msCategory => !dbCategoriesIds.Contains((Guid)msCategory.Id!))
-                .Select(msCategory => new Category()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = msCategory.Name,
-                    MsId = (Guid)msCategory.Id!,
-                    Type = CategoryType.Soapmaking
-                })
-                .ToList();
+                .ToArray();
 
-            await dbContext.AddRangeAsync(newDbCategories);
+            await new Creator(dbContext).CreateCategories(newDbCategories);
         }
-
-        await dbContext.SaveChangesAsync();
     }
 }
