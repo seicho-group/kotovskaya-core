@@ -22,6 +22,18 @@ public class ProductUpdater(
         }
     }
 
+    public async Task MigrateSingleCategory(Guid categoryId)
+    {
+        var category = await dbContext.Categories
+            .Where(cat => cat.MsId == categoryId)
+            .FirstOrDefaultAsync();
+        if (category == null)
+        {
+            throw new Exception("Category not found");
+        }
+        await ExecuteCategoryUpdate(category);
+    }
+
     private async Task ExecuteCategoryUpdate(Category category)
     {
         var currentCategoryProducts =  await dbContext.Products
