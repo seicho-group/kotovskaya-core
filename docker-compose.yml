@@ -41,6 +41,16 @@
       - ASPNETCORE_ENVIRONMENT=Prod
     restart: always
 
+
+  kotovskaya.moyskladupdater:
+    image: ghcr.io/seicho-group/kotovskaya-moyskladupdater:latest
+    build:
+      context: .
+      dockerfile: Kotovskaya.MoySkladUpdater/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Prod
+
+
   hangfire.server:
     image: mcr.microsoft.com/mssql/server:latest
     environment:
@@ -48,6 +58,15 @@
       - SA_PASSWORD=Kotovskaya123
     ports:
       - "1433:1433"
+    volumes:
+      - mssqlsystem:/var/opt/mssql
+      - mssqluser:/var/opt/sqlserver
+      - ${MSSQL_CONFIG_DIR:-./.config/mssql}/entrypoint.sh:/usr/src/app/entrypoint.sh
+      - ${MSSQL_CONFIG_DIR:-./.config/mssql}/sql/:/usr/src/app/docker-entrypoint-initdb.d
+
+volumes:
+  mssqlsystem: # external: true
+  mssqluser: # external: true
 
 networks:
   kotovskaya-network:

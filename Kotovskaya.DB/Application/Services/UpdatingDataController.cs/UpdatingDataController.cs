@@ -9,25 +9,15 @@ public class UpdatingDataController(KotovskayaMsContext msContext, KotovskayaDbC
 {
     public async Task UpdateProductData(List<ProductEntity> products)
     {
-        foreach (var product in products)
+        foreach (var product in products.Where(product => product.LastUpdatedAt == null || !((DateTime.Now - product.LastUpdatedAt).Value.TotalDays <= 1)))
         {
-            if (product.MsId == null)
-            {
-                SentrySdk.CaptureMessage($"Product: {product.Id} has no MoySklad ID");
-                continue;
-            }
-
-            // if updated before last night, updating info
-            if (product.LastUpdatedAt != null && (DateTime.Now - product.LastUpdatedAt).Value.TotalDays <= 1)
-                continue;
-
             product.LastUpdatedAt = DateTime.Now.ToUniversalTime();
 
             try
             {
-                var productAssortmentFromMoySklad = await msContext.FetchAssortmentInfoExtended(product.MsId.Value);
-                var productFromMoySklad = await msContext.FetchProductInfoExtended(product.MsId.Value);
-                await SaveDataAsync(product, productFromMoySklad, productAssortmentFromMoySklad);
+                var productAssortmentFromMoySklad = await msContext.FetchAssortmentInfoExtended($"id={product.MsId};");
+                var productFromMoySklad = await msContext.FetchProductInfoExtended(product.MsId);
+                await SaveDataAsync(product, productFromMoySklad, productAssortmentFromMoySklad[0]);
             }
             catch
             {
@@ -50,6 +40,7 @@ public class UpdatingDataController(KotovskayaMsContext msContext, KotovskayaDbC
         var newSalePrice = new SaleTypes()
         {
             Product = productEntity,
+            ProductId = productEntity.Id,
             OldPrice = (int)(product.SalePrices[2].Value ?? 0),
             Price = (int)(product.SalePrices[0].Value ?? 0)
         };

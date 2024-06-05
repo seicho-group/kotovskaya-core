@@ -17,18 +17,18 @@ public class PositionService(KotovskayaDbContext dbContext, KotovskayaMsContext 
         {
             var product = await dbContext.Products
                 .Include(productEntity => productEntity.SaleTypes)
-                .FirstOrDefaultAsync(pr => pr.Id == position.ProductId.ToString());
+                .FirstOrDefaultAsync(pr => pr.Id == position.ProductId);
 
             // Shouldn't go here
             if (product == null)
                 throw new ApiException(404, $"Product: {product?.Id} not found, but MS order created");
 
             positionsList.Add(product);
-            if (moySkladOrderId == null || product.MsId == null) continue;
+            if (moySkladOrderId == null) continue;
 
             try
             {
-                await msContext.CreateOrderPositionByOrderId(moySkladOrderId.Value, product.MsId.Value,
+                await msContext.CreateOrderPositionByOrderId(moySkladOrderId.Value, product.MsId,
                     position.Quantity,
                     product.SaleTypes?.Price ?? 0);
             }

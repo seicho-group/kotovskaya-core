@@ -6,7 +6,7 @@ public record GetCategoryItemsResponse
 {
     public string CategoryName { get; init; } = "Категория";
 
-    public string CategoryId { get; init; } = Guid.Empty.ToString();
+    public Guid CategoryId { get; init; } = Guid.Empty;
 
     public ProductEntityDto[] CategoryItems { get; init; } = null!;
 
