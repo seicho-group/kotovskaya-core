@@ -92,6 +92,20 @@ public class KotovskayaMsContext : MoySkladApi
             return null;
         }
     }
+    
+    public async Task<ProductFolder[]?> FetchProductFoldersExtended()
+    {
+        try
+        {
+            var products = await GetAsyncJson<EntitiesResponse<ProductFolder>?>($"entity/productfolder");
+            return products?.Rows;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
 
     /**
      * !! DANGEROUS METHOD !!
@@ -170,8 +184,8 @@ public class KotovskayaMsContext : MoySkladApi
     }
 
     /**
- * get request to ms with credentials
- */
+     * get request to ms with credentials
+     */
     private async Task<Stream> GetAsyncStream(string url)
     {
         var responseMessage = await Client.GetAsync(url);

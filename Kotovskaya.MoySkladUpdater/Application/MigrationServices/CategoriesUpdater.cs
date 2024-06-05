@@ -10,8 +10,7 @@ public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContex
 {
     public async Task Migrate()
     {
-        var msCategoriesResponse = await msContext.ProductFolder.GetAllAsync();
-        var msCategories = msCategoriesResponse.Payload.Rows;
+        var msCategories = await msContext.FetchProductFoldersExtended();
 
         var dbCategories = await dbContext.Categories.ToListAsync();
 
@@ -28,7 +27,35 @@ public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContex
                 .Where(msCategory => !dbCategoriesIds.Contains((Guid)msCategory.Id!))
                 .ToArray();
 
-            await new Creator(dbContext, msContext, yandexObjectStorageContext).CreateCategories(newDbCategories);
+            await MigrateCategoriesByPathName(newDbCategories, "", null);
+        }
+    }
+    
+    private async Task MigrateCategoriesByPathName(ProductFolder[] categories, string pathName, Category? parentFolder)
+    {
+        var childCategories = categories
+            .Where(c => c.PathName.Split("/").Last() == pathName);
+
+        foreach (var childCategory in childCategories.ToList())
+        {
+            var existingCategory = await dbContext.Categories
+                .FirstOrDefaultAsync(cat => cat.Id == childCategory.Id);
+
+            var newCategoryModel = new Category
+            {
+                ParentCategory = parentFolder,
+                ParentCategoryId = parentFolder?.Id,
+                Id = existingCategory?.Id ?? childCategory.Id ?? Guid.NewGuid(),
+                Name = childCategory.Name,
+                Type = existingCategory?.Type ?? CategoryType.Soapmaking,
+                IsVisible = existingCategory?.IsVisible ?? true,
+                MsId = (Guid)childCategory.Id!
+            };
+
+            if (existingCategory != null) dbContext.Categories.Remove(existingCategory);
+            await dbContext.Categories.AddAsync(newCategoryModel);
+            await dbContext.SaveChangesAsync();
+            await MigrateCategoriesByPathName(categories, childCategory.Name, newCategoryModel);
         }
     }
 }

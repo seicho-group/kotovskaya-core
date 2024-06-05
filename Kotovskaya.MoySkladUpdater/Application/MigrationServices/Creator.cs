@@ -62,9 +62,9 @@ public class Creator(KotovskayaDbContext dbContext, KotovskayaMsContext msContex
             SentrySdk.CaptureMessage($"No image present for product: {productEntity.Id}:{productEntity.Name}");
             return;
         }
-        await yandexObjectStorageContext.ObjectService.PutAsync(productImage, $"{productEntity.Id}/0.jpg");
+        await yandexObjectStorageContext.ObjectService.PutAsync(productImage, $"{productEntity.MsId}/0.jpg");
 
-        productEntity.ImageLink = $"{productEntity.Id}.jpg";
+        productEntity.ImageLink = $"{productEntity.MsId}/0.jpg";
         await dbContext.SaveChangesAsync();
     }
 
@@ -72,15 +72,21 @@ public class Creator(KotovskayaDbContext dbContext, KotovskayaMsContext msContex
     {
         try
         {
-            var newCategories = categories.ToList()
-                .Select(category =>
-                    new Category()
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = category.Name,
-                        MsId = (Guid)category.Id!,
-                        Type = CategoryType.Soapmaking
-                    });
+            var newCategories = new List<Category>();
+            foreach (var category in categories.ToList())
+            {
+                var parentCategoryEntity = newCategories.FirstOrDefault(cat => cat.MsId == category.Id);
+                var categoryEntity = new Category()
+                {
+                    ParentCategory = parentCategoryEntity,
+                    ParentCategoryId = parentCategoryEntity!.Id,
+                    Id = Guid.NewGuid(),
+                    Name = category.Name,
+                    MsId = (Guid)category.Id!,
+                    Type = CategoryType.Soapmaking
+                };
+                newCategories.Add(categoryEntity);
+            }
 
             await dbContext.Categories.AddRangeAsync(newCategories);
             await dbContext.SaveChangesAsync();
