@@ -4,7 +4,9 @@ using Microsoft.Extensions.Options;
 
 namespace Kotovskaya.DB.Domain.Context;
 
-public class KotovskayaYandexObjectStorageContext(YandexStorageOptions options) : YandexStorageService(options)
+public class KotovskayaYandexObjectStorageContext() : YandexStorageService(new YandexStorageOptions()
 {
-
-}
+    BucketName = "kotovskaya.products",
+    AccessKey = Environment.GetEnvironmentVariable("YA_ID_KEY"),
+    SecretKey = Environment.GetEnvironmentVariable("YA_ID_SECRET_KEY")
+});

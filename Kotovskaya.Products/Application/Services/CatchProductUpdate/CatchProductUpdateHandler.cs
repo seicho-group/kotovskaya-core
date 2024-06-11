@@ -30,11 +30,20 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
             product.Name = updatedProduct.Name;
             product.Description = updatedProduct.Description;
             product.Quantity = (int)updatedProduct.Quantity!;
-            var image = await msContext.FetchProductImage(updatedProduct.Images.Rows[0].Miniature.Href);
-            if (image != null)
+            try
             {
-                await yaContext.ObjectService.PutAsync(image, $"{updatedProduct.Id}/0.jpg");
+                var image = await msContext.FetchProductImage(updatedProduct.Images.Rows[0].Miniature.Href);
+                if (image != null)
+                {
+                    await yaContext.ObjectService.PutAsync(image, $"{updatedProduct.Id}/0.jpg");
+                }
+                product.ImageLink = $"{updatedProduct.Id}/0.jpg";
             }
+            catch (Exception e)
+            {
+                SentrySdk.CaptureMessage($"Failed to load image to {product.Id}");
+            }
+            
             
             var priceType =  await dbContext.SaleTypes.Where(price => price.ProductId == product.Id).FirstOrDefaultAsync();
             if (priceType != null)

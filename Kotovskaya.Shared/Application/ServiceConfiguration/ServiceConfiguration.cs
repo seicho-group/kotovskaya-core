@@ -36,6 +36,7 @@ public class KotovskayaServicesConfiguration(IServiceCollection services, Assemb
         services.AddSingleton(mapper);
 
         services.AddTransient<KotovskayaDbContext>();
+        services.AddTransient<KotovskayaYandexObjectStorageContext>();
         services.AddSingleton<KotovskayaMsContext>();
 
         return services;
