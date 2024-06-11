@@ -1,4 +1,5 @@
-﻿using Kotovskaya.Products.Application.Services.GetNewProducts;
+﻿using Kotovskaya.Products.Application.Services.CatchProductUpdate;
+using Kotovskaya.Products.Application.Services.GetNewProducts;
 using Kotovskaya.Products.Application.Services.GetPopularProducts;
 using Kotovskaya.Products.Application.Services.GetProductInfo;
 using Kotovskaya.Products.Application.Services.GetSaleProducts;
@@ -53,5 +54,13 @@ public class ProductsController(IMediator mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         return Ok(await mediator.Send(request, cancellationToken));
+    }
+    
+    [HttpPost]
+    [Route("catch_product_update")]
+    public async Task CatchProductUpdate([FromBody] CatchProductUpdateRequest request,
+        CancellationToken cancellationToken)
+    {
+        await mediator.Send(request, cancellationToken);
     }
 }
