@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Products.Application.Services.CatchProductUpdate;
 
-public class CatchProductUpdateHandler(KotovskayaDbContext dbContext, KotovskayaMsContext msContext): IRequestHandler<CatchProductUpdateRequest>
+// todo: split it up
+public class CatchProductUpdateHandler(KotovskayaDbContext dbContext, 
+    KotovskayaMsContext msContext, 
+    KotovskayaYandexObjectStorageContext yaContext): IRequestHandler<CatchProductUpdateRequest>
 {
     public async Task Handle(CatchProductUpdateRequest request, CancellationToken cancellationToken)
     {
@@ -27,6 +30,12 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext, Kotovskaya
             product.Name = updatedProduct.Name;
             product.Description = updatedProduct.Description;
             product.Quantity = (int)updatedProduct.Quantity!;
+            var image = await msContext.FetchProductImage(updatedProduct.Images.Rows[0].Miniature.Href);
+            if (image != null)
+            {
+                await yaContext.ObjectService.PutAsync(image, $"{updatedProduct.Id}/0.jpg");
+            }
+            
             var priceType =  await dbContext.SaleTypes.Where(price => price.ProductId == product.Id).FirstOrDefaultAsync();
             if (priceType != null)
             {
