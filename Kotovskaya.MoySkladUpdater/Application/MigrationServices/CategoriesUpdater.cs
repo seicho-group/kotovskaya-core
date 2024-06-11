@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.MoySkladUpdater.Application.MigrationServices;
 
-public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContext dbContext, KotovskayaYandexObjectStorageContext yandexObjectStorageContext) : IMigrationService
+public class CategoriesUpdater(KotovskayaMsContext msContext, KotovskayaDbContext dbContext) : IMigrationService
 {
     public async Task Migrate()
     {
