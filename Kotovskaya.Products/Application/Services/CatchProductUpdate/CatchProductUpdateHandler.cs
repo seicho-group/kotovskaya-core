@@ -41,6 +41,8 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
+                SentrySdk.CaptureException(e);
                 SentrySdk.CaptureMessage($"Failed to load image to {product.Id}");
             }
             
