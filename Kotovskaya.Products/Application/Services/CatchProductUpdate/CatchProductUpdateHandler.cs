@@ -36,6 +36,7 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                 if (image != null)
                 {
                     await yaContext.ObjectService.PutAsync(image, $"{updatedProduct.Id}/0.jpg");
+                    Console.WriteLine("Photo updated");
                 }
                 product.ImageLink = $"{updatedProduct.Id}/0.jpg";
             }
