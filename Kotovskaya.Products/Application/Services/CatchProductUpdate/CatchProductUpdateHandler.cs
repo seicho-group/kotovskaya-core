@@ -28,11 +28,11 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
         if (updatedProduct != null)
         {
             product.Name = updatedProduct.Name;
-            product.Description = updatedProduct.Description;
+            product.Description = updatedProduct.Description[..(updatedProduct.Description.Length > 2040 ? 2040 : updatedProduct.Description.Length)];
             product.Quantity = (int)updatedProduct.Quantity!;
             try
             {
-                var image = await msContext.FetchProductImage(updatedProduct.Images.Rows[0].Miniature.Href);
+                var image = await msContext.FetchProductImage(updatedProduct.Images.Rows[0].Meta.DownloadHref);
                 if (image != null)
                 {
                     await yaContext.ObjectService.PutAsync(image, $"{updatedProduct.Id}/0.jpg");
