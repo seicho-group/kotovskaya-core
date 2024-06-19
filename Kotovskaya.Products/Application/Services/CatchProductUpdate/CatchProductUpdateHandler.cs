@@ -1,6 +1,5 @@
-using Confiti.MoySklad.Remap.Client;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.Shared.Application.Entities.DTO;
+using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,17 +17,38 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
         var product = await dbContext.Products
             .Where(pr => pr.MsId == Guid.Parse(productId))
             .FirstOrDefaultAsync(cancellationToken);
-        if (product == null)
-        {
-            SentrySdk.CaptureMessage("Product not found after update");
-            return;
-        }
+        
         var updatedProductsFromMs = await msContext.FetchAssortmentInfoExtended($"id={productId};");
         var updatedProduct = updatedProductsFromMs.FirstOrDefault();
         if (updatedProduct != null)
         {
+            var desc = updatedProduct.Description[
+                ..(updatedProduct.Description.Length > 2040 
+                    ? 2040 
+                    : updatedProduct.Description.Length)];
+            if (product == null)
+            {
+                SentrySdk.CaptureMessage("Product not found after update");
+                product = new ProductEntity
+                {
+                    Name = updatedProduct.Name,
+                    Description = desc,
+                    MsId = (Guid)updatedProduct.Id!,
+                    Quantity = (int)updatedProduct.Quantity!,
+                    Categories = new List<Category>(),
+                    ImageLink = null,
+                    LastUpdatedAt = null
+                };
+                product.SaleTypes = new SaleTypes
+                {
+                    ProductId = product.Id,
+                    Product = product,
+                    Price = (int)updatedProduct.SalePrices.FirstOrDefault()?.Value!,
+                    OldPrice = (int?)updatedProduct.SalePrices.LastOrDefault()?.Value
+                };
+            }
             product.Name = updatedProduct.Name;
-            product.Description = updatedProduct.Description[..(updatedProduct.Description.Length > 2040 ? 2040 : updatedProduct.Description.Length)];
+            product.Description = desc;
             product.Quantity = (int)updatedProduct.Quantity!;
             try
             {
@@ -36,7 +56,6 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                 if (image != null)
                 {
                     await yaContext.ObjectService.PutAsync(image, $"{updatedProduct.Id}/0.jpg");
-                    Console.WriteLine("Photo updated");
                 }
                 product.ImageLink = $"{updatedProduct.Id}/0.jpg";
             }
