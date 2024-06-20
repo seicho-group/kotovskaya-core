@@ -39,13 +39,15 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                     ImageLink = null,
                     LastUpdatedAt = null
                 };
-                product.SaleTypes = new SaleTypes
+                var saleType = new SaleTypes
                 {
                     ProductId = product.Id,
                     Product = product,
                     Price = (int)updatedProduct.SalePrices.FirstOrDefault()?.Value!,
                     OldPrice = (int?)updatedProduct.SalePrices.LastOrDefault()?.Value
                 };
+                product.SaleTypes = saleType;
+                dbContext.Products.Add(product);
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
             product.Name = updatedProduct.Name;
