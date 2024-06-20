@@ -46,6 +46,7 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                     Price = (int)updatedProduct.SalePrices.FirstOrDefault()?.Value!,
                     OldPrice = (int?)updatedProduct.SalePrices.LastOrDefault()?.Value
                 };
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
             product.Name = updatedProduct.Name;
             product.Description = desc;
