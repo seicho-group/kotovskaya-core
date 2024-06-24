@@ -1,5 +1,4 @@
-﻿using AspNetCore.Yandex.ObjectStorage.Configuration;
-using Kotovskaya.DB.Domain.Context;
+﻿using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.MoySkladUpdater.Application.MigrationServices;
 
 var dbContext = new KotovskayaDbContext();
