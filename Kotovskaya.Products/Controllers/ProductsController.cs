@@ -57,6 +57,14 @@ public class ProductsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPost]
+    [Route("generate_feed")]
+    public async Task GenerateFeed([FromRoute] GetSaleProductsRequest request,
+        CancellationToken cancellationToken)
+    {
+        await mediator.Send(request, cancellationToken);
+    }
+    
+    [HttpPost]
     [Route("catch_product_update")]
     public async Task CatchProductUpdate([FromBody] CatchProductUpdateRequest request,
         CancellationToken cancellationToken)
