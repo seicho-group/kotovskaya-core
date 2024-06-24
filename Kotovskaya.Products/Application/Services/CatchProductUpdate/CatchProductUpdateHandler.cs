@@ -1,5 +1,6 @@
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
+using Kotovskaya.DB.Domain.Entities.MoySkladExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,10 +47,13 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                     Price = (int)updatedProduct.SalePrices.FirstOrDefault()?.Value!,
                     OldPrice = (int?)updatedProduct.SalePrices.LastOrDefault()?.Value
                 };
+                
                 product.SaleTypes = saleType;
                 dbContext.Products.Add(product);
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
+
+            await AddCategoriesToProduct(product, updatedProduct);
             product.Name = updatedProduct.Name;
             product.Description = desc;
             product.Quantity = (int)updatedProduct.Quantity!;
@@ -83,5 +87,29 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
             dbContext.Products.Update(product);
         }
         await dbContext.SaveChangesAsync(cancellationToken);
+    }
+    
+    private async Task AddCategoriesToProduct(ProductEntity product, KotovskayaAssortment
+        updatedProduct)
+    {
+        var categories = updatedProduct.PathName.Split("/");
+        foreach (var category in categories)
+        {
+            var categoryEntity = await dbContext.Categories
+                .Where(c => c.Name == category)
+                .FirstOrDefaultAsync();
+            if (categoryEntity == null)
+            {
+                categoryEntity = new Category
+                {
+                    Name = category
+                };
+                dbContext.Categories.Add(categoryEntity);
+                await dbContext.SaveChangesAsync();
+            }
+            product.Categories.Add(categoryEntity);
+        }
+
+        await dbContext.SaveChangesAsync();
     }
 }
