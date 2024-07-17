@@ -15,7 +15,6 @@ public class GetCategoryItemsHandler(KotovskayaDbContext dbContext, IMapper mapp
     public async Task<GetCategoryItemsResponse> Handle(GetCategoryItemsRequest request,
         CancellationToken cancellationToken)
     {
-        BackgroundJob.Enqueue(() => Console.WriteLine("123123"));
         var category = await dbContext.Categories
             .Include(category => category.Products)!
                 .ThenInclude(pr => pr.SaleTypes)

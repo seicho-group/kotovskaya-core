@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using Confiti.MoySklad.Remap.Entities;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Kotovskaya.DB.Domain.Entities.MoySkladExtensions;
@@ -29,28 +31,7 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                     : updatedProduct.Description.Length)];
             if (product == null)
             {
-                SentrySdk.CaptureMessage("Product not found after update");
-                product = new ProductEntity
-                {
-                    Name = updatedProduct.Name,
-                    Description = desc,
-                    MsId = (Guid)updatedProduct.Id!,
-                    Quantity = (int)updatedProduct.Quantity!,
-                    Categories = new List<Category>(),
-                    ImageLink = null,
-                    LastUpdatedAt = null
-                };
-                var saleType = new SaleTypes
-                {
-                    ProductId = product.Id,
-                    Product = product,
-                    Price = (int)updatedProduct.SalePrices.FirstOrDefault()?.Value!,
-                    OldPrice = (int?)updatedProduct.SalePrices.LastOrDefault()?.Value
-                };
-                
-                product.SaleTypes = saleType;
-                dbContext.Products.Add(product);
-                await dbContext.SaveChangesAsync(cancellationToken);
+                product = await CreateProduct(updatedProduct, cancellationToken);
             }
 
             await AddCategoriesToProduct(product, updatedProduct);
@@ -88,7 +69,40 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
         }
         await dbContext.SaveChangesAsync(cancellationToken);
     }
-    
+
+    private async Task<ProductEntity> CreateProduct( KotovskayaAssortment updatedProduct,
+        CancellationToken cancellationToken)
+    {
+        var desc = updatedProduct.Description[
+            ..(updatedProduct.Description.Length > 2040
+                ? 2040
+                : updatedProduct.Description.Length)];
+
+        SentrySdk.CaptureMessage("Product not found after update");
+        var product = new ProductEntity
+        {
+            Name = updatedProduct.Name,
+            Description = desc,
+            MsId = (Guid)updatedProduct.Id!,
+            Quantity = (int)updatedProduct.Quantity!,
+            Categories = new List<Category>(),
+            ImageLink = null,
+            LastUpdatedAt = null
+        };
+        var saleType = new SaleTypes
+        {
+            ProductId = product.Id,
+            Product = product,
+            Price = (int)updatedProduct.SalePrices.FirstOrDefault()?.Value!,
+            OldPrice = (int?)updatedProduct.SalePrices.LastOrDefault()?.Value
+        };
+
+        product.SaleTypes = saleType;
+        dbContext.Products.Add(product);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return product;
+    }
+
     private async Task AddCategoriesToProduct(ProductEntity product, KotovskayaAssortment
         updatedProduct)
     {
@@ -106,6 +120,11 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                 };
                 dbContext.Categories.Add(categoryEntity);
                 await dbContext.SaveChangesAsync();
+            }
+
+            if (product.Categories == null)
+            {
+                product.Categories = new List<Category>();
             }
             product.Categories.Add(categoryEntity);
         }

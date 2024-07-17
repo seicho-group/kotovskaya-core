@@ -19,7 +19,7 @@ public class ProductEntity
 
     public int Quantity { get; set; }
 
-    public List<Category> Categories { get; init; } = null!;
+    public List<Category> Categories { get; set; } = [];
 
     [StringLength(512, MinimumLength = 0)] public string? ImageLink { get; set; }
 

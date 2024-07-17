@@ -23,11 +23,10 @@ public class KotovskayaDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         optionsBuilder.UseNpgsql($"" +
                                  $"Host={Environment.GetEnvironmentVariable("PG_HOST")};" +
                                  $"Database={Environment.GetEnvironmentVariable("PG_DB")};" +
-                                 $"Username=root;" +
+                                 $"Username=postgres;" +
                                  $"Password={Environment.GetEnvironmentVariable("PG_PASS")}");
     }
 }

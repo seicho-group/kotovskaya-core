@@ -14,6 +14,7 @@ public class Category
     [StringLength(150, MinimumLength = 5)] public Guid Id { get; init; }
 
     [StringLength(150, MinimumLength = 5)] public string Name { get; init; } = "Категория";
+    [StringLength(150, MinimumLength = 5)] public string PathName { get; init; } = "";
 
     [StringLength(150, MinimumLength = 5)] public Guid MsId { get; init; }
 
