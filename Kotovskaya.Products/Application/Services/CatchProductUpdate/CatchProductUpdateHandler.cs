@@ -45,7 +45,7 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                 {
                     await yaContext.ObjectService.PutAsync(image, $"{updatedProduct.Id}/0.jpg");
                 }
-                product.ImageLink = $"{updatedProduct.Id}/0.jpg";
+                product.ImageLink = $"{updatedProduct.Id}/0";
             }
             catch (Exception e)
             {
@@ -107,6 +107,7 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
         updatedProduct)
     {
         var categories = updatedProduct.PathName.Split("/");
+        var productCategories = categories.ToArray();
         foreach (var category in categories)
         {
             var categoryEntity = await dbContext.Categories
@@ -122,13 +123,11 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
                 await dbContext.SaveChangesAsync();
             }
 
-            if (product.Categories == null)
+            if (productCategories.Any(cat => category == cat) == false)
             {
-                product.Categories = new List<Category>();
+                product.Categories.Add(categoryEntity);
             }
-            product.Categories.Add(categoryEntity);
+            await dbContext.SaveChangesAsync();
         }
-
-        await dbContext.SaveChangesAsync();
     }
 }

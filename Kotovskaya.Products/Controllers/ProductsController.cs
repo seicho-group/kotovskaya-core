@@ -63,4 +63,12 @@ public class ProductsController(IMediator mediator) : ControllerBase
     {
         await mediator.Send(request, cancellationToken);
     }
+
+    [HttpPost]
+    [Route("catch_product_create")]
+    public async Task CatchProductCreate([FromBody] CatchProductUpdateRequest request,
+        CancellationToken cancellationToken)
+    {
+        await mediator.Send(request, cancellationToken);
+    }
 }

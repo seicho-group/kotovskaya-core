@@ -20,7 +20,7 @@ public class Category
 
     [StringLength(150, MinimumLength = 5)] public Guid? ParentCategoryId { get; init; }
 
-    public Category? ParentCategory { get; init; }
+    public Category? ParentCategory { get; set; }
 
     public List<ProductEntity>? Products { get; init; } = null;
 

@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="AspNetCore.Yandex.ObjectStorage" Version="0.2.2" />
-        <PackageReference Include="Confiti.MoySklad.Remap.Sdk" Version="0.18.0"/>
+        <PackageReference Include="Confiti.MoySklad.Remap.Sdk" Version="0.20.1" />
         <PackageReference Include="DotNetEnv" Version="3.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.3.24172.4">
             <PrivateAssets>all</PrivateAssets>
