@@ -1,14 +1,11 @@
 using Confiti.MoySklad.Remap.Client;
 using Confiti.MoySklad.Remap.Entities;
 using Confiti.MoySklad.Remap.Models;
-using Kotovskaya.DB.Application.Services.UpdatingDataController.cs;
 using Kotovskaya.DB.Domain.Context;
-using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Kotovskaya.DB.Domain.Entities.Enum;
 using Kotovskaya.Order.Domain.PositionService;
 using Kotovskaya.TelegramApi.KotovskayaBotController;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kotovskaya.Order.Application.Services.CreateOrder;
 
@@ -45,9 +42,6 @@ public class CreateOrderHandler(KotovskayaDbContext dbContext, KotovskayaMsConte
         await dbContext.AddAsync(orderDbEntity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        // обновляем данные по продуктам - убрать в кролика
-        await new UpdatingDataController(msContext, dbContext)
-            .UpdateProductData(positionsList);
         return orderDbEntity.MoySkladNumber;
     }
 
