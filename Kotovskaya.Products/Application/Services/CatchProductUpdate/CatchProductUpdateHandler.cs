@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using Confiti.MoySklad.Remap.Entities;
 using Kotovskaya.DB.Domain.Context;
 using Kotovskaya.DB.Domain.Entities.DatabaseEntities;
 using Kotovskaya.DB.Domain.Entities.MoySkladExtensions;
