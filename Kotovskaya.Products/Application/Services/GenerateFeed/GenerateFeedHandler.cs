@@ -57,7 +57,7 @@ public class GenerateFeedHandler(KotovskayaDbContext dbContext) : IRequestHandle
             var nameElement = xmlDoc.CreateElement("name");
             nameElement.InnerText = product.Name;
             var urlElement = xmlDoc.CreateElement("url");
-            urlElement.InnerText = $"https://mkotovskaya.ru/{product.Id}";
+            urlElement.InnerText = $"https://mkotovskaya.ru/product/{product.Id}";
             var priceElement = xmlDoc.CreateElement("price");
             priceElement.InnerText = product.SaleTypes?.Price.ToString() ?? "0";
             var currencyIdElement = xmlDoc.CreateElement("currencyId");
