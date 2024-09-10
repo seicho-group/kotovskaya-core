@@ -21,6 +21,7 @@ public class CatchProductUpdateHandler(KotovskayaDbContext dbContext,
         
         var updatedProductsFromMs = await msContext.FetchAssortmentInfoExtended($"id={productId};");
         var updatedProduct = updatedProductsFromMs.FirstOrDefault();
+
         if (updatedProduct != null)
         {
             var desc = updatedProduct.Description[
