@@ -10,6 +10,7 @@ namespace Kotovskaya.Categories.Application.Services.GetAllCategoriesTree;
 public class GetAllCategoriesTreeHandler(KotovskayaDbContext dbContext, IMapper mapper)
     : IRequestHandler<GetAllCategoriesTreeRequest, List<CategoryDtoBranch>>
 {
+    
     public async Task<List<CategoryDtoBranch>> Handle(GetAllCategoriesTreeRequest request,
         CancellationToken cancellationToken)
     {
